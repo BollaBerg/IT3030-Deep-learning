@@ -92,3 +92,18 @@ def test_generator_generate_cross_centering():
              [False, True, False]]
         )
     )
+
+def test_generator_generate_vertical_bars():
+    """Test that Generator._generate_vertical_bars generates bars"""
+    generator = Generator()
+    image = generator._generate_vertical_bars(5, 0.0, debug_bars=(0, 1, 3))
+    np.testing.assert_array_equal(
+        image,
+        np.array(
+            [[True, True, False, True, False],
+             [True, True, False, True, False],
+             [True, True, False, True, False],
+             [True, True, False, True, False],
+             [True, True, False, True, False],]
+        )
+    )

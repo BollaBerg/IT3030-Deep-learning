@@ -88,6 +88,8 @@ class Generator:
             image = self._generate_X(image_dimension, centering_factor)
         elif image_class == ImageClass.CROSS:
             image = self._generate_cross(image_dimension, centering_factor)
+        elif image_class == ImageClass.VERTICAL_BARS:
+            image = self._generate_vertical_bars(image_dimension, centering_factor)
         else:
             raise NotImplementedError
         
@@ -196,6 +198,38 @@ class Generator:
         
         image[center[0], :] = True
         image[:, center[1]] = True
+        return image
+    
+
+    def _generate_vertical_bars(self,
+                                image_dimension : int,
+                                centering_factor : float = None,
+                                *,
+                                debug_bars : Tuple[int] = None) -> np.ndarray:
+        """Generate an image of vertical bars
+
+        IMPORTANT: centering_factor is NOT used in this method, but is still
+        an argument for API-consistency.
+
+        Args:
+            image_dimension (int): Height/width of image to generate
+            centering_factor (float, optional): Centering factor. NOT USED!
+            debug_bars (Tuple[int], optional): DEBUG: Manually choose where to
+                place bars. Only used for debugging. Defaults to None.
+
+        Returns:
+            np.ndarray: [description]
+        """
+        image = np.zeros(
+            (image_dimension, image_dimension),
+            dtype=np.bool8
+        )
+        number_of_bars = random.randrange(1, int(image_dimension / 2))
+        bars = random.sample(range(image_dimension), number_of_bars)
+        if debug_bars is not None:
+            bars = debug_bars
+        for x in bars:
+            image[:, x] = True
         return image
 
 
