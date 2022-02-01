@@ -31,15 +31,13 @@ layer.py
 generator.py
     -  Generator
         "Generates two-dimensional, binary pixel images"
-        - get_training_set()
-        - get_validation_set()
-        - get_test_set()
-        - get_all_sets()
+        - get_single_set
+        - get_multiple_sets
     - ImageClass (Enum)
         "Enum of possible image classes that can be generated"
 config.py
     - ConfigReader
         "Reads user-supplied config files, returns a Network"
 main.py
-    "Main file, allowing the user to run Networks from a CLI, using       configuration files"
+    "Main file, allowing the user to run Networks from a CLI, using configuration files"
 ```
