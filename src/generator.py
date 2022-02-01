@@ -84,12 +84,14 @@ class Generator:
                                flatten : bool) -> np.ndarray:
         if image_class == ImageClass.RECTANGLE:
             image = self._generate_rectangle(image_dimension, centering_factor)
+        elif image_class == ImageClass.X:
+            image = self._generate_X(image_dimension, centering_factor)
         else:
             raise NotImplementedError
         
         noise_pixels = int(noise_portion * image_dimension**2)
         for _ in noise_pixels:
-            pixel = (random.randint(0, image_dimension), random.randint(0, image_dimension))
+            pixel = (random.randrange(0, image_dimension), random.randrange(0, image_dimension))
             image[pixel] = not image[pixel]
 
         if flatten:
@@ -104,21 +106,26 @@ class Generator:
                                  center : Tuple[int, int]) -> Tuple[int, int]:
         actual_center = (int(image_dimension / 2), int(image_dimension / 2))
         delta = (
-            (actual_center[0] - center[0]) * centering_factor,
-            (actual_center[1] - center[1]) * centering_factor,
+            int((actual_center[0] - center[0]) * centering_factor),
+            int((actual_center[1] - center[1]) * centering_factor),
         )
         return delta
 
 
     def _generate_rectangle(self,
                             image_dimension : int,
-                            centering_factor : float) -> np.ndarray:
+                            centering_factor : float,
+                            *,
+                            debug_corners : Tuple[Tuple[int, int], Tuple[int, int]] = None) -> np.ndarray:
         image = np.zeros(
             (image_dimension, image_dimension),
             dtype=np.bool8
         )
-        corner1 = (random.randint(0, image_dimension), random.randint(0, image_dimension))
-        corner2 = (random.randint(0, image_dimension), random.randint(0, image_dimension))
+        corner1 = (random.randrange(0, image_dimension), random.randrange(0, image_dimension))
+        corner2 = (random.randrange(0, image_dimension), random.randrange(0, image_dimension))
+        if debug_corners is not None:
+            corner1, corner2 = debug_corners
+
         center = (abs(corner1[0] - corner2[0]), abs(corner1[1] - corner2[1]))
         delta = self._compute_centering_delta(
             image_dimension, centering_factor, center
@@ -126,12 +133,45 @@ class Generator:
         corner1 = (corner1[0] + delta[0], corner1[1] + delta[1])
         corner2 = (corner2[0] + delta[0], corner2[1] + delta[1])
 
-        for x in range(min(corner1[0], corner2[0]), max(corner1[0], corner2[0])):
+        for x in range(min(corner1[0], corner2[0]), max(corner1[0], corner2[0]) + 1):
             image[x, corner1[1]] = True
             image[x, corner2[1]] = True
-        for y in range(min(corner1[1], corner2[1]), max(corner1[1], corner2[1])):
+        for y in range(min(corner1[1], corner2[1]), max(corner1[1], corner2[1]) + 1):
             image[corner1[0], y] = True
             image[corner2[0], y] = True
+        return image
+
+
+    def _generate_X(self,
+                    image_dimension : int,
+                    centering_factor : float,
+                    *,
+                    debug_center : Tuple[int, int] = None) -> np.ndarray:
+        image = np.zeros(
+            (image_dimension, image_dimension),
+            dtype=np.bool8
+        )
+        center = (random.randrange(0, image_dimension), random.randrange(0, image_dimension))
+        if debug_center is not None:
+            center = debug_center
+
+        delta = self._compute_centering_delta(
+            image_dimension, centering_factor, center
+        )
+        center = (center[0] + delta[0], center[1] + delta[1])
+        # Iterate through \ line
+        x, y = center[0] - min(center), center[1] - min(center)
+        while x < image_dimension and y < image_dimension:
+            image[x, y] = True
+            x += 1
+            y += 1
+        # Iterate through / line
+        distance_to_line = (center[0], image_dimension - center[1])
+        x, y = center[0] - min(distance_to_line), center[1] + min(distance_to_line)
+        while x < image_dimension and y >= 0:
+            image[x, y] = True
+            x += 1
+            y -= 1
         return image
 
 
@@ -144,7 +184,7 @@ class Generator:
             dtype=np.bool8
         )
         corners = [
-            (random.randint(0, image_dimension), random.randint(0, image_dimension))
+            (random.randrange(0, image_dimension), random.randrange(0, image_dimension))
             for _ in range(3)
         ]
         center = (
