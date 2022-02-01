@@ -173,7 +173,7 @@ class Generator:
             raise NotImplementedError
         
         noise_pixels = int(noise_portion * image_dimension**2)
-        for _ in noise_pixels:
+        for _ in range(noise_pixels):
             pixel = (random.randrange(0, image_dimension), random.randrange(0, image_dimension))
             image[pixel] = not image[pixel]
 
@@ -294,7 +294,7 @@ class Generator:
             x += 1
             y += 1
         # Iterate through / line
-        distance_to_line = (center[0], image_dimension - center[1])
+        distance_to_line = (center[0], image_dimension - center[1] - 1)
         x, y = center[0] - min(distance_to_line), center[1] + min(distance_to_line)
         while x < image_dimension and y >= 0:
             image[x, y] = True
