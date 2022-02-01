@@ -133,6 +133,32 @@ class Generator:
                                noise_portion : float,
                                centering_factor : float,
                                flatten : bool) -> np.ndarray:
+        """Generate a single image of a given class.
+
+        This method is basically a distributing method, which calls the 
+        different _generate_...-methods, applies noise to the image and
+        optionally flattens it.
+
+        Args:
+            image_class (ImageClass): Class of the image that will be generated
+            image_dimension (int): The height/width of the image. All images
+                are square.
+            noise_portion (float): What portion of the image should be noise.
+                If set to 1.0, the entire image will be noise. If set to 0.0,
+                no noise will be generated.
+            centering_factor (float): How much centering should be applied to
+                the image. If set to 1.0, the entire image will be centered.
+                If set to 0.0, no centering will be applied. Defaults to 0.0.
+            flatten (bool): Whether the images should be flattened. If True,
+                images will be created as 1D vectors. If False, images will be
+                created as 2D arrays. Defaults to False.
+
+        Raises:
+            NotImplementedError: [description]
+
+        Returns:
+            np.ndarray: [description]
+        """
         if image_class == ImageClass.RECTANGLE:
             image = self._generate_rectangle(image_dimension, centering_factor)
         elif image_class == ImageClass.X:
@@ -161,6 +187,20 @@ class Generator:
                                  image_dimension : int,
                                  centering_factor : float,
                                  center : Tuple[int, int]) -> Tuple[int, int]:
+        """Compute how much a center should move for a given centering_factor
+
+        Args:
+            image_dimension (int): Height/width of image
+            centering_factor (float): How much centering should be
+                applied to the image. If set to 1.0, the entire image will be 
+                centered. If set to 0.0, no centering will be applied. Defaults
+                to 0.0.
+            center (Tuple[int, int]): Center that should be moved.
+
+        Returns:
+            Tuple[int, int]: How much the center should move to satisfy the
+            supplied centering_factor. Coordinates: (x, y)
+        """
         actual_center = (int(image_dimension / 2), int(image_dimension / 2))
         delta = (
             int((actual_center[0] - center[0]) * centering_factor),
@@ -173,7 +213,23 @@ class Generator:
                             image_dimension : int,
                             centering_factor : float,
                             *,
-                            _debug_corners : Tuple[Tuple[int, int], Tuple[int, int]] = None) -> np.ndarray:
+                            _debug_corners : Tuple[Tuple[int, int], Tuple[int, int]] = None
+                        ) -> np.ndarray:
+        """Generate a single image of a rectangle
+
+        Args:
+            image_dimension (int): Height/width of image to generate
+            centering_factor (float): How much centering should be
+                applied to the image. If set to 1.0, the entire image will be 
+                centered. If set to 0.0, no centering will be applied. Defaults
+                to 0.0.
+            _debug_corners (Tuple[Tuple[int, int], Tuple[int, int]], optional):
+                DEBUG: Manually choose where the center of the X should be.
+                Only used for debugging and testing. Defaults to None.
+
+        Returns:
+            np.ndarray: Image of a rectangle
+        """
         image = np.zeros(
             (image_dimension, image_dimension),
             dtype=np.bool8
@@ -204,6 +260,21 @@ class Generator:
                     centering_factor : float,
                     *,
                     _debug_center : Tuple[int, int] = None) -> np.ndarray:
+        """Generate a single image of an X
+
+        Args:
+            image_dimension (int): Height/width of image to generate
+            centering_factor (float): How much centering should be
+                applied to the image. If set to 1.0, the entire image will be 
+                centered. If set to 0.0, no centering will be applied. Defaults
+                to 0.0.
+            _debug_center (Tuple[int, int], optional): DEBUG: Manually choose
+                where the center of the X should be. Only used for 
+                debugging and testing. Defaults to None.
+
+        Returns:
+            np.ndarray: Image of an X
+        """
         image = np.zeros(
             (image_dimension, image_dimension),
             dtype=np.bool8
@@ -230,12 +301,28 @@ class Generator:
             x += 1
             y -= 1
         return image
-    
+
+
     def _generate_cross(self,
                         image_dimension : int,
                         centering_factor : float,
                         *,
                         _debug_center : Tuple[int, int] = None) -> np.ndarray:
+        """Generate a single image of a cross (+)
+
+        Args:
+            image_dimension (int): Height/width of image to generate
+            centering_factor (float): How much centering should be
+                applied to the image. If set to 1.0, the entire image will be 
+                centered. If set to 0.0, no centering will be applied. Defaults
+                to 0.0.
+            _debug_center (Tuple[int, int], optional): DEBUG: Manually choose
+                where the center of the cross should be. Only used for 
+                debugging and testing. Defaults to None.
+
+        Returns:
+            np.ndarray: Image of a cross
+        """
         image = np.zeros(
             (image_dimension, image_dimension),
             dtype=np.bool8
@@ -267,8 +354,8 @@ class Generator:
         Args:
             image_dimension (int): Height/width of image to generate
             centering_factor (float, optional): Centering factor. NOT USED!
-            debug_bars (Tuple[int], optional): DEBUG: Manually choose where to
-                place bars. Only used for debugging. Defaults to None.
+            _debug_bars (Tuple[int], optional): DEBUG: Manually choose where to
+                place bars. Only used for debugging and testing. Defaults to None.
 
         Returns:
             np.ndarray: Image with vertical bars
@@ -299,8 +386,8 @@ class Generator:
         Args:
             image_dimension (int): Height/width of image to generate
             centering_factor (float, optional): Centering factor. NOT USED!
-            debug_bars (Tuple[int], optional): DEBUG: Manually choose where to
-                place bars. Only used for debugging. Defaults to None.
+            _debug_bars (Tuple[int], optional): DEBUG: Manually choose where to
+                place bars. Only used for debugging and testing. Defaults to None.
 
         Returns:
             np.ndarray: Image with horizontal bars
