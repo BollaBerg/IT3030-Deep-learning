@@ -76,6 +76,57 @@ class Generator:
         return output
     
 
+    def get_multiple_sets(self,
+                    image_dimension : int,
+                    total_number_of_images : int,
+                    noise_portion : float,
+                    set_distribution : list[int] = [70, 20, 10],
+                    centering_factor : float = 0.0,
+                    flatten : bool = False) -> list[list[np.ndarray]]:
+        """Generate a list of image sets, with distribution given in
+        set_distribution
+
+        Args:
+            image_dimension (int): The height/width of the image. All images
+                are square.
+            total_number_of_images (int): Total number of images in the
+                generated sets.
+            noise_portion (float): What portion of the image should be noise.
+                If set to 1.0, the entire image will be noise. If set to 0.0,
+                no noise will be generated.
+            set_distribution (list[int], optional): Relative sizes of the 
+                generated sets, i.e. distribution of images in the different
+                sets. Can sum to 100 for direct translation into percentages,
+                but that is not necessary. Defaults to [70, 20, 10].
+            centering_factor (float, optional): How much centering should be
+                applied to the image. If set to 1.0, the entire image will be 
+                centered. If set to 0.0, no centering will be applied. Defaults
+                to 0.0.
+            flatten (bool, optional): Whether the images should be flattened.
+                If True, images will be created as 1D vectors. If False, images
+                will be created as 2D arrays. Defaults to False.
+
+        Returns:
+            list[list[np.ndarray]]: [description]
+        """
+        images_per_set = [
+            int(total_number_of_images * distribution / sum(set_distribution))
+            for distribution in set_distribution
+        ]
+        output = []
+        for image_set in images_per_set:
+            output.append(
+                self.get_single_set(
+                    image_dimension=image_dimension,
+                    number_of_images=image_set,
+                    noise_portion=noise_portion,
+                    centering_factor=centering_factor,
+                    flatten=flatten
+                )
+            )
+        return output
+    
+
     def _generate_single_image(self,
                                image_class : ImageClass,
                                image_dimension : int,
@@ -90,6 +141,8 @@ class Generator:
             image = self._generate_cross(image_dimension, centering_factor)
         elif image_class == ImageClass.VERTICAL_BARS:
             image = self._generate_vertical_bars(image_dimension, centering_factor)
+        elif image_class == ImageClass.HORIZONTAL_BARS:
+            image = self._generate_horizontal_bars(image_dimension, centering_factor)
         else:
             raise NotImplementedError
         
