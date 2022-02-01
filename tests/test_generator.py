@@ -51,3 +51,16 @@ def test_generator_generate_X():
              [True, False, False, False]]
         )
     )
+
+def test_generator_generate_X_centering():
+    """Test that Generator._generate_X centers the X"""
+    generator = Generator()
+    image = generator._generate_X(3, 1.0, debug_center=(0, 1))
+    np.testing.assert_array_equal(
+        image,
+        np.array(
+            [[True, False, True],
+             [False, True, False],
+             [True, False, True]]
+        )
+    )
