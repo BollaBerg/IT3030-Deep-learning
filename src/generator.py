@@ -1,11 +1,12 @@
 from enum import Enum
 import random
+from typing import Tuple
 
 import numpy as np
 
 class ImageClass(Enum):
     RECTANGLE = 0
-    TRIANGLE = 1
+    X = 1
     CROSS = 2
     VERTICAL_BARS = 3
     HORIZONTAL_BARS = 4
@@ -96,10 +97,22 @@ class Generator:
         else:
             return image
 
-    
+
+    def _compute_centering_delta(self,
+                                 image_dimension : int,
+                                 centering_factor : float,
+                                 center : Tuple[int, int]) -> Tuple[int, int]:
+        actual_center = (int(image_dimension / 2), int(image_dimension / 2))
+        delta = (
+            (actual_center[0] - center[0]) * centering_factor,
+            (actual_center[1] - center[1]) * centering_factor,
+        )
+        return delta
+
+
     def _generate_rectangle(self,
                             image_dimension : int,
-                            centering_factor : float):
+                            centering_factor : float) -> np.ndarray:
         image = np.zeros(
             (image_dimension, image_dimension),
             dtype=np.bool8
@@ -107,10 +120,8 @@ class Generator:
         corner1 = (random.randint(0, image_dimension), random.randint(0, image_dimension))
         corner2 = (random.randint(0, image_dimension), random.randint(0, image_dimension))
         center = (abs(corner1[0] - corner2[0]), abs(corner1[1] - corner2[1]))
-        actual_center = (int(image_dimension / 2), int(image_dimension / 2))
-        delta = (
-            (actual_center[0] - center[0]) * centering_factor,
-            (actual_center[1] - center[1]) * centering_factor,
+        delta = self._compute_centering_delta(
+            image_dimension, centering_factor, center
         )
         corner1 = (corner1[0] + delta[0], corner1[1] + delta[1])
         corner2 = (corner2[0] + delta[0], corner2[1] + delta[1])
@@ -122,3 +133,26 @@ class Generator:
             image[corner1[0], y] = True
             image[corner2[0], y] = True
         return image
+
+
+    def _generate_triangle(self,
+                           image_dimension : int,
+                           centering_factor : float) -> np.ndarray:
+        raise NotImplementedError
+        image = np.zeros(
+            (image_dimension, image_dimension),
+            dtype=np.bool8
+        )
+        corners = [
+            (random.randint(0, image_dimension), random.randint(0, image_dimension))
+            for _ in range(3)
+        ]
+        center = (
+            sum(corner[0] for corner in corners) / 3,
+            sum(corner[1] for corner in corners) / 3
+        )
+        delta = self._compute_centering_delta(
+            image_dimension, centering_factor, center
+        )
+        for corner in corners:
+            corner = (corner[0] + delta[0], corner[1] + delta[1])
