@@ -7,7 +7,7 @@ def test_generator_generate_rectangle():
     generator = Generator()
     image = generator._generate_rectangle(
         4, 0.0,
-        debug_corners=((0, 1), (2, 3))
+        _debug_corners=((0, 1), (2, 3))
     )
     np.testing.assert_array_equal(
         image,
@@ -24,7 +24,7 @@ def test_generator_generate_rectangle_centering():
     generator = Generator()
     image = generator._generate_rectangle(
         4, 1.0,
-        debug_corners=((0, 0), (1, 1))
+        _debug_corners=((0, 0), (1, 1))
     )
     np.testing.assert_array_equal(
         image,
@@ -41,7 +41,7 @@ def test_generator_generate_rectangle_centering():
 def test_generator_generate_X():
     """Test that Generator._generate_X generates an X"""
     generator = Generator()
-    image = generator._generate_X(4, 0.0, debug_center=(1, 2))
+    image = generator._generate_X(4, 0.0, _debug_center=(1, 2))
     np.testing.assert_array_equal(
         image,
         np.array(
@@ -55,7 +55,7 @@ def test_generator_generate_X():
 def test_generator_generate_X_centering():
     """Test that Generator._generate_X centers the X"""
     generator = Generator()
-    image = generator._generate_X(3, 1.0, debug_center=(0, 1))
+    image = generator._generate_X(3, 1.0, _debug_center=(0, 1))
     np.testing.assert_array_equal(
         image,
         np.array(
@@ -69,7 +69,7 @@ def test_generator_generate_X_centering():
 def test_generator_generate_cross():
     """Test that Generator._generate_cross generates a cross"""
     generator = Generator()
-    image = generator._generate_cross(4, 0.0, debug_center=(1, 2))
+    image = generator._generate_cross(4, 0.0, _debug_center=(1, 2))
     np.testing.assert_array_equal(
         image,
         np.array(
@@ -83,7 +83,7 @@ def test_generator_generate_cross():
 def test_generator_generate_cross_centering():
     """Test that Generator._generate_cross centers the cross"""
     generator = Generator()
-    image = generator._generate_cross(3, 1.0, debug_center=(0, 0))
+    image = generator._generate_cross(3, 1.0, _debug_center=(0, 0))
     np.testing.assert_array_equal(
         image,
         np.array(
@@ -96,7 +96,7 @@ def test_generator_generate_cross_centering():
 def test_generator_generate_vertical_bars():
     """Test that Generator._generate_vertical_bars generates bars"""
     generator = Generator()
-    image = generator._generate_vertical_bars(5, 0.0, debug_bars=(0, 1, 3))
+    image = generator._generate_vertical_bars(5, 0.0, _debug_bars=(0, 1, 3))
     np.testing.assert_array_equal(
         image,
         np.array(
@@ -105,5 +105,20 @@ def test_generator_generate_vertical_bars():
              [True, True, False, True, False],
              [True, True, False, True, False],
              [True, True, False, True, False],]
+        )
+    )
+
+def test_generator_generate_horizontal_bars():
+    """Test that Generator._generate_horizontal_bars generate bars"""
+    generator = Generator()
+    image = generator._generate_horizontal_bars(5, 0.0, _debug_bars=(0, 1, 3))
+    np.testing.assert_array_equal(
+        image,
+        np.array(
+            [[True, True, True, True, True],
+             [True, True, True, True, True],
+             [False, False, False, False, False],
+             [True, True, True, True, True],
+             [False, False, False, False, False]]
         )
     )

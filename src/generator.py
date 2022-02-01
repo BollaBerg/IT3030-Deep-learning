@@ -120,15 +120,15 @@ class Generator:
                             image_dimension : int,
                             centering_factor : float,
                             *,
-                            debug_corners : Tuple[Tuple[int, int], Tuple[int, int]] = None) -> np.ndarray:
+                            _debug_corners : Tuple[Tuple[int, int], Tuple[int, int]] = None) -> np.ndarray:
         image = np.zeros(
             (image_dimension, image_dimension),
             dtype=np.bool8
         )
         corner1 = (random.randrange(0, image_dimension), random.randrange(0, image_dimension))
         corner2 = (random.randrange(0, image_dimension), random.randrange(0, image_dimension))
-        if debug_corners is not None:
-            corner1, corner2 = debug_corners
+        if _debug_corners is not None:
+            corner1, corner2 = _debug_corners
 
         center = (abs(corner1[0] - corner2[0]), abs(corner1[1] - corner2[1]))
         delta = self._compute_centering_delta(
@@ -150,14 +150,14 @@ class Generator:
                     image_dimension : int,
                     centering_factor : float,
                     *,
-                    debug_center : Tuple[int, int] = None) -> np.ndarray:
+                    _debug_center : Tuple[int, int] = None) -> np.ndarray:
         image = np.zeros(
             (image_dimension, image_dimension),
             dtype=np.bool8
         )
         center = (random.randrange(0, image_dimension), random.randrange(0, image_dimension))
-        if debug_center is not None:
-            center = debug_center
+        if _debug_center is not None:
+            center = _debug_center
 
         delta = self._compute_centering_delta(
             image_dimension, centering_factor, center
@@ -182,14 +182,14 @@ class Generator:
                         image_dimension : int,
                         centering_factor : float,
                         *,
-                        debug_center : Tuple[int, int] = None) -> np.ndarray:
+                        _debug_center : Tuple[int, int] = None) -> np.ndarray:
         image = np.zeros(
             (image_dimension, image_dimension),
             dtype=np.bool8
         )
         center = (random.randrange(0, image_dimension), random.randrange(0, image_dimension))
-        if debug_center is not None:
-            center = debug_center
+        if _debug_center is not None:
+            center = _debug_center
         
         delta = self._compute_centering_delta(
             image_dimension, centering_factor, center
@@ -205,7 +205,7 @@ class Generator:
                                 image_dimension : int,
                                 centering_factor : float = None,
                                 *,
-                                debug_bars : Tuple[int] = None) -> np.ndarray:
+                                _debug_bars : Tuple[int] = None) -> np.ndarray:
         """Generate an image of vertical bars
 
         IMPORTANT: centering_factor is NOT used in this method, but is still
@@ -218,7 +218,7 @@ class Generator:
                 place bars. Only used for debugging. Defaults to None.
 
         Returns:
-            np.ndarray: [description]
+            np.ndarray: Image with vertical bars
         """
         image = np.zeros(
             (image_dimension, image_dimension),
@@ -226,10 +226,42 @@ class Generator:
         )
         number_of_bars = random.randrange(1, int(image_dimension / 2))
         bars = random.sample(range(image_dimension), number_of_bars)
-        if debug_bars is not None:
-            bars = debug_bars
+        if _debug_bars is not None:
+            bars = _debug_bars
         for x in bars:
             image[:, x] = True
+        return image
+    
+
+    def _generate_horizontal_bars(self,
+                                image_dimension : int,
+                                centering_factor : float = None,
+                                *,
+                                _debug_bars : Tuple[int] = None) -> np.ndarray:
+        """Generate an image of horizontal bars
+
+        IMPORTANT: centering_factor is NOT used in this method, but is still
+        an argument for API-consistency.
+
+        Args:
+            image_dimension (int): Height/width of image to generate
+            centering_factor (float, optional): Centering factor. NOT USED!
+            debug_bars (Tuple[int], optional): DEBUG: Manually choose where to
+                place bars. Only used for debugging. Defaults to None.
+
+        Returns:
+            np.ndarray: Image with horizontal bars
+        """
+        image = np.zeros(
+            (image_dimension, image_dimension),
+            dtype=np.bool8
+        )
+        number_of_bars = random.randrange(1, int(image_dimension / 2))
+        bars = random.sample(range(image_dimension), number_of_bars)
+        if _debug_bars is not None:
+            bars = _debug_bars
+        for y in bars:
+            image[y, :] = True
         return image
 
 
