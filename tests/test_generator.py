@@ -19,6 +19,24 @@ def test_generator_generate_rectangle():
         )
     )
 
+def test_generator_generate_rectangle_centering():
+    """Test that Generator._generate_rectangle centers the rectangle"""
+    generator = Generator()
+    image = generator._generate_rectangle(
+        4, 1.0,
+        debug_corners=((0, 0), (1, 1))
+    )
+    np.testing.assert_array_equal(
+        image,
+        np.array(
+            [[False, False, False, False],
+             [False, True, True, False],
+             [False, True, True, False],
+             [False, False, False, False],]
+        )
+    )
+
+
 
 def test_generator_generate_X():
     """Test that Generator._generate_X generates an X"""
