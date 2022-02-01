@@ -86,6 +86,8 @@ class Generator:
             image = self._generate_rectangle(image_dimension, centering_factor)
         elif image_class == ImageClass.X:
             image = self._generate_X(image_dimension, centering_factor)
+        elif image_class == ImageClass.CROSS:
+            image = self._generate_cross(image_dimension, centering_factor)
         else:
             raise NotImplementedError
         
@@ -172,6 +174,28 @@ class Generator:
             image[x, y] = True
             x += 1
             y -= 1
+        return image
+    
+    def _generate_cross(self,
+                        image_dimension : int,
+                        centering_factor : float,
+                        *,
+                        debug_center : Tuple[int, int] = None) -> np.ndarray:
+        image = np.zeros(
+            (image_dimension, image_dimension),
+            dtype=np.bool8
+        )
+        center = (random.randrange(0, image_dimension), random.randrange(0, image_dimension))
+        if debug_center is not None:
+            center = debug_center
+        
+        delta = self._compute_centering_delta(
+            image_dimension, centering_factor, center
+        )
+        center = (center[0] + delta[0], center[1] + delta[1])
+        
+        image[center[0], :] = True
+        image[:, center[1]] = True
         return image
 
 

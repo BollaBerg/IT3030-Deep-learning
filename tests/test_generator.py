@@ -64,3 +64,31 @@ def test_generator_generate_X_centering():
              [True, False, True]]
         )
     )
+
+
+def test_generator_generate_cross():
+    """Test that Generator._generate_cross generates a cross"""
+    generator = Generator()
+    image = generator._generate_cross(4, 0.0, debug_center=(1, 2))
+    np.testing.assert_array_equal(
+        image,
+        np.array(
+            [[False, False, True, False],
+             [True, True, True, True],
+             [False, False, True, False],
+             [False, False, True, False],]
+        )
+    )
+
+def test_generator_generate_cross_centering():
+    """Test that Generator._generate_cross centers the cross"""
+    generator = Generator()
+    image = generator._generate_cross(3, 1.0, debug_center=(0, 0))
+    np.testing.assert_array_equal(
+        image,
+        np.array(
+            [[False, True, False],
+             [True, True, True],
+             [False, True, False]]
+        )
+    )
