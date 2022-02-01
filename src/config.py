@@ -1,0 +1,2 @@
+class ConfigReader:
+    pass
