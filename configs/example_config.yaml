@@ -1,0 +1,20 @@
+# YAML-file copying example config given in assignment PDF
+loss: cross_entropy
+lrate: 0.1
+wrt: L2
+wreg: 0.001
+
+layers:
+  - input: 20
+  - size: 100
+    act: relu
+    wr: [-0.1, 0.1]
+    lrate: 0.01
+  - size: 5
+    act: relu
+    wr: glorot
+    br: [0, 1]
+  - type: softmax
+
+dataset:
+    path: datasets/example.dataset
