@@ -24,10 +24,12 @@ def read_config(path : str | pathlib.Path) -> Network:
     
     layers = config.get("layers")
     
+    # Handle input layer
     input_size = layers.pop(0).get("input", None)
     if input_size is None:
         raise ValueError("First layer must follow syntax: `layer: size`")
     
+    # Handle (optional) softmax layer
     softmax = False
     if layers[-1].get("type", None) is not None:
         final_layer = layers.pop(-1).get("type")
