@@ -18,17 +18,21 @@ Optional Directory/
 
 Note that this structure is mainly for helping myself plan the project, and while I will try to keep it up to date with the project, some changes may happen without me remembering to update this structure.
 ```
-network.py
-    - Network
-        "Actual Neural/Deep Network, core of the project"
-        - forward_pass()
-        - backward_pass()
-layer.py
-    - Layer
-        "Network layer, handling the core work of the Network"
-        - forward_pass()
-        - backward_pass()
-generator.py
+src/
+ activation_functions.py
+    "Activation functions that can be used in each Layer. Each function has two methods: `apply(x)` and `derivative(x)`
+    - Sigmoid
+    - Tanh
+    - Relu
+    - Linear
+ config_options.py
+    "Collection of enums of legal config options"
+    - Loss(Enum)
+    - WeightRegularization(Enum)
+ config.py
+    - ConfigReader
+        "Reads user-supplied config files, returns a Network"
+ generator.py
     -  Generator
         "Generates two-dimensional, binary pixel images"
         - get_single_set
@@ -37,9 +41,16 @@ generator.py
         "Enum of possible image classes that can be generated"
     - Image (Dataclass)
         "Dataclass holding image data and image class"
-config.py
-    - ConfigReader
-        "Reads user-supplied config files, returns a Network"
+ layer.py
+    - Layer
+        "Network layer, handling the core work of the Network"
+        - forward_pass()
+        - backward_pass()
+ network.py
+    - Network
+        "Actual Neural/Deep Network, core of the project"
+        - forward_pass()
+        - backward_pass()
 main.py
     "Main file, allowing the user to run Networks from a CLI, using configuration files"
 ```
