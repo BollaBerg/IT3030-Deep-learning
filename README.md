@@ -35,6 +35,8 @@ generator.py
         - get_multiple_sets
     - ImageClass (Enum)
         "Enum of possible image classes that can be generated"
+    - Image (Dataclass)
+        "Dataclass holding image data and image class"
 config.py
     - ConfigReader
         "Reads user-supplied config files, returns a Network"

@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from enum import Enum
 import random
 from typing import Tuple
@@ -10,6 +11,12 @@ class ImageClass(Enum):
     CROSS = 2
     VERTICAL_BARS = 3
     HORIZONTAL_BARS = 4
+
+
+@dataclass
+class Image:
+    data : np.ndarray
+    image_class : ImageClass
 
 
 class Generator:
@@ -29,7 +36,7 @@ class Generator:
                     number_of_images : int,
                     noise_portion : float,
                     centering_factor : float = 0.0,
-                    flatten : bool = False) -> list[np.ndarray]:
+                    flatten : bool = False) -> list[Image]:
         """Generate and return a single image set (i.e. a single training set)
 
         Args:
@@ -82,7 +89,7 @@ class Generator:
                     noise_portion : float,
                     set_distribution : list[int] = [70, 20, 10],
                     centering_factor : float = 0.0,
-                    flatten : bool = False) -> list[list[np.ndarray]]:
+                    flatten : bool = False) -> list[list[Image]]:
         """Generate a list of image sets, with distribution given in
         set_distribution
 
@@ -107,7 +114,8 @@ class Generator:
                 will be created as 2D arrays. Defaults to False.
 
         Returns:
-            list[list[np.ndarray]]: [description]
+            list[list[Image]]: List of image sets. Each element in the top-
+                level list is a dataset
         """
         images_per_set = [
             int(total_number_of_images * distribution / sum(set_distribution))
@@ -132,7 +140,7 @@ class Generator:
                                image_dimension : int,
                                noise_portion : float,
                                centering_factor : float,
-                               flatten : bool) -> np.ndarray:
+                               flatten : bool) -> Image:
         """Generate a single image of a given class.
 
         This method is basically a distributing method, which calls the 
@@ -154,10 +162,11 @@ class Generator:
                 created as 2D arrays. Defaults to False.
 
         Raises:
-            NotImplementedError: [description]
+            NotImplementedError: Raised if instance of ImageClass is not yet
+                implemented
 
         Returns:
-            np.ndarray: [description]
+            Image: Generated image
         """
         if image_class == ImageClass.RECTANGLE:
             image = self._generate_rectangle(image_dimension, centering_factor)
@@ -178,9 +187,9 @@ class Generator:
             image[pixel] = not image[pixel]
 
         if flatten:
-            return image.flatten()
-        else:
-            return image
+            image = image.flatten()
+        
+        return Image(data=image, image_class=image_class)
 
 
     def _compute_centering_delta(self,
