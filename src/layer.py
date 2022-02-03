@@ -1,7 +1,6 @@
-from audioop import bias
 import numpy as np
 
-from activation_functions import ActivationFunction
+from src.activation_functions import ActivationFunction
 
 class Layer:
     def __init__(self,
@@ -27,6 +26,7 @@ class Layer:
                 (input_size, size)
             )
         self.activation_function = activation_function
+        self.learning_rate = learning_rate
 
         self.biases = self._rng.uniform(
             bias_range[0], bias_range[1], size=size
