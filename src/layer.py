@@ -25,6 +25,11 @@ class Layer:
                 initial_weight_range[1],
                 (input_size, size)
             )
+            # Note: weights have shape = (input_size, own_size), meaning that
+            # the forward pass will be performed as inputs * weights
+            # While the lecture states that this should be the other way, to
+            # not transpose the values, all of this is handled by Numpy, 
+            # meaning that both are equivalent. It is also trivial to change.
         self.activation_function = activation_function
         self.learning_rate = learning_rate
 
