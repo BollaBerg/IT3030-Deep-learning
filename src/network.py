@@ -1,12 +1,13 @@
 import numpy as np
 
-from config_options import Loss, WeightRegularization
+from config_options import WeightRegularization
 from layer import Layer, SoftmaxLayer
+from loss_functions import LossFunction
 
 class Network:
     def __init__(self,
                  input_size : int,
-                 loss_function : Loss,
+                 loss_function : LossFunction,
                  weight_regularization : WeightRegularization,
                  weight_regularization_rate : float,
                  output_layer : Layer,
