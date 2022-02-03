@@ -34,8 +34,9 @@ class Layer:
 
     def forward_pass(self, input_values : np.ndarray) -> np.ndarray:
         weighted_inputs = np.dot(input_values, self.weights)
-        values = self.activation_function.apply(weighted_inputs)
-        return values + self.biases
+        biased_inputs = weighted_inputs + self.biases
+        values = self.activation_function.apply(biased_inputs)
+        return values
 
     def backward_pass(self) -> np.ndarray:
         raise NotImplementedError
