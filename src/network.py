@@ -9,6 +9,7 @@ class Network:
                  loss_function : Loss,
                  weight_regularization : WeightRegularization,
                  weight_regularization_rate : float,
+                 output_layer : Layer,
                  hidden_layers : list[Layer] = None,
                  softmax : bool = False,
                  ):
