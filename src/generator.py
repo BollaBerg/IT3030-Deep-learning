@@ -55,7 +55,7 @@ class Generator:
                 will be created as 2D arrays. Defaults to False.
 
         Returns:
-            list[np.ndarray]: List of generated images.
+            list[Image]: List of generated images.
         """                
         distribution_of_images = [
             int(weight * number_of_images) for weight in self.weights
