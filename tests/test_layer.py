@@ -1,7 +1,7 @@
 import numpy as np
 
 from src.activation_functions import Linear
-from src.layer import Layer
+from src.layer import Layer, SoftmaxLayer
 
 def _create_layer():
     return Layer(
@@ -57,4 +57,27 @@ def test_layer_forward_pass_with_bias():
     np.testing.assert_array_equal(
         layer.forward_pass(inputs),
         np.array([1*1 + 4*100 + 42, 2*1 + 5*100 + 43, 3*1 + 6*100 + 44])
+    )
+
+
+
+def test_softmax_layer():
+    """Test that Softmax.forward_pass produces correct output"""
+    softmax = SoftmaxLayer()
+    
+    # All inputs taken from lecture slide
+    np.testing.assert_array_almost_equal(
+        softmax.forward_pass(np.array([1, 1, 2, 1, 1])),
+        np.array([0.15, 0.15, 0.40, 0.15, 0.15]),
+        decimal=2
+    )
+    np.testing.assert_array_almost_equal(
+        softmax.forward_pass(np.array([-1, 0, 1, 0, -1])),
+        np.array([0.07, 0.18, 0.50, 0.18, 0.07]),
+        decimal=2
+    )
+    np.testing.assert_array_almost_equal(
+        softmax.forward_pass(np.array([1, 2, 3, 4, 5])),
+        np.array([0.01, 0.03, 0.08, 0.23, 0.64]),
+        decimal=2
     )

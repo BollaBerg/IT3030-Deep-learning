@@ -41,5 +41,14 @@ class Layer:
     def backward_pass(self) -> np.ndarray:
         raise NotImplementedError
 
-class SoftmaxLayer(Layer):
-    pass
+
+class SoftmaxLayer:
+    def forward_pass(self, x : np.ndarray) -> np.ndarray:
+        # Note: This could be implemented with e_x = np.exp(x) directly, but
+        # this method is better for numerical stability
+        # Source: https://cs231n.github.io/linear-classify/#softmax
+        e_x = np.exp(x - np.max(x))
+        return e_x / e_x.sum(axis=0)
+    
+    def backward_pass(self, x : np.ndarray) -> np.ndarray:
+        raise NotImplementedError
