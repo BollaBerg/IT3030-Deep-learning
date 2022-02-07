@@ -96,7 +96,7 @@ Layers are defined in the `layers`-array. Each element is one layer. The followi
 
 | Option | Description | Legal values | Mandatory |
 | ------ | ----------- | ------------ | :-------: |
-| `input`| Number of input neurons. MUST be defined as the first layer, and only the first layer. Note that the input layer cannot have any other options! | Any integer | ✔️ (in first layer) |
+| `input`| Number of input neurons. MUST be defined as the first layer, and only the first layer. Note that the input layer should not have any other options! | Any integer | ✔️ (as first layer only) |
 | `size` | Size of the layer | Any integer in the interval `[1, 1000]` | ✔️ |
 | `act`  | Activation function for the layer | `sigmoid`, `tanh`, `relu`, `linear` | ✔️ |
 | `wr`   | Initial weight ranges for the layer | Either an inline array of `[min, max]`, or `glorot` to use the glorot initializer | ✔️ |
@@ -112,5 +112,5 @@ Information about the dataset are defined in the `dataset` value. There are two 
 | `number` | Total number of images in all datasets (i.e. the sum of training, validation and testing data) | Any integer | ✔️ |
 | `flatten` | Whether the images should be flattened | Boolean | ✔️ |
 | `distribution` | The distribution of images in the different sets | An array of integers (i.e. `[70, 20, 10]`) | ❌ (Defaults to `[70, 20, 10]`) |
-| `noise` | The proportion of each image that should be noise | Any value in the open interval `(0, 1)` | ❌ (Defaults to `0`) |
-| `centering` | To what degree the figures should be centered in the image | Any value in the open interval `(0, 1)` | ❌ (Defaults to `0`) |
+| `noise` | The proportion of each image that should be noise | Any value in the interval `[0, 1]` | ❌ (Defaults to `0`) |
+| `centering` | To what degree the figures should be centered in the image | Any value in the interval `[0, 1]` | ❌ (Defaults to `0`) |
