@@ -10,7 +10,12 @@ class LossFunction:
 
 class CrossEntropy(LossFunction):
     def apply(self, predictions: np.ndarray, targets: np.ndarray) -> float:
-        return -np.sum(targets * np.log10(predictions))
+        # Normalize values in case they do not sum to 1
+        normalized_pred = predictions / predictions.sum()
+        normalized_targets = targets / targets.sum()
+        # Avoid log(0)
+        epsilon = np.finfo(float).eps
+        return -np.sum(normalized_targets * np.log2(normalized_pred + epsilon))
     
     def derivative(self, predictions: np.ndarray, targets: np.ndarray) -> np.ndarray:
         return predictions - targets

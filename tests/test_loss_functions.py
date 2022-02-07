@@ -7,10 +7,22 @@ def test_cross_entropy():
     """Test that CrossEntropy.apply gives correct outputs"""
     cross_entropy = CrossEntropy()
 
-    observations = np.array([0.1, 0.2, 0.3, 0.4])
-    targets = np.array([0.1, 0.4, 0.4, 0.1])
+    # Values taken from lecture
+    observations = np.array([.15, .35, .25, .25])
+    targets = np.array([0, 0, 1, 0])
+    assert cross_entropy.apply(observations, targets) == approx(2.0)
 
-    # assert cross_entropy.apply(observations, targets) == approx(2.08794309)
+    observations = np.array([.05, .05, .9, .0])
+    targets = np.array([0, 0, 1, 0])
+    assert cross_entropy.apply(observations, targets) == approx(0.15, abs=1e-2)
+
+    observations = np.array([.15, .35, .25, .25])
+    targets = np.array([.8, .05, .05, .1])
+    assert cross_entropy.apply(observations, targets) == approx(2.57, abs=1e-2)
+
+    observations = np.array([.8, .1, .09, .01])
+    targets = np.array([.8, .05, .05, .1])
+    assert cross_entropy.apply(observations, targets) == approx(1.27, abs=1e-2)
 
 
 
