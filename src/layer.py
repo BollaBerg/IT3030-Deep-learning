@@ -32,9 +32,7 @@ class Layer:
             )
             # Note: weights have shape = (input_size, own_size), meaning that
             # the forward pass will be performed as inputs * weights
-            # While the lecture states that this should be the other way, to
-            # not transpose the values, all of this is handled by Numpy, 
-            # meaning that both are equivalent. It is also trivial to change.
+            # This is the same shape as in the backpropagation lectures
         self.activation_function = activation_function
         self.learning_rate = learning_rate
 
