@@ -13,7 +13,12 @@ class Layer:
         self._rng = np.random.default_rng()
         if isinstance(initial_weight_range, str):
             if initial_weight_range.lower() == "glorot":
-                raise NotImplementedError("Glorot is not yet implemented")
+                glorot_factor = np.sqrt(6) / np.sqrt(input_size + size)
+                self.weights = self._rng.uniform(
+                    -glorot_factor,
+                    glorot_factor,
+                    (input_size, size)
+                )
             else:
                 raise ValueError(
                     "If initial_weight_range is a string, it must be 'glorot'!"
