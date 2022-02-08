@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 import numpy as np
 
 from src.activation_functions import Linear
@@ -6,6 +7,11 @@ from src.loss_functions import MeanSquaredError
 from src.network import Network
 
 LEARNING_RATE = 0.1
+
+@dataclass
+class MockImage:
+    data : np.ndarray
+    image_class : np.ndarray
 
 def _create_network() -> Network:
     layer1 = Layer(
@@ -115,3 +121,18 @@ def test_network_backward_pass():
         network.layers[1].biases,
         expected_biases_l2
     )
+
+def test_network_gets_closer():
+    """Test that Network gets closer to the target by training"""
+    network = _create_network()
+    dataset = [
+        MockImage(np.array([0.05, 0.10]), np.array([0.01, 0.99]))
+        for _ in range(500)
+    ]
+    original_prediction = network.predict(np.array([0.05, 0.10]))
+    network.train(dataset)
+    later_prediction = network.predict(np.array([0.05, 0.10]))
+    target = np.array([0.01, 0.99])
+
+    assert abs(later_prediction[0] - target[0]) < abs(original_prediction[0] - target[0])
+    assert abs(later_prediction[1] - target[1]) < abs(original_prediction[1] - target[1])
