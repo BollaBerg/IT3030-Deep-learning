@@ -28,7 +28,7 @@ def test_layer_creation():
     assert np.max(layer.biases) <= 0.9
 
 def test_layer_forward_pass():
-    """Test that Layer.forward_pass gives correct output"""
+    """Test that Layer.forward_pass gives correct jacobi_loss"""
     layer = _create_layer()
 
     layer.weights = np.array([
@@ -62,7 +62,7 @@ def test_layer_forward_pass_with_bias():
 
 
 def test_softmax_layer():
-    """Test that Softmax.forward_pass produces correct output"""
+    """Test that Softmax.forward_pass produces correct jacobi_loss"""
     softmax = SoftmaxLayer()
     
     # All inputs taken from lecture slide
@@ -86,13 +86,14 @@ def test_softmax_backward_pass():
     """Test that Softmax.backward_pass produces correct output"""
     softmax = SoftmaxLayer()
 
-    output = softmax.forward_pass(np.array([1, 2, 3]))
-    jacobi = softmax.backward_pass()
+    softmax.forward_pass(np.array([1, 2, 3]))
+    jacobi_loss = np.array([90, 47, 42])
+    jacobi = softmax.backward_pass(jacobi_loss)
 
     expected_jacobi = np.array([
-        [output[0]-output[0]**2, -output[0]*output[1], -output[0]*output[2]],
-        [-output[1]*output[0], output[1]-output[1]**2, -output[1]*output[2]],
-        [-output[2]*output[0], -output[2]*output[1], output[2]-output[2]**2]
+        [jacobi_loss[0]-jacobi_loss[0]**2, -jacobi_loss[0]*jacobi_loss[1], -jacobi_loss[0]*jacobi_loss[2]],
+        [-jacobi_loss[1]*jacobi_loss[0], jacobi_loss[1]-jacobi_loss[1]**2, -jacobi_loss[1]*jacobi_loss[2]],
+        [-jacobi_loss[2]*jacobi_loss[0], -jacobi_loss[2]*jacobi_loss[1], jacobi_loss[2]-jacobi_loss[2]**2]
     ])
 
     np.testing.assert_array_equal(jacobi, expected_jacobi)

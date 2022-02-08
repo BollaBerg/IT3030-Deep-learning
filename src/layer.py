@@ -3,6 +3,7 @@ import numpy as np
 from src.activation_functions import ActivationFunction
 
 class Layer:
+    _cache = None
     def __init__(self,
                  size : int,
                  input_size : int,
@@ -45,22 +46,44 @@ class Layer:
         biased_inputs = weighted_inputs + self.biases
         values = self.activation_function.apply(biased_inputs)
 
-        self._cache = {"inputs": biased_inputs, "outputs": values}
+        self._cache = {
+            "last_layer_outputs": input_values,     # = a_(l-1)
+            "biased_inputs": biased_inputs,         # = z_l
+            "outputs": values                       # = a_l
+        }
         return values
 
-    def backward_pass(self, jacobian_layer_to_loss: np.ndarray) -> np.ndarray:
+    def backward_pass(self, jacobi_layer_to_loss: np.ndarray) -> np.ndarray:
+        if self._cache is None:
+            raise RuntimeError("forward_pass must be run before backward_pass!")
+
         # Calculate delta Jacobian
+        delta = np.multiply(
+            jacobi_layer_to_loss,
+            self.activation_function.derivative(self._cache.get("biased_inputs"))
+        )
 
         # Compute weight gradients for incoming weights and cache it
+        delta_weights = -self.learning_rate * np.outer(self._cache.get("last_layer_outputs"), delta)
+        self._cache["delta_weights"] = delta_weights
 
         # Compute bias gradients for biases, and cache it
+        delta_bias = -self.learning_rate * delta
+        self._cache["delta_bias"] = delta_bias
 
         # Compute Jacobian from the previous layer to loss, and return it
-
-        raise NotImplementedError
+        jacobi_prev_layer = np.dot(self.weights, delta)
+        return jacobi_prev_layer
     
     def update_weights_and_biases(self):
-        raise NotImplementedError
+        if self._cache is None:
+            raise RuntimeError("forward_pass must be run before backward_pass!")
+        if self._cache.get("delta_weights", None) is None:
+            raise RuntimeError("backward_pass must be run before update_weights_and_biases!")
+
+        self.weights += self._cache.get("delta_weights")
+        self.biases += self._cache.get("delta_bias")
+
 
 
 class SoftmaxLayer:
@@ -75,13 +98,13 @@ class SoftmaxLayer:
         self._cache = output
         return output
     
-    def backward_pass(self) -> np.ndarray:
+    def backward_pass(self, jacobi_loss: np.ndarray) -> np.ndarray:
         if self._cache is None:
             raise RuntimeError("forward_pass must be run before backward_pass!")
         
         # The following vectorization is gotten from
         # https://stackoverflow.com/a/40576872
-        output = self._cache
+        output = jacobi_loss
         reshaped_output = output.reshape((-1, 1))
         jacobi = np.diagflat(output) - np.dot(reshaped_output, reshaped_output.T)
 
