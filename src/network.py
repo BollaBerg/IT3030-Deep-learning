@@ -22,6 +22,8 @@ class Network:
         
         if softmax:
             self.softmax = SoftmaxLayer()
+        else:
+            self.softmax = None
         
         raise NotImplementedError
 
@@ -36,7 +38,7 @@ class Network:
         for layer in self.hidden_layers:
             current_value = layer.forward_pass(current_value)
         
-        if self.get("softmax", None) is not None:
+        if self.softmax is not None:
             current_value = self.softmax.forward_pass(current_value)
         
         return current_value
