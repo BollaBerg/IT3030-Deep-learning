@@ -44,6 +44,8 @@ class Layer:
         weighted_inputs = np.dot(input_values, self.weights)
         biased_inputs = weighted_inputs + self.biases
         values = self.activation_function.apply(biased_inputs)
+
+        self._cache = {"inputs": biased_inputs, "outputs": values}
         return values
 
     def backward_pass(self) -> np.ndarray:

@@ -32,20 +32,14 @@ class Network:
                 "input_values must have same size as self.input_size! "
                 f"input_values = {input_values}, self.input_size = {self.input_size}"    
             )
-        self._cache = {
-            "input": input_values,
-            "layers": []
-        }
         current_value = input_values
         for layer in self.hidden_layers:
             current_value = layer.forward_pass(current_value)
-            self._cache["layers"].append(current_value)
         
         if self.get("softmax", None) is not None:
             current_value = self.softmax.forward_pass(current_value)
-            self._cache["softmax"] = current_value
         
         return current_value
 
-    def backward_pass(self):
-        raise NotImplementedError
+    def backward_pass(self, predicted: np.ndarray, target: np.ndarray):
+        error = target - predicted
