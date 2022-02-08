@@ -1,6 +1,7 @@
 import numpy as np
 
 from config_options import WeightRegularization
+from generator import Image
 from layer import Layer, SoftmaxLayer
 from loss_functions import LossFunction
 
@@ -50,3 +51,13 @@ class Network:
         
         for layer in self.layers:
             layer.update_weights_and_biases()
+    
+    def train(self, dataset : list[Image]):
+        for image in dataset:
+            prediction = self.forward_pass(image.data)
+            target = image.image_class
+
+            self.backward_pass(prediction, target)
+    
+    def predict(self, inputs: np.ndarray) -> np.ndarray:
+        return self.forward_pass(inputs)
