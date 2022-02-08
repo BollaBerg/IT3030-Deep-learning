@@ -90,6 +90,7 @@ Anything defined initially (before `layers`) will be applied globally, and/or us
 | `lrate`| Default learning rate for the Network | Any value in the open interval `(0, 1)`| ❌ (defaults to `0.1`)|
 | `wrt` | Global weight regularization | `L1`, `L2`, `none`| ❌ (defaults to `none`)|
 | `wreg` | Global weight regularization rate | Any value in the open interval `(0, 1)` (usually small fractions) | ❌ (defaults to `0.001`) |
+| `debug` | Whether the Network should run in DEBUG-mode, and log everything | Boolean | ❌ (defaults to False) |
 
 
 Layers are defined in the `layers`-array. Each element is one layer. The following options can be defined for each layer:
