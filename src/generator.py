@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
+import pathlib
+import pickle
 import random
 from typing import Tuple
 
@@ -133,6 +135,29 @@ class Generator:
                 )
             )
         return output
+    
+    def dump_dataset(dataset: list[Image], path: pathlib.Path | str):
+        path_ = pathlib.Path(path)
+        path_.parent.mkdir(parents=True, exist_ok=True)
+
+        with open(path_, "w") as file:
+            for image in dataset:
+                file.write(f"{image.data.dumps()}|{image.image_class.value}")
+    
+    def read_file(path: pathlib.Path | str) -> list[Image]:
+        path_ = pathlib.Path(path)
+        if not path_.exists():
+            raise ValueError(f"File does not exist: {path_}")
+        
+        dataset = []
+        with open(path_, "r") as file:
+            for line in file.readlines():
+                splitline = line.split("|")
+                data = pickle.loads(splitline[0])
+                image_class = ImageClass(int(splitline[1]))
+                dataset.append(Image(data=data, image_class=image_class))
+        
+        return dataset
     
 
     def _generate_single_image(self,
