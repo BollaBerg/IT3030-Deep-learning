@@ -36,7 +36,4 @@ class MeanSquaredError(LossFunction):
         else:
             denominator = 1
 
-        sums = np.array([
-            np.sum(predictions - targets) * pred for pred in predictions
-        ])
-        return sums / denominator
+        return -2 * (targets - predictions) / denominator
