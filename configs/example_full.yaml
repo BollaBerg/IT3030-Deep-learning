@@ -3,23 +3,30 @@ loss: cross_entropy
 lrate: 0.1
 wrt: L2
 wreg: 0.001
+debug: true
 
 layers:
-  - input: 20
+  - input: 400
   - size: 100
-    act: relu
+    act: sigmoid
     wr: [-0.1, 0.1]
     lrate: 0.01
-  - size: 5
-    act: relu
-    wr: glorot
     br: [0, 1]
+  - size: 50
+    act: tanh
+    wr: glorot
+  - size: 25
+    act: relu
+    wr: [-0.5, 0.5]
+  - size: 5
+    act: linear
+    wr: glorot
   - softmax: true
 
 dataset:
-  dimension: 15
+  dimension: 20
   number: 500
   flatten: true
-  distribution: [60, 25, 15]
+  distribution: [70, 20, 10]
   noise: 0.01
   centering: 0.0 
