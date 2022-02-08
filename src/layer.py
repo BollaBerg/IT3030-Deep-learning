@@ -64,12 +64,25 @@ class Layer:
 
 
 class SoftmaxLayer:
+    _cache = None
     def forward_pass(self, x : np.ndarray) -> np.ndarray:
         # Note: This could be implemented with e_x = np.exp(x) directly, but
         # this method is better for numerical stability
         # Source: https://cs231n.github.io/linear-classify/#softmax
         e_x = np.exp(x - np.max(x))
-        return e_x / e_x.sum(axis=0)
+        output = e_x / e_x.sum(axis=0)
+
+        self._cache = output
+        return output
     
-    def backward_pass(self, x : np.ndarray) -> np.ndarray:
-        raise NotImplementedError
+    def backward_pass(self) -> np.ndarray:
+        if self._cache is None:
+            raise RuntimeError("forward_pass must be run before backward_pass!")
+        
+        # The following vectorization is gotten from
+        # https://stackoverflow.com/a/40576872
+        output = self._cache
+        reshaped_output = output.reshape((-1, 1))
+        jacobi = np.diagflat(output) - np.dot(reshaped_output, reshaped_output.T)
+
+        return jacobi

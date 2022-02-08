@@ -81,3 +81,18 @@ def test_softmax_layer():
         np.array([0.01, 0.03, 0.08, 0.23, 0.64]),
         decimal=2
     )
+
+def test_softmax_backward_pass():
+    """Test that Softmax.backward_pass produces correct output"""
+    softmax = SoftmaxLayer()
+
+    output = softmax.forward_pass(np.array([1, 2, 3]))
+    jacobi = softmax.backward_pass()
+
+    expected_jacobi = np.array([
+        [output[0]-output[0]**2, -output[0]*output[1], -output[0]*output[2]],
+        [-output[1]*output[0], output[1]-output[1]**2, -output[1]*output[2]],
+        [-output[2]*output[0], -output[2]*output[1], output[2]-output[2]**2]
+    ])
+
+    np.testing.assert_array_equal(jacobi, expected_jacobi)
