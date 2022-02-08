@@ -52,12 +52,13 @@ class Network:
         for layer in self.layers:
             layer.update_weights_and_biases()
     
-    def train(self, dataset : list[Image]):
-        for image in dataset:
-            prediction = self.forward_pass(image.data)
-            target = image.image_class
+    def train(self, dataset: list[Image], epochs: int = 1):
+        for _ in range(epochs):
+            for image in dataset:
+                prediction = self.forward_pass(image.data)
+                target = image.image_class
 
-            self.backward_pass(prediction, target)
+                self.backward_pass(prediction, target)
     
     def predict(self, inputs: np.ndarray) -> np.ndarray:
         return self.forward_pass(inputs)
