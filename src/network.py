@@ -10,23 +10,19 @@ class Network:
                  loss_function : LossFunction,
                  weight_regularization : WeightRegularization,
                  weight_regularization_rate : float,
-                 output_layer : Layer,
-                 hidden_layers : list[Layer] = None,
+                 layers : list[Layer],
                  softmax : bool = False,
                  ):
         self.input_size = input_size
-        if hidden_layers is None:
-            self.hidden_layers = []
-        else:
-            self.hidden_layers = hidden_layers
+        self.loss_function = loss_function
+        
+        self.layers = layers
         
         if softmax:
             self.softmax = SoftmaxLayer()
         else:
             self.softmax = None
         
-        raise NotImplementedError
-
 
     def forward_pass(self, input_values : np.ndarray) -> np.ndarray:
         if input_values.size != self.input_size:
@@ -35,7 +31,7 @@ class Network:
                 f"input_values = {input_values}, self.input_size = {self.input_size}"    
             )
         current_value = input_values
-        for layer in self.hidden_layers:
+        for layer in self.layers:
             current_value = layer.forward_pass(current_value)
         
         if self.softmax is not None:
@@ -43,5 +39,14 @@ class Network:
         
         return current_value
 
-    def backward_pass(self, predicted: np.ndarray, target: np.ndarray):
-        error = target - predicted
+    def backward_pass(self, predictions: np.ndarray, targets: np.ndarray):
+        jacobi = self.loss_function.derivative(predictions, targets)
+
+        if self.softmax is not None:
+            jacobi = self.softmax.backward_pass(jacobi)
+        
+        for layer in reversed(self.layers):
+            jacobi = layer.backward_pass(jacobi)
+        
+        for layer in self.layers:
+            layer.update_weights_and_biases()
