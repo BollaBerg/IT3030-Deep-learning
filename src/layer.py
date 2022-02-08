@@ -48,7 +48,18 @@ class Layer:
         self._cache = {"inputs": biased_inputs, "outputs": values}
         return values
 
-    def backward_pass(self) -> np.ndarray:
+    def backward_pass(self, jacobian_layer_to_loss: np.ndarray) -> np.ndarray:
+        # Calculate delta Jacobian
+
+        # Compute weight gradients for incoming weights and cache it
+
+        # Compute bias gradients for biases, and cache it
+
+        # Compute Jacobian from the previous layer to loss, and return it
+
+        raise NotImplementedError
+    
+    def update_weights_and_biases(self):
         raise NotImplementedError
 
 
