@@ -5,15 +5,17 @@ from src.layer import Layer
 from src.loss_functions import MeanSquaredError
 from src.network import Network
 
+LEARNING_RATE = 0.1
+
 def _create_network() -> Network:
     layer1 = Layer(
-        2, 2, Linear(), (0, 1), 0.1
+        2, 2, Linear(), (0, 1), LEARNING_RATE
     )
     layer1.weights = np.array([
         [.15, .25], [.20, .30]
     ])
     layer1.biases = np.array([.35, .45])
-    layer2 = Layer(2, 2, Linear(), (0, 1), 0.1)
+    layer2 = Layer(2, 2, Linear(), (0, 1), LEARNING_RATE)
     layer2.weights = np.array([
         [.40, .50], [.45, .55]
     ])
@@ -54,27 +56,62 @@ def test_network_forward_pass():
         expected_output
     )
 
-# def test_network_backward_pass():
-#     """Test that Network.backward_pass works as expected"""
-#     network = _create_network()
-#     network.softmax = None
-#     inputs = np.array([.05, .10])
-#     predictions = network.forward_pass(inputs)
-#     network.backward_pass(predictions, )
+def test_network_backward_pass():
+    """Test that Network.backward_pass works as expected"""
+    network = _create_network()
+    network.softmax = None
+    inputs = np.array([.05, .10])
+    predictions = network.forward_pass(inputs)
+    targets = np.array([0.01, 0.99])
+    network.backward_pass(predictions, targets)
 
-#     # Calculated by hand
-#     expected_weights = np.array([
-#         []
-#     ])
-#     expected_biases = np.array([
+    layer1 = np.array([
+        inputs[0]*.15 + inputs[1]*.20 + .35,
+        inputs[0]*.25 + inputs[1]*.30 + .45]
+    )
+    expected_output = np.array([
+        layer1[0]*.40 + layer1[1]*.45 + .50,
+        layer1[0]*.50 + layer1[1]*.55 + .60,
+    ])
 
-#     ])
+    # Calculated by hand
+    l2 = network.layers[1]
+    expected_weights_l2 = np.array([
+        [.40 - LEARNING_RATE * (
+            network.loss_function.derivative(predictions, targets)[0]
+            * l2.activation_function.derivative(expected_output[0])
+            * layer1[0]
+        ),
+         .50 - LEARNING_RATE * (
+            network.loss_function.derivative(predictions, targets)[1]
+            * l2.activation_function.derivative(expected_output[1])
+            * layer1[0]
+        )],
+        [.45 - LEARNING_RATE * (
+            network.loss_function.derivative(predictions, targets)[0]
+            * l2.activation_function.derivative(expected_output[0])
+            * layer1[1]
+        ),
+         .55 - LEARNING_RATE * (
+            network.loss_function.derivative(predictions, targets)[1]
+            * l2.activation_function.derivative(expected_output[1])
+            * layer1[1]
+        ),]
+    ])
+    expected_biases_l2 = np.array([
+        .50 - LEARNING_RATE * (
+            network.loss_function.derivative(predictions, targets)[0]
+        ),
+        .60 - LEARNING_RATE * (
+            network.loss_function.derivative(predictions, targets)[1]
+        ),
+    ])
 
-#     np.testing.assert_array_equal(
-#         network.layer[0].weights,
-#         expected_weights
-#     )
-#     np.testing.assert_array_equal(
-#         network.layers[0].biases,
-#         expected_biases
-#     )
+    np.testing.assert_array_equal(
+        network.layers[1].weights,
+        expected_weights_l2
+    )
+    np.testing.assert_array_equal(
+        network.layers[1].biases,
+        expected_biases_l2
+    )
