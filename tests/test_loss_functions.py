@@ -33,5 +33,21 @@ def test_mean_squared_error():
 
     observations = np.array([1, 2, 3, 4])
     targets = np.array([1, 4, 2, 0])
-
     assert MSE.apply(observations, targets) == 5.25
+
+    observations = np.array([1.2, 0.5, 3.2, 4.2, 3.2])
+    targets = np.array([1.5, 0.2, 3.9, 6.2, 5.2])
+    assert MSE.apply(observations, targets) == 1.734
+
+
+def test_mean_squared_error_derivatives():
+    """Test that MeanSquaredError.derivative gives correct Jacobian"""
+    MSE = MeanSquaredError()
+
+    observations = np.array([1.2, 0.5, 3.2, 4.2, 3.2])
+    targets = np.array([1.5, 0.2, 3.9, 6.2, 5.2])
+
+    np.testing.assert_array_almost_equal(
+        MSE.derivative(observations, targets),
+        np.array([-0.12, 0.12, -0.28, -0.8, -0.8])
+    )
