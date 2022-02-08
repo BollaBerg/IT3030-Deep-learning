@@ -1,9 +1,9 @@
 import numpy as np
 
-from config_options import WeightRegularization
-from generator import Image
-from layer import Layer, SoftmaxLayer
-from loss_functions import LossFunction
+from src.config_options import WeightRegularization
+from src.generator import Image
+from src.layer import Layer, SoftmaxLayer
+from src.loss_functions import LossFunction
 
 class Network:
     def __init__(self,
