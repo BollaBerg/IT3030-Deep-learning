@@ -14,7 +14,7 @@ layers:
     act: relu
     wr: glorot
     br: [0, 1]
-  - type: softmax
+  - softmax: true
 
 dataset:
     path: datasets/example.dataset

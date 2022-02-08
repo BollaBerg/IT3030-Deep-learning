@@ -11,6 +11,7 @@ DEFAULTS = {
     "distribution" : [70, 20, 10],
     "noise" : 0.0,
     "centering" : 0.0,
+    "softmax": False,
 }
 
 def read_config(path : str | pathlib.Path) -> Network:

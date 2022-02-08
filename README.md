@@ -102,7 +102,7 @@ Layers are defined in the `layers`-array. Each element is one layer. The followi
 | `wr`   | Initial weight ranges for the layer | Either an inline array of `[min, max]`, or `glorot` to use the glorot initializer | ✔️ |
 | `lrate`| Learning rate for the layer, if it is not using the default learning rate | Any value in the open interval `(0, 1)`| ❌ (defaults to the global `lrate`)|
 | `br`   | Range for biases in the layer | Any value in the interval `[0, 1]` | ❌ (Defaults to `[0, 1]`) |
-| `type` | Type of layer. ONLY applicable for the final layer, if there should be a softmax layer. If not used, then there will not be a softmax layer | `softmax` | ❌ |
+| `softmax` | Whether there should be a softmax layer after the last layer. ONLY allowed as last layer | Boolean | ❌ (defaults to `false`) |
 
 Information about the dataset are defined in the `dataset` value. There are two ways to supply a dataset - through a path, or by giving options that will be used for generating the dataset when running the file. The example shows a path, but the following options can be used instead, to create the dataset when it is used:
 
