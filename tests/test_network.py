@@ -8,10 +8,15 @@ from src.network import Network
 
 LEARNING_RATE = 0.1
 
+class MockImageClass:
+    def one_hot(self):
+        return np.array([0, 1])
+
 @dataclass
 class MockImage:
     data : np.ndarray
-    image_class : np.ndarray
+    image_class : MockImageClass
+
 
 def _create_network() -> Network:
     layer1 = Layer(
@@ -126,7 +131,7 @@ def test_network_gets_closer():
     """Test that Network gets closer to the target by training"""
     network = _create_network()
     dataset = [
-        MockImage(np.array([0.05, 0.10]), np.array([0.01, 0.99]))
+        MockImage(np.array([0.05, 0.10]), MockImageClass())
         for _ in range(500)
     ]
     original_prediction = network.predict(np.array([0.05, 0.10]))
