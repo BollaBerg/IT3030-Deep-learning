@@ -1,0 +1,34 @@
+# YAML-file copying example config given in assignment PDF
+loss: cross_entropy
+lrate: 0.01
+wrt: L2
+wreg: 0.001
+epochs: 10
+debug: true
+
+layers:
+  - input: 225
+  - size: 25
+    act: sigmoid
+    wr: glorot
+  - size: 25
+    act: sigmoid
+    wr: glorot
+  - size: 25
+    act: sigmoid
+    wr: glorot
+  - size: 25
+    act: sigmoid
+    wr: glorot
+  - size: 5
+    act: sigmoid
+    wr: glorot
+  - softmax: true
+
+dataset:
+  dimension: 15
+  number: 150
+  flatten: true
+  distribution: [70, 20, 10]
+  noise: 0.00
+  centering: 1.0
