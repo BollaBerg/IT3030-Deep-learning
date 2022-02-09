@@ -64,12 +64,10 @@ class Layer:
         )
 
         # Compute weight gradients for incoming weights and cache it
-        delta_weights = -self.learning_rate * np.outer(self._cache.get("last_layer_outputs"), delta)
-        self._cache["delta_weights"] = delta_weights
+        self._cache["weight_gradient"] = np.outer(self._cache.get("last_layer_outputs"), delta)
 
         # Compute bias gradients for biases, and cache it
-        delta_bias = -self.learning_rate * delta
-        self._cache["delta_bias"] = delta_bias
+        self._cache["bias_gradient"] = delta
 
         # Compute Jacobian from the previous layer to loss, and return it
         jacobi_prev_layer = np.dot(self.weights, delta)
@@ -78,11 +76,11 @@ class Layer:
     def update_weights_and_biases(self):
         if self._cache is None:
             raise RuntimeError("forward_pass must be run before backward_pass!")
-        if self._cache.get("delta_weights", None) is None:
+        if self._cache.get("weight_gradient", None) is None:
             raise RuntimeError("backward_pass must be run before update_weights_and_biases!")
 
-        self.weights += self._cache.get("delta_weights")
-        self.biases += self._cache.get("delta_bias")
+        self.weights += -self.learning_rate * self._cache.get("weight_gradient")
+        self.biases += -self.learning_rate * self._cache.get("bias_gradient")
 
 
 
@@ -108,4 +106,5 @@ class SoftmaxLayer:
         reshaped_output = output.reshape((-1, 1))
         jacobi = np.diagflat(output) - np.dot(reshaped_output, reshaped_output.T)
 
-        return jacobi
+        partial_loss_softmax_inputs = np.sum(jacobi, axis=0)
+        return partial_loss_softmax_inputs
