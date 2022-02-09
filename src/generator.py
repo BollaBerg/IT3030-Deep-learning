@@ -5,6 +5,7 @@ import pickle
 import random
 from typing import Tuple
 
+import matplotlib.pyplot as plt
 import numpy as np
 
 class ImageClass(Enum):
@@ -273,7 +274,10 @@ class Generator:
         if _debug_corners is not None:
             corner1, corner2 = _debug_corners
 
-        center = (abs(corner1[0] - corner2[0]), abs(corner1[1] - corner2[1]))
+        center = (
+            (corner1[0] + corner2[0])/2,
+            (corner1[1] + corner2[1])/2
+        )
         delta = self._compute_centering_delta(
             image_dimension, centering_factor, center
         )
@@ -460,3 +464,58 @@ class Generator:
         )
         for corner in corners:
             corner = (corner[0] + delta[0], corner[1] + delta[1])
+
+
+def demo_generator():
+    generator = Generator()
+
+    dimensions = 25
+    centering = 0.33
+
+    fig, axes = plt.subplots(nrows=5, ncols=5)
+    for row in range(3):
+        axes[0][row].imshow(generator._generate_cross(dimensions, centering*row))
+        axes[1][row].imshow(generator._generate_X(dimensions, centering*row))
+        axes[2][row].imshow(generator._generate_rectangle(dimensions, centering*row))
+        axes[3][row].imshow(generator._generate_horizontal_bars(dimensions, centering*row))
+        axes[4][row].imshow(generator._generate_vertical_bars(dimensions, centering*row))
+    
+    noise_factor = 0.05
+    for row in range(1, 3):
+        axes[0][row + 2].imshow(
+            generator._generate_single_image(
+                ImageClass.CROSS, dimensions, noise_portion=row*noise_factor, centering_factor=0.5, flatten=False
+            ).data)
+        axes[1][row + 2].imshow(
+            generator._generate_single_image(
+                ImageClass.X, dimensions, noise_portion=row*noise_factor, centering_factor=0.5, flatten=False
+            ).data)
+        axes[2][row + 2].imshow(
+            generator._generate_single_image(
+                ImageClass.RECTANGLE, dimensions, noise_portion=row*noise_factor, centering_factor=0.5, flatten=False
+            ).data)
+        axes[3][row + 2].imshow(
+            generator._generate_single_image(
+                ImageClass.HORIZONTAL_BARS, dimensions, noise_portion=row*noise_factor, centering_factor=0.5, flatten=False
+            ).data)
+        axes[4][row + 2].imshow(
+            generator._generate_single_image(
+                ImageClass.VERTICAL_BARS, dimensions, noise_portion=row*noise_factor, centering_factor=0.5, flatten=False
+            ).data)
+    
+    for row in axes:
+        for col in row:
+            col.set_axis_off()
+
+    axes[0, 0].set_title("C=0")
+    axes[0, 1].set_title(f"C={centering}")
+    axes[0, 2].set_title(f"C={2*centering}")
+    axes[0, 3].set_title(f"N={noise_factor}")
+    axes[0, 4].set_title(f"N={2*noise_factor}")
+
+    fig.tight_layout()
+    plt.show()
+    plt.savefig("images/GENERATOR_DEMO.png")
+
+if __name__ == "__main__":
+    demo_generator()

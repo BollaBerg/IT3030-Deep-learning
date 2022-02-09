@@ -1,6 +1,10 @@
 # Ignore test.py, to enable local testing without re-running python in the terminal all the time
 test.py
 
+# Image directory
+images/*
+!images/.gitkeep
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

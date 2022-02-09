@@ -1,6 +1,7 @@
 numpy==1.22.1
 pytest==6.2.5
 PyYAML==6.0
+matplotlib==3.5.1
 
 # Install self as a package, to run tests etc.
 --editable .
