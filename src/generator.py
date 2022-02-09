@@ -15,6 +15,11 @@ class ImageClass(Enum):
     VERTICAL_BARS = 3
     HORIZONTAL_BARS = 4
 
+    def one_hot(self):
+        vec = np.zeros(5)
+        vec[self.value] = 1
+        return vec
+
 
 @dataclass
 class Image:

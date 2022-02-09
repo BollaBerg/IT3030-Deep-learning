@@ -15,7 +15,9 @@ class Network:
                  weight_regularization_rate : float,
                  layers : list[Layer],
                  softmax : bool = False,
+                 *,
                  debug: bool = False,
+                 verbose: bool = False,
                  ):
         self.input_size = input_size
         self.loss_function = loss_function
@@ -32,6 +34,7 @@ class Network:
             with open(self.log_file, "w") as file:
                 # Empty the file
                 pass
+        self.verbose = verbose
         
 
     def forward_pass(self, input_values : np.ndarray) -> np.ndarray:
@@ -75,10 +78,19 @@ class Network:
     def train(self, dataset: list[Image], epochs: int = 1):
         for epoch in range(epochs):
             self._debug(f"##### EPOCH {epoch} #####")
+            self._verbose(f"##### EPOCH {epoch} #####")
+
             for i, image in enumerate(dataset):
+                self._verbose(f"Input:\n{image.data.dumps()}")
+
                 prediction = self.forward_pass(image.data)
-                target = image.image_class
+                target = image.image_class.one_hot()
+
                 self._debug(f"Image {i} - loss {self.loss_function.apply(prediction, target)}")
+                self._verbose(f"### IMAGE {i} ###")
+                self._verbose(f"Prediction: {prediction.dumps()}")
+                self._verbose(f"Target:     {target.dumps()}")
+                self._verbose(f"Loss:       {self.loss_function.apply(prediction, target)}")
 
                 self.backward_pass(prediction, target)
     
@@ -90,3 +102,7 @@ class Network:
         if self.debug:
             with open(self.log_file, "a") as file:
                 file.write(message)
+    
+    def _verbose(self, message: str):
+        if self.verbose:
+            print(message)

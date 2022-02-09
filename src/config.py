@@ -22,6 +22,7 @@ DEFAULTS = {
     "centering" : 0.0,
     "softmax": False,
     "debug": False,
+    "verbose": False,
 }
 
 def read_config(path : str | pathlib.Path) -> tuple[Network, list[list[Image]]]:
@@ -63,6 +64,7 @@ def read_config(path : str | pathlib.Path) -> tuple[Network, list[list[Image]]]:
     weight_regularization_rate = config.get("wreg", DEFAULTS.get("wreg"))
 
     debug = config.get("debug", DEFAULTS.get("debug"))
+    verbose = config.get("verbose", DEFAULTS.get("verbose"))
 
     ### LAYERS ###
 
@@ -144,6 +146,7 @@ def read_config(path : str | pathlib.Path) -> tuple[Network, list[list[Image]]]:
         layers=network_layers,
         softmax=softmax,
         debug=debug,
+        verbose=verbose,
     )
 
     ### DATASET ###
