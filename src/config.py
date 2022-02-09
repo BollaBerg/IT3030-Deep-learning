@@ -23,9 +23,10 @@ DEFAULTS = {
     "softmax": False,
     "debug": False,
     "verbose": False,
+    "epochs": 10
 }
 
-def read_config(path : str | pathlib.Path) -> tuple[Network, list[list[Image]]]:
+def read_config(path : str | pathlib.Path) -> tuple[Network, list[list[Image]], int]:
     file = pathlib.Path(path)
     if not file.exists():
         raise FileNotFoundError(f"Couldn't find file at {path}")
@@ -65,6 +66,7 @@ def read_config(path : str | pathlib.Path) -> tuple[Network, list[list[Image]]]:
 
     debug = config.get("debug", DEFAULTS.get("debug"))
     verbose = config.get("verbose", DEFAULTS.get("verbose"))
+    epochs = config.get("epochs", DEFAULTS.get("epochs"))
 
     ### LAYERS ###
 
@@ -90,7 +92,7 @@ def read_config(path : str | pathlib.Path) -> tuple[Network, list[list[Image]]]:
                 f"All layers must have a size! Layer {i} does not have size."
             )
         
-        activation_function_name = layer.get("activation_function", "")
+        activation_function_name = layer.get("act", "")
         if activation_function_name.lower() == "sigmoid":
             activation_function = Sigmoid()
         elif activation_function_name.lower() == "tanh":
@@ -127,7 +129,7 @@ def read_config(path : str | pathlib.Path) -> tuple[Network, list[list[Image]]]:
         if len(network_layers) < 1:
             prev_size = input_size
         else:
-            prev_size = network_layers[-1].size
+            prev_size = network_layers[-1].biases.size
 
         network_layers.append(Layer(
             size=size,
@@ -167,7 +169,7 @@ def read_config(path : str | pathlib.Path) -> tuple[Network, list[list[Image]]]:
         generated_datasets.append(test_set)
     
     if len(generated_datasets) > 0:
-        return network, generated_datasets
+        return network, generated_datasets, epochs
     
     dimension = dataset.get("dimension", None)
     if dimension is None:
@@ -191,7 +193,7 @@ def read_config(path : str | pathlib.Path) -> tuple[Network, list[list[Image]]]:
         flatten=flatten
     )
 
-    return network, generated_datasets
+    return network, generated_datasets, epochs
 
 
 

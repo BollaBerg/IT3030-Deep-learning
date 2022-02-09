@@ -1,4 +1,7 @@
 import argparse
+
+import matplotlib.pyplot as plt
+
 from src.config import read_config
 from src.generator import demo_generator
 
@@ -28,8 +31,17 @@ def main():
         demo_generator()
         return
 
-    network, datasets = read_config(args.path)
+    network, datasets, epochs = read_config(args.path)
+    train_losses, validation_losses = network.train(datasets[0], epochs=epochs, validation_set=datasets[1])
+    test_losses = network.test(datasets[2])
 
+    fig, ax = plt.subplots(nrows=1, ncols=1)
+    plt.plot(train_losses.flatten(), fmt="-b")
+    plt.plot(validation_losses.flatten(), fmt="-y")
+    plt.plot(test_losses.flatten(), fmt="--m")
+
+    plt.show()
+    plt.savefig("images/loss_progression.png")
 
 if __name__ == "__main__":
     main()

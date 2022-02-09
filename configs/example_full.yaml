@@ -4,6 +4,7 @@ lrate: 0.1
 wrt: L2
 wreg: 0.001
 debug: true
+epochs: 10
 
 layers:
   - input: 400

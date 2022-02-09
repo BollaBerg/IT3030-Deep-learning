@@ -75,7 +75,18 @@ class Network:
         for layer in self.layers:
             layer.update_weights_and_biases()
     
-    def train(self, dataset: list[Image], epochs: int = 1):
+    def train(self,
+              dataset: list[Image],
+              epochs: int = 1,
+              *,
+              validation_set: list[Image] = None) -> np.ndarray:
+
+        losses = np.zeros((len(dataset), epochs))
+        if validation_set is not None:
+            validation_losses = np.zeros((len(validation_set), epochs))
+        else:
+            validation_losses = None
+
         for epoch in range(epochs):
             self._debug(f"##### EPOCH {epoch} #####")
             self._verbose(f"##### EPOCH {epoch} #####")
@@ -85,14 +96,47 @@ class Network:
 
                 prediction = self.forward_pass(image.data)
                 target = image.image_class.one_hot()
+                loss = self.loss_function.apply(prediction, target)
 
-                self._debug(f"Image {i} - loss {self.loss_function.apply(prediction, target)}")
+                losses[i, epoch] = loss
+
+                self._debug(f"Image {i} - loss {loss}")
                 self._verbose(f"### IMAGE {i} ###")
                 self._verbose(f"Prediction: {prediction.dumps()}")
                 self._verbose(f"Target:     {target.dumps()}")
-                self._verbose(f"Loss:       {self.loss_function.apply(prediction, target)}")
+                self._verbose(f"Loss:       {loss}")
 
                 self.backward_pass(prediction, target)
+            
+            if validation_set is not None:
+                for i, image in enumerate(validation_set):
+                    prediction = self.forward_pass(image.data)
+                    target = image.image_class.one_hot()
+                    loss = self.loss_function.apply(prediction, target)
+
+                    validation_losses[i, epoch] = loss
+        
+        return losses, validation_losses
+    
+    def test(self, dataset: list[Image]) -> np.ndarray:
+        losses = np.zeros(len(dataset))
+        for i, image in enumerate(dataset):
+            self._verbose(f"Input:\n{image.data.dumps()}")
+
+            prediction = self.forward_pass(image.data)
+            target = image.image_class.one_hot()
+            loss = self.loss_function.apply(prediction, target)
+
+            losses[i] = loss
+
+            self._debug(f"Image {i} - loss {loss}")
+            self._verbose(f"### IMAGE {i} ###")
+            self._verbose(f"Prediction: {prediction.dumps()}")
+            self._verbose(f"Target:     {target.dumps()}")
+            self._verbose(f"Loss:       {loss}")
+        
+        return losses
+
     
     def predict(self, inputs: np.ndarray) -> np.ndarray:
         return self.forward_pass(inputs)
