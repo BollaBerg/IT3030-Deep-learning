@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from enum import Enum
 import pathlib
 import pickle
+from posixpath import split
 import random
 from typing import Tuple
 
@@ -142,24 +143,29 @@ class Generator:
             )
         return output
     
-    def dump_dataset(dataset: list[Image], path: pathlib.Path | str):
+    def dump_dataset(self, dataset: list[Image], path: pathlib.Path | str):
         path_ = pathlib.Path(path)
         path_.parent.mkdir(parents=True, exist_ok=True)
 
         with open(path_, "w") as file:
             for image in dataset:
-                file.write(f"{image.data.dumps()}|{image.image_class.value}")
+                file.write(f"{image.data.dumps()}|-|-|{image.image_class.value}§§§")
     
-    def read_file(path: pathlib.Path | str) -> list[Image]:
+    def read_file(self, path: pathlib.Path | str) -> list[Image]:
         path_ = pathlib.Path(path)
         if not path_.exists():
             raise ValueError(f"File does not exist: {path_}")
         
         dataset = []
         with open(path_, "r") as file:
-            for line in file.readlines():
-                splitline = line.split("|")
-                data = pickle.loads(splitline[0])
+            content = file.read()
+            for line in content.split("§§§"):
+                splitline = line.split("|-|-|")
+                if len(splitline) < 2:
+                    continue
+                data_txt = splitline[0].lstrip("b'").rstrip("'")
+                data_bytes = data_txt.encode("latin1")
+                data = pickle.loads(data_bytes)
                 image_class = ImageClass(int(splitline[1]))
                 dataset.append(Image(data=data, image_class=image_class))
         
