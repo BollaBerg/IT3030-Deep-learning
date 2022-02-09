@@ -407,8 +407,10 @@ class Generator:
             (image_dimension, image_dimension),
             dtype=np.bool8
         )
-        number_of_bars = random.randrange(1, int(image_dimension / 2))
-        bars = random.sample(range(image_dimension), number_of_bars)
+        number_of_bars = random.randrange(int(image_dimension / 5), int(image_dimension / 3))
+        space_between = int(image_dimension / number_of_bars)
+        start_bar = random.randrange(0, space_between)
+        bars = [start_bar + i*space_between for i in range(number_of_bars)]
         if _debug_bars is not None:
             bars = _debug_bars
         for x in bars:
@@ -439,8 +441,10 @@ class Generator:
             (image_dimension, image_dimension),
             dtype=np.bool8
         )
-        number_of_bars = random.randrange(1, int(image_dimension / 2))
-        bars = random.sample(range(image_dimension), number_of_bars)
+        number_of_bars = random.randrange(int(image_dimension / 5), int(image_dimension / 3))
+        space_between = int(image_dimension / number_of_bars)
+        start_bar = random.randrange(0, space_between)
+        bars = [start_bar + i*space_between for i in range(number_of_bars)]
         if _debug_bars is not None:
             bars = _debug_bars
         for y in bars:
