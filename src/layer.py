@@ -64,7 +64,7 @@ class Layer:
         )
 
         # Compute weight gradients for incoming weights and cache it
-        self._cache["weight_gradient"] = np.outer(self._cache.get("last_layer_outputs"), delta)
+        self._cache["weight_gradient"] = np.dot(delta, self._cache.get("outputs"))
 
         # Compute bias gradients for biases, and cache it
         self._cache["bias_gradient"] = delta
