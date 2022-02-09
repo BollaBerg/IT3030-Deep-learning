@@ -39,7 +39,7 @@ class Network:
 
     def forward_pass(self, input_values : np.ndarray) -> np.ndarray:
         self._debug("##### FORWARD_PASS #####")
-        self._debug(f"Input value {input_values.dumps()}")
+        self._debug(f"Input value {input_values}")
         if input_values.size != self.input_size:
             raise ValueError(
                 "input_values must have same size as self.input_size! "
@@ -48,7 +48,7 @@ class Network:
         current_value = input_values
         for i, layer in enumerate(self.layers):
             current_value = layer.forward_pass(current_value)
-            self._debug(f"Layer {i} - value {current_value.dumps()}")
+            self._debug(f"Layer {i} - value {current_value}")
         
         if self.softmax is not None:
             current_value = self.softmax.forward_pass(current_value)
@@ -58,19 +58,19 @@ class Network:
 
     def backward_pass(self, predictions: np.ndarray, targets: np.ndarray):
         self._debug("##### BACKWARD_PASS #####")
-        self._debug(f"Predictions: {predictions.dumps()}")
-        self._debug(f"Targets: {targets.dumps()}")
+        self._debug(f"Predictions: {predictions}")
+        self._debug(f"Targets: {targets}")
 
         jacobi = self.loss_function.derivative(predictions, targets)
-        self._debug(f"Loss jacobi matrix: {jacobi.dumps()}")
+        self._debug(f"Loss jacobi matrix: {jacobi}")
 
         if self.softmax is not None:
             jacobi = self.softmax.backward_pass(jacobi)
-            self._debug(f"Softmax jacobi: {jacobi.dumps()}")
+            self._debug(f"Softmax jacobi: {jacobi}")
         
-        for i, layer in enumerate(reversed(self.layers)):
+        for i, layer in reversed(list(enumerate(self.layers))):
             jacobi = layer.backward_pass(jacobi)
-            self._debug(f"Layer {i} - jacobi {jacobi.dumps()}")
+            self._debug(f"Layer {i} - jacobi {jacobi}")
         
         for layer in self.layers:
             layer.update_weights_and_biases()
@@ -92,7 +92,7 @@ class Network:
             self._verbose(f"##### EPOCH {epoch} #####")
 
             for i, image in enumerate(dataset):
-                self._verbose(f"Input:\n{image.data.dumps()}")
+                self._verbose(f"Input:\n{image.data}")
 
                 prediction = self.forward_pass(image.data)
                 target = image.image_class.one_hot()
@@ -102,8 +102,8 @@ class Network:
 
                 self._debug(f"Image {i} - loss {loss}")
                 self._verbose(f"### IMAGE {i} ###")
-                self._verbose(f"Prediction: {prediction.dumps()}")
-                self._verbose(f"Target:     {target.dumps()}")
+                self._verbose(f"Prediction: {prediction}")
+                self._verbose(f"Target:     {target}")
                 self._verbose(f"Loss:       {loss}")
 
                 self.backward_pass(prediction, target)
@@ -121,7 +121,7 @@ class Network:
     def test(self, dataset: list[Image]) -> np.ndarray:
         losses = np.zeros(len(dataset))
         for i, image in enumerate(dataset):
-            self._verbose(f"Input:\n{image.data.dumps()}")
+            self._verbose(f"Input:\n{image.data}")
 
             prediction = self.forward_pass(image.data)
             target = image.image_class.one_hot()
@@ -131,8 +131,8 @@ class Network:
 
             self._debug(f"Image {i} - loss {loss}")
             self._verbose(f"### IMAGE {i} ###")
-            self._verbose(f"Prediction: {prediction.dumps()}")
-            self._verbose(f"Target:     {target.dumps()}")
+            self._verbose(f"Prediction: {prediction}")
+            self._verbose(f"Target:     {target}")
             self._verbose(f"Loss:       {loss}")
         
         return losses
@@ -145,7 +145,7 @@ class Network:
     def _debug(self, message: str):
         if self.debug:
             with open(self.log_file, "a") as file:
-                file.write(message)
+                file.write(message + '\n')
     
     def _verbose(self, message: str):
         if self.verbose:
