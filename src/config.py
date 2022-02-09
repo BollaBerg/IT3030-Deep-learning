@@ -53,7 +53,7 @@ def read_config(path : str | pathlib.Path) -> tuple[Network, list[list[Image]], 
     weight_regularization_rate = config.get("wreg", DEFAULTS.get("wreg"))
 
     weight_reg_name = config.get("wrt", DEFAULTS.get("wrt"))
-    if weight_reg_name is None:
+    if weight_reg_name is None or weight_reg_name.lower() == "none":
         weight_regularization = NoRegularization(weight_regularization_rate)
     elif weight_reg_name.lower() == "l1":
         weight_regularization = L1(weight_regularization_rate)
