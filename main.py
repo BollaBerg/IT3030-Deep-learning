@@ -36,9 +36,10 @@ def main():
     test_losses = network.test(datasets[2])
 
     fig, ax = plt.subplots(nrows=1, ncols=1)
-    plt.plot(train_losses.flatten(), fmt="-b")
-    plt.plot(validation_losses.flatten(), fmt="-y")
-    plt.plot(test_losses.flatten(), fmt="--m")
+
+    plt.plot(train_losses.flatten(), "b-")
+    # plt.plot(validation_losses,"y-")
+    # plt.plot(test_losses, "m--")
 
     plt.show()
     plt.savefig("images/loss_progression.png")

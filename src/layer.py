@@ -73,13 +73,17 @@ class Layer:
         jacobi_prev_layer = np.dot(self.weights, delta)
         return jacobi_prev_layer
     
-    def update_weights_and_biases(self):
+    def update_weights_and_biases(self, regularization):
         if self._cache is None:
             raise RuntimeError("forward_pass must be run before backward_pass!")
         if self._cache.get("weight_gradient", None) is None:
             raise RuntimeError("backward_pass must be run before update_weights_and_biases!")
 
-        self.weights += -self.learning_rate * self._cache.get("weight_gradient")
+        self.weights += (
+            -self.learning_rate
+            * self._cache.get("weight_gradient")
+            + regularization.apply(self.weights)
+        )
         self.biases += -self.learning_rate * self._cache.get("bias_gradient")
 
 

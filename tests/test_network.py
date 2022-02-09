@@ -3,6 +3,7 @@ import numpy as np
 
 from src.activation_functions import Linear
 from src.layer import Layer
+from src.regularization import NoRegularization
 from src.loss_functions import MeanSquaredError
 from src.network import Network
 
@@ -34,8 +35,7 @@ def _create_network() -> Network:
     network = Network(
         input_size=2,
         loss_function=MeanSquaredError(),
-        weight_regularization=None,
-        weight_regularization_rate=None,
+        weight_regularization=NoRegularization(0.01),
         layers=[layer1, layer2],
         softmax=False
     )

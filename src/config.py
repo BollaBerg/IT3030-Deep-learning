@@ -6,7 +6,7 @@ import pathlib
 import yaml
 
 from src.activation_functions import Sigmoid, Tanh, Relu, Linear
-from src.config_options import WeightRegularization
+from src.regularization import L1, L2, NoRegularization
 from src.generator import Image, Generator
 from src.layer import Layer
 from src.loss_functions import CrossEntropy, MeanSquaredError
@@ -50,19 +50,19 @@ def read_config(path : str | pathlib.Path) -> tuple[Network, list[list[Image]], 
     learning_rate = config.get("lrate", DEFAULTS.get("lrate"))
     DEFAULTS["lrate"] = learning_rate
 
+    weight_regularization_rate = config.get("wreg", DEFAULTS.get("wreg"))
+
     weight_reg_name = config.get("wrt", DEFAULTS.get("wrt"))
     if weight_reg_name is None:
-        weight_regularization = WeightRegularization.NONE
+        weight_regularization = NoRegularization(weight_regularization_rate)
     elif weight_reg_name.lower() == "l1":
-        weight_regularization = WeightRegularization.L1
+        weight_regularization = L1(weight_regularization_rate)
     elif weight_reg_name.lower() == "l2":
-        weight_regularization = WeightRegularization.L2
+        weight_regularization = L2(weight_regularization_rate)
     else:
         raise ValueError(
             f"wrt must be one of 'l1', 'l2' or 'none'. wrt was {weight_reg_name}"
         )
-    
-    weight_regularization_rate = config.get("wreg", DEFAULTS.get("wreg"))
 
     debug = config.get("debug", DEFAULTS.get("debug"))
     verbose = config.get("verbose", DEFAULTS.get("verbose"))
@@ -80,6 +80,9 @@ def read_config(path : str | pathlib.Path) -> tuple[Network, list[list[Image]], 
     # Handle (optional) softmax layer
     if layers[-1].get("softmax", False):
         softmax = True
+        layers.pop(-1)
+    elif layers[-1].get("softmax", None) is not None:
+        softmax = False
         layers.pop(-1)
     else:
         softmax = False
@@ -144,7 +147,6 @@ def read_config(path : str | pathlib.Path) -> tuple[Network, list[list[Image]], 
         input_size=input_size,
         loss_function=loss_function,
         weight_regularization=weight_regularization,
-        weight_regularization_rate=weight_regularization_rate,
         layers=network_layers,
         softmax=softmax,
         debug=debug,

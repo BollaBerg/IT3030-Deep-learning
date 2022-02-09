@@ -1,7 +1,8 @@
 import pathlib
 import numpy as np
+import random
 
-from src.config_options import WeightRegularization
+from src.regularization import WeightRegularization
 from src.generator import Image
 from src.layer import Layer, SoftmaxLayer
 from src.loss_functions import LossFunction
@@ -12,7 +13,6 @@ class Network:
                  input_size : int,
                  loss_function : LossFunction,
                  weight_regularization : WeightRegularization,
-                 weight_regularization_rate : float,
                  layers : list[Layer],
                  softmax : bool = False,
                  *,
@@ -20,7 +20,6 @@ class Network:
                  verbose: bool = False,
                  ):
         self.input_size = input_size
-        self.loss_function = loss_function
         
         self.layers = layers
         
@@ -35,6 +34,10 @@ class Network:
                 # Empty the file
                 pass
         self.verbose = verbose
+
+
+        self.loss_function = loss_function
+        self.weight_regularization = weight_regularization
         
 
     def forward_pass(self, input_values : np.ndarray) -> np.ndarray:
@@ -43,7 +46,7 @@ class Network:
         if input_values.size != self.input_size:
             raise ValueError(
                 "input_values must have same size as self.input_size! "
-                f"input_values = {input_values}, self.input_size = {self.input_size}"    
+                f"input_values = {input_values.shape}, self.input_size = {self.input_size}"    
             )
         current_value = input_values
         for i, layer in enumerate(self.layers):
@@ -73,7 +76,7 @@ class Network:
             self._debug(f"Layer {i} - jacobi {jacobi}")
         
         for layer in self.layers:
-            layer.update_weights_and_biases()
+            layer.update_weights_and_biases(self.weight_regularization)
     
     def train(self,
               dataset: list[Image],
@@ -88,6 +91,8 @@ class Network:
             validation_losses = None
 
         for epoch in range(epochs):
+            random.shuffle(dataset)
+
             self._debug(f"##### EPOCH {epoch} #####")
             self._verbose(f"##### EPOCH {epoch} #####")
 
