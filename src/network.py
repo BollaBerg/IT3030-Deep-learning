@@ -8,7 +8,7 @@ from src.layer import Layer, SoftmaxLayer
 from src.loss_functions import LossFunction
 
 class Network:
-    log_file = pathlib.Path("network.log")
+    log_file = pathlib.Path("debug.log")
     def __init__(self,
                  input_size : int,
                  loss_function : LossFunction,
