@@ -35,11 +35,21 @@ def main():
     train_losses, validation_losses = network.train(datasets[0], epochs=epochs, validation_set=datasets[1])
     test_losses = network.test(datasets[2])
 
+    train_size = train_losses.size
+    validation_size = validation_losses.size
+    test_size = test_losses.size
+
     fig, ax = plt.subplots(nrows=1, ncols=1)
 
     plt.plot(train_losses.flatten(), "b-")
-    # plt.plot(validation_losses,"y-")
-    # plt.plot(test_losses, "m--")
+    plt.plot(
+        range(train_size, train_size + validation_size),
+        validation_losses.flatten(), "y-"
+    )
+    plt.plot(
+        range(train_size + validation_size, train_size + validation_size + test_size),
+        test_losses, "m--"
+    )
 
     plt.show()
     plt.savefig("images/loss_progression.png")
