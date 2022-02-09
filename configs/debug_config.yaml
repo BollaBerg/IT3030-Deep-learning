@@ -1,9 +1,9 @@
 # YAML-file copying example config given in assignment PDF
 loss: cross_entropy
 lrate: 0.01
-wrt: L2
+wrt: None
 wreg: 0.001
-epochs: 50
+epochs: 10
 debug: true
 
 layers:
@@ -11,7 +11,7 @@ layers:
   - size: 5
     act: sigmoid
     wr: glorot
-  - softmax: true
+  - softmax: false
 
 dataset:
   dimension: 10
