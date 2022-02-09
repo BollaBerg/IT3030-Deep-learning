@@ -10,12 +10,10 @@ layers:
   - input: 225
   - size: 25
     act: sigmoid
-    wr: [-0.1, 0.1]
-    lrate: 0.01
-  - size: 100
+    wr: glorot
+  - size: 25
     act: sigmoid
     wr: glorot
-    br: [0, 1]
   - size: 5
     act: sigmoid
     wr: glorot
