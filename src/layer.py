@@ -95,7 +95,8 @@ class SoftmaxLayer:
         # this method is better for numerical stability
         # Source: https://cs231n.github.io/linear-classify/#softmax
         e_x = np.exp(x - np.max(x))
-        output = e_x / e_x.sum(axis=0)
+        epsilon = np.finfo(float).eps
+        output = e_x / (e_x.sum(axis=0) + epsilon)
 
         self._cache = output
         return output
