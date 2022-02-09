@@ -479,7 +479,7 @@ def demo_generator():
     generator = Generator()
 
     dimensions = 25
-    centering = 0.33
+    centering = 0.5
 
     fig, axes = plt.subplots(nrows=5, ncols=5)
     for row in range(3):
