@@ -62,7 +62,7 @@ class StackedMNISTData:
     channel 1 counting the tens for the green channel, and channel 2 counting the hundreds for the blue.
     """
 
-    def __init__(self, mode: DataMode, default_batch_size: np.int = 256) -> None:
+    def __init__(self, mode: DataMode, default_batch_size: int = 256) -> None:
         # Load MNIST and put in internals
         self.default_batch_size = default_batch_size
 
@@ -124,7 +124,7 @@ class StackedMNISTData:
 
         # Recode, incl scale to 0--1
         images = images / 255.0
-        labels = labels.astype(np.int)
+        labels = labels.astype(int)
 
         # Drop specific digit?  --- will only do this from training data
         if training is True:
@@ -135,7 +135,7 @@ class StackedMNISTData:
         if self.make_binary is True:
             images[images >= .5] = 1.
             images[images < .5] = 0.
-            images = images.astype(np.int)
+            images = images.astype(int)
 
         # Make colorful?
         if self.channels > 1:
@@ -147,7 +147,7 @@ class StackedMNISTData:
             # where the last dim is over the dims of the indexes
             generated_images = np.zeros(shape=(images.shape[0], 28, 28, self.channels),
                                         dtype=images.dtype)
-            generated_labels = np.zeros(shape=(images.shape[0],), dtype=np.int)
+            generated_labels = np.zeros(shape=(images.shape[0],), dtype=int)
             for channel in range(self.channels):
                 generated_images[:, :, :, channel] = images[indexes[:, channel], :, :, 0]
                 generated_labels += np.power(10, channel) * labels[indexes[:, channel]]
@@ -157,7 +157,7 @@ class StackedMNISTData:
 
         return images, labels
 
-    def get_random_batch(self, training: bool = True, batch_size: np.int = None) -> tuple:
+    def get_random_batch(self, training: bool = True, batch_size: int = None) -> tuple:
         """
         Generate a batch of data. We can choose to use training or testing data.
         Also, we can ask for a specific batch-size (if we don't, we use the default
@@ -181,7 +181,7 @@ class StackedMNISTData:
 
         return images, labels
 
-    def batch_generator(self, training: bool = True, batch_size: np.int = None) -> tuple:
+    def batch_generator(self, training: bool = True, batch_size: int = None) -> tuple:
         """
         Create a  batch generator. We can choose to use training or testing data.
         Also, we can ask for a specific batch-size (if we don't, we use the default

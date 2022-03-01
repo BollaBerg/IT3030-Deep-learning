@@ -1,7 +1,7 @@
 from stacked_mnist import StackedMNISTData, DataMode
-from tensorflow.python import keras
-from tensorflow.python.keras.models import Sequential
-from tensorflow.python.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D
+from tensorflow import keras                                                        # type: ignore
+from tensorflow.keras.models import Sequential                                      # type: ignore
+from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D   # type: ignore
 import numpy as np
 
 
@@ -48,7 +48,7 @@ class VerificationNet:
 
         return done_training
 
-    def train(self, generator: StackedMNISTData, epochs: np.int = 10) -> bool:
+    def train(self, generator: StackedMNISTData, epochs: int = 10) -> bool:
         """
         Train model if required. As we have a one-channel model we take care to
         only use the first channel of the data.
@@ -62,9 +62,9 @@ class VerificationNet:
 
             # "Translate": Only look at "red" channel; only use the last digit. Use one-hot for labels during training
             x_train = x_train[:, :, :, [0]]
-            y_train = keras.utils.to_categorical((y_train % 10).astype(np.int), 10)
+            y_train = keras.utils.to_categorical((y_train % 10).astype(int), 10)
             x_test = x_test[:, :, :, [0]]
-            y_test = keras.utils.to_categorical((y_test % 10).astype(np.int), 10)
+            y_test = keras.utils.to_categorical((y_test % 10).astype(int), 10)
 
             # Fit model
             self.model.fit(x=x_train, y=y_train, batch_size=1024, epochs=epochs,
