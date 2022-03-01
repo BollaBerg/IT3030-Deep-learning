@@ -206,7 +206,7 @@ class StackedMNISTData:
             yield images[start_position:end_position],  labels[start_position:end_position]
             start_position = end_position
 
-    def plot_example(self, images: np.ndarray = None, labels: np.ndarray = None) -> None:
+    def plot_example(self, images: np.ndarray = None, labels: np.ndarray = None, filename : str = None) -> None:
         """
         Plot data in RGB (3-channel data) or monochrome (one-channel data).
         If data is submitted, we need to generate an example.
@@ -221,8 +221,8 @@ class StackedMNISTData:
 
         # Do the plotting
         plt.Figure()
-        no_rows = np.ceil(np.sqrt(no_images))
-        no_cols = np.ceil(no_images / no_rows)
+        no_rows = int(np.ceil(np.sqrt(no_images)))
+        no_cols = int(np.ceil(no_images / no_rows))
         for img_idx in range(no_images):
             plt.subplot(no_rows, no_cols, img_idx + 1)
             if self.channels == 1:
@@ -236,11 +236,15 @@ class StackedMNISTData:
         # Show the thing ...
         plt.show()
 
+        # Optionally save plot (for people like me, using WSL and non-GUI backend)
+        if filename is not None:
+            plt.savefig(filename)
+
 
 if __name__ == "__main__":
     gen = StackedMNISTData(mode=DataMode.COLOR_BINARY_MISSING, default_batch_size=9)
     img, cls = gen.get_random_batch(batch_size=9)
-    gen.plot_example(images=img, labels=cls)
+    gen.plot_example(images=img, labels=cls, filename="images/MNIST_example.png")
 
     for (img, cls) in gen.batch_generator(training=False, batch_size=2048):
         print(f"Batch has size: Images: {img.shape}; Labels {cls.shape}")
