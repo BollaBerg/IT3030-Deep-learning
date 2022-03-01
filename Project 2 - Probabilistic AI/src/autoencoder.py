@@ -3,7 +3,7 @@ import torch
 from torch import nn
 
 # Enable CUDA if available
-_device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 
 class _Reshape(nn.Module):
@@ -81,7 +81,7 @@ class AutoEncoder(nn.Module):
 
 
 if __name__ == "__main__":
-    encoder = AutoEncoder().to(_device)
+    encoder = AutoEncoder().to(device)
     print(encoder)
 
     inputs = torch.randint(0, 2, (1, 1, 28, 28), dtype=torch.float)
