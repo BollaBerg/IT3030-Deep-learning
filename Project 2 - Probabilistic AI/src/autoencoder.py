@@ -3,7 +3,9 @@ import torch
 from torch import nn
 
 # Enable CUDA if available
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device = 'cpu'  # torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+# NVIDIA GeForce RTX 3070 with CUDA capability sm_86 is not compatible with the current PyTorch installation.
+# The current PyTorch install supports CUDA capabilities sm_37 sm_50 sm_60 sm_70.
 
 
 class _Reshape(nn.Module):
