@@ -7,7 +7,7 @@ import numpy as np
 
 class VerificationNet:
 
-    def __init__(self, force_learn: bool = False, file_name: str = "./models/verification_model") -> None:
+    def __init__(self, force_learn: bool = False, file_name: str = "./models/verification/verification_model") -> None:
         """
         Define model and set some parameters.
         The model is  made for classifying one channel only -- if we are looking at a
@@ -105,7 +105,7 @@ class VerificationNet:
 
         return predictions, beliefs
 
-    def check_class_coverage(self, data: np.ndarray, tolerance: np.float = .8) -> np.float:
+    def check_class_coverage(self, data: np.ndarray, tolerance: float = .8) -> float:
         """
         Out of the total number of classes that can be generated, how many are in the data-set?
         I'll only could samples for which the network asserts there is at least tolerance probability
@@ -123,7 +123,7 @@ class VerificationNet:
 
     def check_predictability(self, data: np.ndarray,
                              correct_labels: list = None,
-                             tolerance: np.float = .8) -> tuple:
+                             tolerance: float = .8) -> tuple:
         """
         Out of the number of data points retrieved, how many are we able to make predictions about?
         ... and do we guess right??

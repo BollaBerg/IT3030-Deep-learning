@@ -228,7 +228,7 @@ class StackedMNISTData:
             if self.channels == 1:
                 plt.imshow(images[img_idx, :, :, 0], cmap="binary")
             else:
-                plt.imshow(images[img_idx, :, :, :].astype(np.float))
+                plt.imshow(images[img_idx, :, :, :].astype(float))
             plt.xticks([])
             plt.yticks([])
             plt.title(f"Class is {str(labels[img_idx]).zfill(self.channels)}")
