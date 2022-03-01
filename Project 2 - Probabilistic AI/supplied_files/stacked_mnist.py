@@ -3,6 +3,8 @@ from tensorflow.keras.datasets import mnist     # type: ignore
 import matplotlib.pyplot as plt
 from enum import auto, Enum
 
+import torch
+
 
 class DataMode (Enum):
     """
@@ -98,6 +100,16 @@ class StackedMNISTData:
         self.test_images = np.expand_dims(self.test_images, axis=-1)
         self.train_images, self.train_labels = self.__prepare_data_set(training=True)
         self.test_images, self.test_labels = self.__prepare_data_set(training=False)
+
+        # We convert images to Pytorch Tensors
+        self.train_images = torch.from_numpy(self.train_images).float()
+        self.train_labels = torch.from_numpy(self.train_labels)
+        self.test_images = torch.from_numpy(self.test_images).float()
+        self.test_labels = torch.from_numpy(self.test_labels)
+
+        # And change around their axes - Pytorch requires axes NCHW
+        self.train_images = torch.permute(self.train_images, (0, 3, 1, 2))
+        self.test_images = torch.permute(self.test_images, (0, 3, 1, 2))
 
     def get_full_data_set(self, training: bool = True) -> tuple:
         """
