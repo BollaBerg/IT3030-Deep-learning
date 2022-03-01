@@ -1,4 +1,4 @@
-from stacked_mnist import StackedMNISTData, DataMode
+from supplied_files.stacked_mnist import StackedMNISTData, DataMode
 from tensorflow import keras                                                        # type: ignore
 from tensorflow.keras.models import Sequential                                      # type: ignore
 from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D   # type: ignore
