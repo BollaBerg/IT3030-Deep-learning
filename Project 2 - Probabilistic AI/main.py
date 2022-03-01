@@ -19,7 +19,7 @@ def train_autoencoder():
     verification_net = VerificationNet()
 
     for epoch in range(EPOCHS):
-        print(f"########## EPOCH {epoch + 1} ##########", end="\n\n")
+        print(f"\n########## EPOCH {epoch + 1} ##########")
 
         ### TRAINING ###
         model.train()
@@ -52,6 +52,8 @@ def train_autoencoder():
         print(f"Test loss:      {test_loss:.5f}")
         print(f"Predictability: {100*predictability:.2f}%")
         print(f"Accuracy:       {100*accuracy:.2f}%")
+    
+    torch.save(model.state_dict(), "models/autoencoder/mono.pt")
 
 
 
