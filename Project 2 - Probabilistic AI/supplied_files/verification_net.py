@@ -7,7 +7,7 @@ import numpy as np
 
 class VerificationNet:
 
-    def __init__(self, force_learn: bool = False, file_name: str = "./models/verification/verification_model") -> None:
+    def __init__(self, force_learn: bool = False, file_name: str = "./models/verification_model") -> None:
         """
         Define model and set some parameters.
         The model is  made for classifying one channel only -- if we are looking at a
@@ -29,7 +29,7 @@ class VerificationNet:
         model.add(Dense(10, activation='softmax'))
 
         model.compile(loss=keras.losses.categorical_crossentropy,
-                      optimizer=keras.optimizers.Adam(lr=.01),
+                      optimizer=keras.optimizers.Adam(learning_rate=.01),
                       metrics=['accuracy'])
 
         self.model = model
