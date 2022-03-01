@@ -1,5 +1,5 @@
 import numpy as np
-from tensorflow.keras.datasets import mnist
+from tensorflow.keras.datasets import mnist     # type: ignore
 import matplotlib.pyplot as plt
 from enum import auto, Enum
 
