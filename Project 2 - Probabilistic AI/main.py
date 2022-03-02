@@ -13,12 +13,13 @@ def train_autoencoder(
         model_save_path: str,
         predictability_tolerance: float = 0.8,
         learning_rate: float = 1e-3,
-        epochs: int = 500):
+        epochs: int = 500,
+        batch_size: int = 10000):
 
     model = AutoEncoder(channels=channels).to(device)
     loss_fn = BCELoss()
     optimizer = Adam(model.parameters(), lr=learning_rate)
-    data_generator = StackedMNISTData(datamode, default_batch_size=10000)
+    data_generator = StackedMNISTData(datamode, default_batch_size=batch_size)
     verification_net = VerificationNet()
 
     for epoch in range(epochs):
