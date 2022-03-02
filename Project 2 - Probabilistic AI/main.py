@@ -78,7 +78,7 @@ def plot_autoencoder_result(
     generated_batch = torch.permute(generated_batch, (0, 2, 3, 1)).detach().numpy()
     mnist_batch = torch.permute(mnist_batch, (0, 2, 3, 1)).detach().numpy()
 
-    fig, axes = plt.subplots(nrows=num_images, ncols=2)
+    fig, axes = plt.subplots(nrows=num_images, ncols=2, figsize=(20, 10*num_images))
     for row in range(num_images):
         if channels == 1:
             axes[row][0].imshow(mnist_batch[row, :, :, 0], cmap="binary")
@@ -92,35 +92,91 @@ def plot_autoencoder_result(
         axes[row][1].set_xticks([])
         axes[row][1].set_yticks([])
 
-        axes[row][0].set_title(str(labels[row].item()))
-        axes[row][1].set_title(str(labels[row].item()))
+        # axes[row][0].set_title(str(labels[row].item()))
+        # axes[row][1].set_title(str(labels[row].item()))
     
     # plt.show()
     plt.savefig(plot_savepath)
     print(f"Plot saved at {plot_savepath}")
 
 
+def plot_color_result_individually(
+        model_path: str,
+        plot_savepath: str,
+        num_images: int = 10,
+        ):
+    data_generator = StackedMNISTData(DataMode.COLOR_BINARY_COMPLETE)
+    model = AutoEncoder(channels=3)
+    model.load_state_dict(torch.load(model_path))
+    model.eval()
+
+    mnist_batch, labels = data_generator.get_random_batch(training=False, batch_size=num_images)
+    generated_batch = model(mnist_batch)
+
+    generated_batch = torch.permute(generated_batch, (0, 2, 3, 1)).detach().numpy()
+    mnist_batch = torch.permute(mnist_batch, (0, 2, 3, 1)).detach().numpy()
+
+    fig, axes = plt.subplots(nrows=num_images, ncols=4, figsize=(20, 5*num_images))
+    for row in range(num_images):
+        axes[row][0].imshow(mnist_batch[row, :, :, :].astype(float))
+        axes[row][1].imshow(generated_batch[row, :, :, 0], cmap="binary")
+        axes[row][2].imshow(generated_batch[row, :, :, 1], cmap="binary")
+        axes[row][3].imshow(generated_batch[row, :, :, 2], cmap="binary")
+        
+        for i in range(4):
+            axes[row][i].set_xticks([])
+            axes[row][i].set_yticks([])
+    
+    # plt.show()
+    plt.savefig(plot_savepath)
+    print(f"Plot saved at {plot_savepath}")
+
+
+def print_model_output(model_path: str, channels: int):
+    if channels == 1:
+        datamode = DataMode.MONO_BINARY_COMPLETE
+    else:
+        datamode = DataMode.COLOR_BINARY_COMPLETE
+
+    data_generator = StackedMNISTData(datamode)
+    model = AutoEncoder(channels=channels)
+    model.load_state_dict(torch.load(model_path))
+    model.eval()
+
+    data, _ = data_generator.get_random_batch(training=False, batch_size=1)
+    output = model(data)
+    print(output)
+
 
 
 if __name__ == "__main__":
-    # Train single-layer image
+    # # Train single-layer image
     # train_autoencoder(
     #     DataMode.MONO_BINARY_COMPLETE, 1, "models/autoencoder/mono.pt"
     # )
 
-    # Train multi-layer image
+    # # Train multi-layer image
     # train_autoencoder(
     #     DataMode.COLOR_BINARY_COMPLETE, 3, "models/autoencoder/color.pt", 0.5
     # )
     
-    # Plot single-layer results
-    plot_autoencoder_result(
-        DataMode.MONO_BINARY_COMPLETE, 1, "models/autoencoder/mono_1.pt",
-        plot_savepath="images/autoencoder/mono_demo.png", num_images=10
+    # # Plot single-layer results
+    # plot_autoencoder_result(
+    #     DataMode.MONO_BINARY_COMPLETE, 1, "models/autoencoder/mono_1.pt",
+    #     plot_savepath="images/autoencoder/mono_demo.png", num_images=10
+    # )
+
+    # # Plot multi-layer results
+    # plot_autoencoder_result(
+    #     DataMode.COLOR_BINARY_COMPLETE, 3, "models/autoencoder/color_1.pt",
+    #     plot_savepath="images/autoencoder/color_demo.png", num_images=10
+    # )
+
+    # Plot multi-layer results individually
+    plot_color_result_individually(
+        "models/autoencoder/color_1.pt", "images/autoencoder/color_individually.png"
     )
 
-    # Plot multi-layer results
-    plot_autoencoder_result(
-        DataMode.COLOR_BINARY_COMPLETE, 3, "models/autoencoder/color_1.pt",
-        plot_savepath="images/autoencoder/color_demo.png", num_images=10
-    )
+    # Print single-layer result
+    # print_model_output("models/autoencoder/mono_1.pt", 1)
+    # print_model_output("models/autoencoder/color_1.pt", 3)
