@@ -22,6 +22,8 @@ def train_autoencoder(
     data_generator = StackedMNISTData(datamode, default_batch_size=batch_size)
     verification_net = VerificationNet()
 
+    model_save_path_base, model_extension = model_save_path.split(".")
+
     for epoch in range(epochs):
         print(f"\n########## EPOCH {epoch + 1} ##########")
 
@@ -57,6 +59,12 @@ def train_autoencoder(
         print(f"Test loss:      {test_loss:.5f}")
         print(f"Predictability: {100*predictability:.2f}%")
         print(f"Accuracy:       {100*accuracy:.2f}%")
+
+        if epoch % 100 == 0:
+            torch.save(
+                model.state_dict(),
+                f"{model_save_path_base}_{epoch}_{test_loss}.{model_extension}"
+            )
     
     torch.save(model.state_dict(), model_save_path)
 
