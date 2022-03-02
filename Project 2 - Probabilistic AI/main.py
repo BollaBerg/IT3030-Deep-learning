@@ -161,7 +161,8 @@ def print_model_output(model_path: str, channels: int):
 if __name__ == "__main__":
     # Train single-layer image
     train_autoencoder(
-        DataMode.MONO_BINARY_COMPLETE, 1, "models/autoencoder/mono.pt"
+        DataMode.MONO_BINARY_COMPLETE, 1, "models/autoencoder/mono.pt",
+        epochs=800
     )
 
     # # Train multi-layer image
