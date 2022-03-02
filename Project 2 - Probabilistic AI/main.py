@@ -2,6 +2,7 @@ from src.autoencoder import AutoEncoder, device
 from supplied_files.stacked_mnist import DataMode, StackedMNISTData
 from supplied_files.verification_net import VerificationNet
 
+import matplotlib.pyplot as plt
 import torch
 from torch.nn import BCEWithLogitsLoss
 from torch.optim import Adam
@@ -59,15 +60,67 @@ def train_autoencoder(
     torch.save(model.state_dict(), model_save_path)
 
 
+def plot_autoencoder_result(
+        datamode: DataMode,
+        channels: int,
+        model_path: str,
+        num_images: int = 10,
+        plot_savepath: str = "images/autoencoder_results.png"
+        ):
+    data_generator = StackedMNISTData(datamode)
+    model = AutoEncoder(channels=channels)
+    model.load_state_dict(torch.load(model_path))
+    model.eval()
+
+    mnist_batch, labels = data_generator.get_random_batch(training=False, batch_size=num_images)
+    generated_batch = model(mnist_batch)
+
+    generated_batch = torch.permute(generated_batch, (0, 2, 3, 1)).detach().numpy()
+    mnist_batch = torch.permute(mnist_batch, (0, 2, 3, 1)).detach().numpy()
+
+    fig, axes = plt.subplots(nrows=num_images, ncols=2)
+    for row in range(num_images):
+        if channels == 1:
+            axes[row][0].imshow(mnist_batch[row, :, :, 0], cmap="binary")
+            axes[row][1].imshow(generated_batch[row, :, :, 0], cmap="binary")
+        else:
+            axes[row][0].imshow(mnist_batch[row, :, :, :].astype(float))
+            axes[row][1].imshow(generated_batch[row, :, :, :].astype(float))
+        
+        axes[row][0].set_xticks([])
+        axes[row][0].set_yticks([])
+        axes[row][1].set_xticks([])
+        axes[row][1].set_yticks([])
+
+        axes[row][0].set_title(str(labels[row].item()))
+        axes[row][1].set_title(str(labels[row].item()))
+    
+    # plt.show()
+    plt.savefig(plot_savepath)
+    print(f"Plot saved at {plot_savepath}")
+
+
 
 
 if __name__ == "__main__":
     # Train single-layer image
-    train_autoencoder(
-        DataMode.MONO_BINARY_COMPLETE, 1, "models/autoencoder/mono.pt"
-    )
+    # train_autoencoder(
+    #     DataMode.MONO_BINARY_COMPLETE, 1, "models/autoencoder/mono.pt"
+    # )
 
     # Train multi-layer image
-    train_autoencoder(
-        DataMode.COLOR_BINARY_COMPLETE, 3, "models/autoencoder/color.pt", 0.5
+    # train_autoencoder(
+    #     DataMode.COLOR_BINARY_COMPLETE, 3, "models/autoencoder/color.pt", 0.5
+    # )
+    
+    # Plot single-layer results
+    plot_autoencoder_result(
+        DataMode.MONO_BINARY_COMPLETE, 1, "models/autoencoder/mono_1.pt",
+        plot_savepath="images/autoencoder/mono_demo.png", num_images=10
+    )
+
+    # Plot multi-layer results
+    plot_autoencoder_result(
+        DataMode.COLOR_BINARY_COMPLETE, 3, "models/autoencoder/color_1.pt",
+        plot_savepath="images/autoencoder/color_demo.png", num_images=10
     )
