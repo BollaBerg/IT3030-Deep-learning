@@ -73,11 +73,13 @@ class AutoEncoder(nn.Module):
     def forward(self, x):
         z = self.encoder(x)
         x_hat = self.decoder(z)
-        return x_hat
+        output = nn.Sigmoid()(x_hat)
+        return output
     
     def decode(self, z):
         x_hat = self.decoder(z)
-        return x_hat
+        output = nn.Sigmoid()(x_hat)
+        return output
 
 
 if __name__ == "__main__":
