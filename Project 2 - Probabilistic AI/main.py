@@ -51,7 +51,7 @@ def train_autoencoder(
         ).cpu().detach().numpy()
 
         predictability, accuracy = verification_net.check_predictability(
-            predictability_data, y_test, tolerance=0.5
+            predictability_data, y_test, tolerance=predictability_tolerance
         )
         print(f"Test loss:      {test_loss:.5f}")
         print(f"Predictability: {100*predictability:.2f}%")
