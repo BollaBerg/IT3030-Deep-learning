@@ -163,13 +163,13 @@ if __name__ == "__main__":
     # # Plot single-layer results
     # plot_autoencoder_result(
     #     DataMode.MONO_BINARY_COMPLETE, 1, "models/autoencoder/mono_1.pt",
-    #     plot_savepath="images/autoencoder/mono_demo.png", num_images=10
+    #     plot_savepath="images/autoencoder/mono.png", num_images=10
     # )
 
     # # Plot multi-layer results
     # plot_autoencoder_result(
     #     DataMode.COLOR_BINARY_COMPLETE, 3, "models/autoencoder/color_1.pt",
-    #     plot_savepath="images/autoencoder/color_demo.png", num_images=10
+    #     plot_savepath="images/autoencoder/color.png", num_images=10
     # )
 
     # Plot multi-layer results individually
