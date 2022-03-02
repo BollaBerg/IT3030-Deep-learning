@@ -4,7 +4,7 @@ from supplied_files.verification_net import VerificationNet
 
 import matplotlib.pyplot as plt
 import torch
-from torch.nn import BCEWithLogitsLoss
+from torch.nn import BCELoss
 from torch.optim import Adam
 
 def train_autoencoder(
@@ -16,7 +16,7 @@ def train_autoencoder(
         epochs: int = 500):
 
     model = AutoEncoder(channels=channels).to(device)
-    loss_fn = BCEWithLogitsLoss()
+    loss_fn = BCELoss()
     optimizer = Adam(model.parameters(), lr=learning_rate)
     data_generator = StackedMNISTData(datamode, default_batch_size=10000)
     verification_net = VerificationNet()
