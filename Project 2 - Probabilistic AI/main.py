@@ -151,33 +151,34 @@ def print_model_output(model_path: str, channels: int):
 
 
 if __name__ == "__main__":
-    # # Train single-layer image
-    # train_autoencoder(
-    #     DataMode.MONO_BINARY_COMPLETE, 1, "models/autoencoder/mono.pt"
-    # )
+    # Train single-layer image
+    train_autoencoder(
+        DataMode.MONO_BINARY_COMPLETE, 1, "models/autoencoder/mono.pt"
+    )
 
     # # Train multi-layer image
     # train_autoencoder(
-    #     DataMode.COLOR_BINARY_COMPLETE, 3, "models/autoencoder/color.pt", 0.5
+    #     DataMode.COLOR_BINARY_COMPLETE, 3, "models/autoencoder/color.pt", 0.5,
+    #     batch_size = 5000
     # )
     
     # # Plot single-layer results
     # plot_autoencoder_result(
-    #     DataMode.MONO_BINARY_COMPLETE, 1, "models/autoencoder/mono_1.pt",
+    #     DataMode.MONO_BINARY_COMPLETE, 1, "models/autoencoder/mono_demo.pt",
     #     plot_savepath="images/autoencoder/mono.png", num_images=10
     # )
 
     # # Plot multi-layer results
     # plot_autoencoder_result(
-    #     DataMode.COLOR_BINARY_COMPLETE, 3, "models/autoencoder/color_1.pt",
+    #     DataMode.COLOR_BINARY_COMPLETE, 3, "models/autoencoder/mono_demo.pt",
     #     plot_savepath="images/autoencoder/color.png", num_images=10
     # )
 
-    # Plot multi-layer results individually
-    plot_color_result_individually(
-        "models/autoencoder/color_1.pt", "images/autoencoder/color_individually.png"
-    )
+    # # Plot multi-layer results individually
+    # plot_color_result_individually(
+    #     "models/autoencoder/mono_demo.pt", "images/autoencoder/color_individually.png"
+    # )
 
-    # Print single-layer result
-    # print_model_output("models/autoencoder/mono_1.pt", 1)
-    # print_model_output("models/autoencoder/color_1.pt", 3)
+    # Print model results
+    # print_model_output("models/autoencoder/mono_demo.pt", 1)
+    # print_model_output("models/autoencoder/color_demo.pt", 3)
