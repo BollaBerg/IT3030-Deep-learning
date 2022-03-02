@@ -1,0 +1,2521 @@
+2022-03-01 23:19:49.297913: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory
+2022-03-01 23:19:49.297944: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2022-03-01 23:19:51.522179: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:936] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-03-01 23:19:51.522370: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory
+2022-03-01 23:19:51.522400: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcublas.so.11'; dlerror: libcublas.so.11: cannot open shared object file: No such file or directory
+2022-03-01 23:19:51.522423: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcublasLt.so.11'; dlerror: libcublasLt.so.11: cannot open shared object file: No such file or directory
+2022-03-01 23:19:51.522445: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcufft.so.10'; dlerror: libcufft.so.10: cannot open shared object file: No such file or directory
+2022-03-01 23:19:51.522467: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcurand.so.10'; dlerror: libcurand.so.10: cannot open shared object file: No such file or directory
+2022-03-01 23:19:51.522488: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcusolver.so.11'; dlerror: libcusolver.so.11: cannot open shared object file: No such file or directory
+2022-03-01 23:19:51.522509: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcusparse.so.11'; dlerror: libcusparse.so.11: cannot open shared object file: No such file or directory
+2022-03-01 23:19:51.522530: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudnn.so.8'; dlerror: libcudnn.so.8: cannot open shared object file: No such file or directory
+2022-03-01 23:19:51.522536: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1850] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+2022-03-01 23:19:51.522695: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+########## EPOCH 1 ##########
+Test loss:      0.67206
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 2 ##########
+Test loss:      0.66846
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 3 ##########
+Test loss:      0.66420
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 4 ##########
+Test loss:      0.65853
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 5 ##########
+Test loss:      0.65019
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 6 ##########
+Test loss:      0.63732
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 7 ##########
+Test loss:      0.61775
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 8 ##########
+Test loss:      0.58995
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 9 ##########
+Test loss:      0.55539
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 10 ##########
+Test loss:      0.52204
+Predictability: 99.93%
+Accuracy:       0.00%
+
+########## EPOCH 11 ##########
+Test loss:      0.50142
+Predictability: 100.00%
+Accuracy:       0.00%
+
+########## EPOCH 12 ##########
+Test loss:      0.49119
+Predictability: 100.00%
+Accuracy:       0.00%
+
+########## EPOCH 13 ##########
+Test loss:      0.47774
+Predictability: 100.00%
+Accuracy:       0.00%
+
+########## EPOCH 14 ##########
+Test loss:      0.46188
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 15 ##########
+Test loss:      0.44966
+Predictability: 0.15%
+Accuracy:       0.00%
+
+########## EPOCH 16 ##########
+Test loss:      0.44167
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 17 ##########
+Test loss:      0.43572
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 18 ##########
+Test loss:      0.43114
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 19 ##########
+Test loss:      0.42795
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 20 ##########
+Test loss:      0.42569
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 21 ##########
+Test loss:      0.42364
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 22 ##########
+Test loss:      0.42159
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 23 ##########
+Test loss:      0.41983
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 24 ##########
+Test loss:      0.41866
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 25 ##########
+Test loss:      0.41787
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 26 ##########
+Test loss:      0.41683
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 27 ##########
+Test loss:      0.41508
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 28 ##########
+Test loss:      0.41282
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 29 ##########
+Test loss:      0.41064
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 30 ##########
+Test loss:      0.40898
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 31 ##########
+Test loss:      0.40785
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 32 ##########
+Test loss:      0.40695
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 33 ##########
+Test loss:      0.40595
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 34 ##########
+Test loss:      0.40471
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 35 ##########
+Test loss:      0.40325
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 36 ##########
+Test loss:      0.40175
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 37 ##########
+Test loss:      0.40037
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 38 ##########
+Test loss:      0.39921
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 39 ##########
+Test loss:      0.39824
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 40 ##########
+Test loss:      0.39735
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 41 ##########
+Test loss:      0.39640
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 42 ##########
+Test loss:      0.39530
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 43 ##########
+Test loss:      0.39405
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 44 ##########
+Test loss:      0.39274
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 45 ##########
+Test loss:      0.39145
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 46 ##########
+Test loss:      0.39020
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 47 ##########
+Test loss:      0.38896
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 48 ##########
+Test loss:      0.38773
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 49 ##########
+Test loss:      0.38648
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 50 ##########
+Test loss:      0.38523
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 51 ##########
+Test loss:      0.38396
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 52 ##########
+Test loss:      0.38267
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 53 ##########
+Test loss:      0.38133
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 54 ##########
+Test loss:      0.37998
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 55 ##########
+Test loss:      0.37862
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 56 ##########
+Test loss:      0.37726
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 57 ##########
+Test loss:      0.37589
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 58 ##########
+Test loss:      0.37445
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 59 ##########
+Test loss:      0.37293
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 60 ##########
+Test loss:      0.37131
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 61 ##########
+Test loss:      0.36966
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 62 ##########
+Test loss:      0.36800
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 63 ##########
+Test loss:      0.36635
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 64 ##########
+Test loss:      0.36466
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 65 ##########
+Test loss:      0.36289
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 66 ##########
+Test loss:      0.36105
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 67 ##########
+Test loss:      0.35919
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 68 ##########
+Test loss:      0.35732
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 69 ##########
+Test loss:      0.35543
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 70 ##########
+Test loss:      0.35347
+Predictability: 0.00%
+Accuracy:       0.00%
+
+########## EPOCH 71 ##########
+Test loss:      0.35144
+Predictability: 0.02%
+Accuracy:       0.00%
+
+########## EPOCH 72 ##########
+Test loss:      0.34936
+Predictability: 0.03%
+Accuracy:       0.00%
+
+########## EPOCH 73 ##########
+Test loss:      0.34725
+Predictability: 0.04%
+Accuracy:       0.00%
+
+########## EPOCH 74 ##########
+Test loss:      0.34511
+Predictability: 0.10%
+Accuracy:       0.00%
+
+########## EPOCH 75 ##########
+Test loss:      0.34294
+Predictability: 0.22%
+Accuracy:       0.00%
+
+########## EPOCH 76 ##########
+Test loss:      0.34077
+Predictability: 0.37%
+Accuracy:       0.00%
+
+########## EPOCH 77 ##########
+Test loss:      0.33858
+Predictability: 0.67%
+Accuracy:       0.00%
+
+########## EPOCH 78 ##########
+Test loss:      0.33635
+Predictability: 1.01%
+Accuracy:       0.00%
+
+########## EPOCH 79 ##########
+Test loss:      0.33411
+Predictability: 1.25%
+Accuracy:       0.00%
+
+########## EPOCH 80 ##########
+Test loss:      0.33183
+Predictability: 1.53%
+Accuracy:       0.00%
+
+########## EPOCH 81 ##########
+Test loss:      0.32946
+Predictability: 1.69%
+Accuracy:       0.00%
+
+########## EPOCH 82 ##########
+Test loss:      0.32704
+Predictability: 1.59%
+Accuracy:       0.00%
+
+########## EPOCH 83 ##########
+Test loss:      0.32462
+Predictability: 1.37%
+Accuracy:       0.00%
+
+########## EPOCH 84 ##########
+Test loss:      0.32219
+Predictability: 1.39%
+Accuracy:       0.00%
+
+########## EPOCH 85 ##########
+Test loss:      0.31979
+Predictability: 1.59%
+Accuracy:       0.00%
+
+########## EPOCH 86 ##########
+Test loss:      0.31740
+Predictability: 1.92%
+Accuracy:       0.00%
+
+########## EPOCH 87 ##########
+Test loss:      0.31502
+Predictability: 2.20%
+Accuracy:       0.00%
+
+########## EPOCH 88 ##########
+Test loss:      0.31267
+Predictability: 2.71%
+Accuracy:       0.00%
+
+########## EPOCH 89 ##########
+Test loss:      0.31033
+Predictability: 3.95%
+Accuracy:       0.00%
+
+########## EPOCH 90 ##########
+Test loss:      0.30805
+Predictability: 5.43%
+Accuracy:       0.00%
+
+########## EPOCH 91 ##########
+Test loss:      0.30580
+Predictability: 6.72%
+Accuracy:       0.00%
+
+########## EPOCH 92 ##########
+Test loss:      0.30362
+Predictability: 7.78%
+Accuracy:       0.00%
+
+########## EPOCH 93 ##########
+Test loss:      0.30148
+Predictability: 8.67%
+Accuracy:       0.00%
+
+########## EPOCH 94 ##########
+Test loss:      0.29937
+Predictability: 9.90%
+Accuracy:       0.00%
+
+########## EPOCH 95 ##########
+Test loss:      0.29728
+Predictability: 11.51%
+Accuracy:       0.00%
+
+########## EPOCH 96 ##########
+Test loss:      0.29526
+Predictability: 13.57%
+Accuracy:       0.00%
+
+########## EPOCH 97 ##########
+Test loss:      0.29328
+Predictability: 14.53%
+Accuracy:       0.00%
+
+########## EPOCH 98 ##########
+Test loss:      0.29135
+Predictability: 15.38%
+Accuracy:       0.00%
+
+########## EPOCH 99 ##########
+Test loss:      0.28948
+Predictability: 16.36%
+Accuracy:       0.00%
+
+########## EPOCH 100 ##########
+Test loss:      0.28764
+Predictability: 17.35%
+Accuracy:       0.00%
+
+########## EPOCH 101 ##########
+Test loss:      0.28584
+Predictability: 18.32%
+Accuracy:       0.00%
+
+########## EPOCH 102 ##########
+Test loss:      0.28410
+Predictability: 19.47%
+Accuracy:       0.00%
+
+########## EPOCH 103 ##########
+Test loss:      0.28238
+Predictability: 19.68%
+Accuracy:       0.00%
+
+########## EPOCH 104 ##########
+Test loss:      0.28068
+Predictability: 19.61%
+Accuracy:       0.00%
+
+########## EPOCH 105 ##########
+Test loss:      0.27901
+Predictability: 20.33%
+Accuracy:       0.00%
+
+########## EPOCH 106 ##########
+Test loss:      0.27737
+Predictability: 20.80%
+Accuracy:       0.00%
+
+########## EPOCH 107 ##########
+Test loss:      0.27578
+Predictability: 21.33%
+Accuracy:       0.00%
+
+########## EPOCH 108 ##########
+Test loss:      0.27423
+Predictability: 21.86%
+Accuracy:       0.00%
+
+########## EPOCH 109 ##########
+Test loss:      0.27274
+Predictability: 22.47%
+Accuracy:       0.00%
+
+########## EPOCH 110 ##########
+Test loss:      0.27132
+Predictability: 23.12%
+Accuracy:       0.00%
+
+########## EPOCH 111 ##########
+Test loss:      0.26994
+Predictability: 23.19%
+Accuracy:       0.00%
+
+########## EPOCH 112 ##########
+Test loss:      0.26863
+Predictability: 23.07%
+Accuracy:       0.00%
+
+########## EPOCH 113 ##########
+Test loss:      0.26736
+Predictability: 23.17%
+Accuracy:       0.00%
+
+########## EPOCH 114 ##########
+Test loss:      0.26617
+Predictability: 23.60%
+Accuracy:       0.00%
+
+########## EPOCH 115 ##########
+Test loss:      0.26504
+Predictability: 23.19%
+Accuracy:       0.00%
+
+########## EPOCH 116 ##########
+Test loss:      0.26401
+Predictability: 23.48%
+Accuracy:       0.00%
+
+########## EPOCH 117 ##########
+Test loss:      0.26309
+Predictability: 23.18%
+Accuracy:       0.00%
+
+########## EPOCH 118 ##########
+Test loss:      0.26250
+Predictability: 24.87%
+Accuracy:       0.00%
+
+########## EPOCH 119 ##########
+Test loss:      0.26197
+Predictability: 21.97%
+Accuracy:       0.00%
+
+########## EPOCH 120 ##########
+Test loss:      0.26070
+Predictability: 25.43%
+Accuracy:       0.00%
+
+########## EPOCH 121 ##########
+Test loss:      0.25950
+Predictability: 24.82%
+Accuracy:       0.00%
+
+########## EPOCH 122 ##########
+Test loss:      0.25903
+Predictability: 24.74%
+Accuracy:       0.00%
+
+########## EPOCH 123 ##########
+Test loss:      0.25831
+Predictability: 25.97%
+Accuracy:       0.00%
+
+########## EPOCH 124 ##########
+Test loss:      0.25724
+Predictability: 26.31%
+Accuracy:       0.00%
+
+########## EPOCH 125 ##########
+Test loss:      0.25668
+Predictability: 27.18%
+Accuracy:       0.00%
+
+########## EPOCH 126 ##########
+Test loss:      0.25617
+Predictability: 27.61%
+Accuracy:       0.00%
+
+########## EPOCH 127 ##########
+Test loss:      0.25529
+Predictability: 28.57%
+Accuracy:       0.00%
+
+########## EPOCH 128 ##########
+Test loss:      0.25472
+Predictability: 30.11%
+Accuracy:       0.00%
+
+########## EPOCH 129 ##########
+Test loss:      0.25434
+Predictability: 30.40%
+Accuracy:       0.00%
+
+########## EPOCH 130 ##########
+Test loss:      0.25364
+Predictability: 31.54%
+Accuracy:       0.00%
+
+########## EPOCH 131 ##########
+Test loss:      0.25310
+Predictability: 32.98%
+Accuracy:       0.00%
+
+########## EPOCH 132 ##########
+Test loss:      0.25276
+Predictability: 33.57%
+Accuracy:       0.00%
+
+########## EPOCH 133 ##########
+Test loss:      0.25221
+Predictability: 33.95%
+Accuracy:       0.00%
+
+########## EPOCH 134 ##########
+Test loss:      0.25169
+Predictability: 35.61%
+Accuracy:       0.00%
+
+########## EPOCH 135 ##########
+Test loss:      0.25133
+Predictability: 35.49%
+Accuracy:       0.00%
+
+########## EPOCH 136 ##########
+Test loss:      0.25092
+Predictability: 35.90%
+Accuracy:       0.00%
+
+########## EPOCH 137 ##########
+Test loss:      0.25046
+Predictability: 37.49%
+Accuracy:       0.00%
+
+########## EPOCH 138 ##########
+Test loss:      0.25005
+Predictability: 36.85%
+Accuracy:       0.00%
+
+########## EPOCH 139 ##########
+Test loss:      0.24974
+Predictability: 37.70%
+Accuracy:       0.00%
+
+########## EPOCH 140 ##########
+Test loss:      0.24938
+Predictability: 38.66%
+Accuracy:       0.00%
+
+########## EPOCH 141 ##########
+Test loss:      0.24899
+Predictability: 37.63%
+Accuracy:       0.00%
+
+########## EPOCH 142 ##########
+Test loss:      0.24869
+Predictability: 38.26%
+Accuracy:       0.00%
+
+########## EPOCH 143 ##########
+Test loss:      0.24840
+Predictability: 38.95%
+Accuracy:       0.00%
+
+########## EPOCH 144 ##########
+Test loss:      0.24809
+Predictability: 38.14%
+Accuracy:       0.00%
+
+########## EPOCH 145 ##########
+Test loss:      0.24796
+Predictability: 40.33%
+Accuracy:       0.00%
+
+########## EPOCH 146 ##########
+Test loss:      0.24802
+Predictability: 36.52%
+Accuracy:       0.00%
+
+########## EPOCH 147 ##########
+Test loss:      0.24866
+Predictability: 42.53%
+Accuracy:       0.00%
+
+########## EPOCH 148 ##########
+Test loss:      0.24958
+Predictability: 34.49%
+Accuracy:       0.00%
+
+########## EPOCH 149 ##########
+Test loss:      0.24777
+Predictability: 41.08%
+Accuracy:       0.00%
+
+########## EPOCH 150 ##########
+Test loss:      0.24692
+Predictability: 39.92%
+Accuracy:       0.00%
+
+########## EPOCH 151 ##########
+Test loss:      0.24722
+Predictability: 38.04%
+Accuracy:       0.00%
+
+########## EPOCH 152 ##########
+Test loss:      0.24695
+Predictability: 41.31%
+Accuracy:       0.00%
+
+########## EPOCH 153 ##########
+Test loss:      0.24666
+Predictability: 38.20%
+Accuracy:       0.00%
+
+########## EPOCH 154 ##########
+Test loss:      0.24610
+Predictability: 40.67%
+Accuracy:       0.00%
+
+########## EPOCH 155 ##########
+Test loss:      0.24619
+Predictability: 40.92%
+Accuracy:       0.00%
+
+########## EPOCH 156 ##########
+Test loss:      0.24618
+Predictability: 37.08%
+Accuracy:       0.00%
+
+########## EPOCH 157 ##########
+Test loss:      0.24546
+Predictability: 42.69%
+Accuracy:       0.00%
+
+########## EPOCH 158 ##########
+Test loss:      0.24563
+Predictability: 40.82%
+Accuracy:       0.00%
+
+########## EPOCH 159 ##########
+Test loss:      0.24547
+Predictability: 36.18%
+Accuracy:       0.00%
+
+########## EPOCH 160 ##########
+Test loss:      0.24511
+Predictability: 42.76%
+Accuracy:       0.00%
+
+########## EPOCH 161 ##########
+Test loss:      0.24506
+Predictability: 40.70%
+Accuracy:       0.00%
+
+########## EPOCH 162 ##########
+Test loss:      0.24477
+Predictability: 37.00%
+Accuracy:       0.00%
+
+########## EPOCH 163 ##########
+Test loss:      0.24483
+Predictability: 42.65%
+Accuracy:       0.00%
+
+########## EPOCH 164 ##########
+Test loss:      0.24446
+Predictability: 40.25%
+Accuracy:       0.00%
+
+########## EPOCH 165 ##########
+Test loss:      0.24427
+Predictability: 37.63%
+Accuracy:       0.00%
+
+########## EPOCH 166 ##########
+Test loss:      0.24439
+Predictability: 41.43%
+Accuracy:       0.00%
+
+########## EPOCH 167 ##########
+Test loss:      0.24401
+Predictability: 39.57%
+Accuracy:       0.00%
+
+########## EPOCH 168 ##########
+Test loss:      0.24395
+Predictability: 38.97%
+Accuracy:       0.00%
+
+########## EPOCH 169 ##########
+Test loss:      0.24381
+Predictability: 39.74%
+Accuracy:       0.00%
+
+########## EPOCH 170 ##########
+Test loss:      0.24369
+Predictability: 39.50%
+Accuracy:       0.00%
+
+########## EPOCH 171 ##########
+Test loss:      0.24361
+Predictability: 40.00%
+Accuracy:       0.00%
+
+########## EPOCH 172 ##########
+Test loss:      0.24337
+Predictability: 38.21%
+Accuracy:       0.00%
+
+########## EPOCH 173 ##########
+Test loss:      0.24335
+Predictability: 40.06%
+Accuracy:       0.00%
+
+########## EPOCH 174 ##########
+Test loss:      0.24322
+Predictability: 40.79%
+Accuracy:       0.00%
+
+########## EPOCH 175 ##########
+Test loss:      0.24311
+Predictability: 37.46%
+Accuracy:       0.00%
+
+########## EPOCH 176 ##########
+Test loss:      0.24300
+Predictability: 40.72%
+Accuracy:       0.00%
+
+########## EPOCH 177 ##########
+Test loss:      0.24286
+Predictability: 40.60%
+Accuracy:       0.00%
+
+########## EPOCH 178 ##########
+Test loss:      0.24280
+Predictability: 38.01%
+Accuracy:       0.00%
+
+########## EPOCH 179 ##########
+Test loss:      0.24269
+Predictability: 40.03%
+Accuracy:       0.00%
+
+########## EPOCH 180 ##########
+Test loss:      0.24261
+Predictability: 39.88%
+Accuracy:       0.00%
+
+########## EPOCH 181 ##########
+Test loss:      0.24250
+Predictability: 39.29%
+Accuracy:       0.00%
+
+########## EPOCH 182 ##########
+Test loss:      0.24237
+Predictability: 38.53%
+Accuracy:       0.00%
+
+########## EPOCH 183 ##########
+Test loss:      0.24232
+Predictability: 40.53%
+Accuracy:       0.00%
+
+########## EPOCH 184 ##########
+Test loss:      0.24221
+Predictability: 39.76%
+Accuracy:       0.00%
+
+########## EPOCH 185 ##########
+Test loss:      0.24214
+Predictability: 37.64%
+Accuracy:       0.00%
+
+########## EPOCH 186 ##########
+Test loss:      0.24207
+Predictability: 40.61%
+Accuracy:       0.00%
+
+########## EPOCH 187 ##########
+Test loss:      0.24196
+Predictability: 39.06%
+Accuracy:       0.00%
+
+########## EPOCH 188 ##########
+Test loss:      0.24190
+Predictability: 38.64%
+Accuracy:       0.00%
+
+########## EPOCH 189 ##########
+Test loss:      0.24180
+Predictability: 38.77%
+Accuracy:       0.00%
+
+########## EPOCH 190 ##########
+Test loss:      0.24173
+Predictability: 39.94%
+Accuracy:       0.00%
+
+########## EPOCH 191 ##########
+Test loss:      0.24165
+Predictability: 37.92%
+Accuracy:       0.00%
+
+########## EPOCH 192 ##########
+Test loss:      0.24157
+Predictability: 39.40%
+Accuracy:       0.00%
+
+########## EPOCH 193 ##########
+Test loss:      0.24151
+Predictability: 38.94%
+Accuracy:       0.00%
+
+########## EPOCH 194 ##########
+Test loss:      0.24145
+Predictability: 38.94%
+Accuracy:       0.00%
+
+########## EPOCH 195 ##########
+Test loss:      0.24138
+Predictability: 38.06%
+Accuracy:       0.00%
+
+########## EPOCH 196 ##########
+Test loss:      0.24140
+Predictability: 40.67%
+Accuracy:       0.00%
+
+########## EPOCH 197 ##########
+Test loss:      0.24146
+Predictability: 36.86%
+Accuracy:       0.00%
+
+########## EPOCH 198 ##########
+Test loss:      0.24170
+Predictability: 41.11%
+Accuracy:       0.00%
+
+########## EPOCH 199 ##########
+Test loss:      0.24236
+Predictability: 35.37%
+Accuracy:       0.00%
+
+########## EPOCH 200 ##########
+Test loss:      0.24288
+Predictability: 43.00%
+Accuracy:       0.00%
+
+########## EPOCH 201 ##########
+Test loss:      0.24370
+Predictability: 32.96%
+Accuracy:       0.00%
+
+########## EPOCH 202 ##########
+Test loss:      0.24190
+Predictability: 42.13%
+Accuracy:       0.00%
+
+########## EPOCH 203 ##########
+Test loss:      0.24083
+Predictability: 39.22%
+Accuracy:       0.00%
+
+########## EPOCH 204 ##########
+Test loss:      0.24122
+Predictability: 36.73%
+Accuracy:       0.00%
+
+########## EPOCH 205 ##########
+Test loss:      0.24183
+Predictability: 41.52%
+Accuracy:       0.00%
+
+########## EPOCH 206 ##########
+Test loss:      0.24154
+Predictability: 36.60%
+Accuracy:       0.00%
+
+########## EPOCH 207 ##########
+Test loss:      0.24062
+Predictability: 40.27%
+Accuracy:       0.00%
+
+########## EPOCH 208 ##########
+Test loss:      0.24096
+Predictability: 40.25%
+Accuracy:       0.00%
+
+########## EPOCH 209 ##########
+Test loss:      0.24149
+Predictability: 36.16%
+Accuracy:       0.00%
+
+########## EPOCH 210 ##########
+Test loss:      0.24075
+Predictability: 41.39%
+Accuracy:       0.00%
+
+########## EPOCH 211 ##########
+Test loss:      0.24042
+Predictability: 39.91%
+Accuracy:       0.00%
+
+########## EPOCH 212 ##########
+Test loss:      0.24086
+Predictability: 37.19%
+Accuracy:       0.00%
+
+########## EPOCH 213 ##########
+Test loss:      0.24068
+Predictability: 41.06%
+Accuracy:       0.00%
+
+########## EPOCH 214 ##########
+Test loss:      0.24021
+Predictability: 39.30%
+Accuracy:       0.00%
+
+########## EPOCH 215 ##########
+Test loss:      0.24031
+Predictability: 38.32%
+Accuracy:       0.00%
+
+########## EPOCH 216 ##########
+Test loss:      0.24046
+Predictability: 40.66%
+Accuracy:       0.00%
+
+########## EPOCH 217 ##########
+Test loss:      0.24017
+Predictability: 38.85%
+Accuracy:       0.00%
+
+########## EPOCH 218 ##########
+Test loss:      0.24001
+Predictability: 39.42%
+Accuracy:       0.00%
+
+########## EPOCH 219 ##########
+Test loss:      0.24018
+Predictability: 40.35%
+Accuracy:       0.00%
+
+########## EPOCH 220 ##########
+Test loss:      0.24012
+Predictability: 38.46%
+Accuracy:       0.00%
+
+########## EPOCH 221 ##########
+Test loss:      0.23988
+Predictability: 40.25%
+Accuracy:       0.00%
+
+########## EPOCH 222 ##########
+Test loss:      0.23990
+Predictability: 40.07%
+Accuracy:       0.00%
+
+########## EPOCH 223 ##########
+Test loss:      0.23997
+Predictability: 38.50%
+Accuracy:       0.00%
+
+########## EPOCH 224 ##########
+Test loss:      0.23980
+Predictability: 40.96%
+Accuracy:       0.00%
+
+########## EPOCH 225 ##########
+Test loss:      0.23967
+Predictability: 39.83%
+Accuracy:       0.00%
+
+########## EPOCH 226 ##########
+Test loss:      0.23972
+Predictability: 38.85%
+Accuracy:       0.00%
+
+########## EPOCH 227 ##########
+Test loss:      0.23970
+Predictability: 40.88%
+Accuracy:       0.00%
+
+########## EPOCH 228 ##########
+Test loss:      0.23955
+Predictability: 39.99%
+Accuracy:       0.00%
+
+########## EPOCH 229 ##########
+Test loss:      0.23950
+Predictability: 39.40%
+Accuracy:       0.00%
+
+########## EPOCH 230 ##########
+Test loss:      0.23953
+Predictability: 40.58%
+Accuracy:       0.00%
+
+########## EPOCH 231 ##########
+Test loss:      0.23947
+Predictability: 39.81%
+Accuracy:       0.00%
+
+########## EPOCH 232 ##########
+Test loss:      0.23936
+Predictability: 40.19%
+Accuracy:       0.00%
+
+########## EPOCH 233 ##########
+Test loss:      0.23933
+Predictability: 40.15%
+Accuracy:       0.00%
+
+########## EPOCH 234 ##########
+Test loss:      0.23933
+Predictability: 39.90%
+Accuracy:       0.00%
+
+########## EPOCH 235 ##########
+Test loss:      0.23928
+Predictability: 41.02%
+Accuracy:       0.00%
+
+########## EPOCH 236 ##########
+Test loss:      0.23919
+Predictability: 40.14%
+Accuracy:       0.00%
+
+########## EPOCH 237 ##########
+Test loss:      0.23915
+Predictability: 40.26%
+Accuracy:       0.00%
+
+########## EPOCH 238 ##########
+Test loss:      0.23915
+Predictability: 40.99%
+Accuracy:       0.00%
+
+########## EPOCH 239 ##########
+Test loss:      0.23910
+Predictability: 40.11%
+Accuracy:       0.00%
+
+########## EPOCH 240 ##########
+Test loss:      0.23903
+Predictability: 40.73%
+Accuracy:       0.00%
+
+########## EPOCH 241 ##########
+Test loss:      0.23898
+Predictability: 40.86%
+Accuracy:       0.00%
+
+########## EPOCH 242 ##########
+Test loss:      0.23896
+Predictability: 40.52%
+Accuracy:       0.00%
+
+########## EPOCH 243 ##########
+Test loss:      0.23894
+Predictability: 41.08%
+Accuracy:       0.00%
+
+########## EPOCH 244 ##########
+Test loss:      0.23888
+Predictability: 40.85%
+Accuracy:       0.00%
+
+########## EPOCH 245 ##########
+Test loss:      0.23883
+Predictability: 40.99%
+Accuracy:       0.00%
+
+########## EPOCH 246 ##########
+Test loss:      0.23879
+Predictability: 41.11%
+Accuracy:       0.00%
+
+########## EPOCH 247 ##########
+Test loss:      0.23876
+Predictability: 40.94%
+Accuracy:       0.00%
+
+########## EPOCH 248 ##########
+Test loss:      0.23874
+Predictability: 41.42%
+Accuracy:       0.00%
+
+########## EPOCH 249 ##########
+Test loss:      0.23869
+Predictability: 41.08%
+Accuracy:       0.00%
+
+########## EPOCH 250 ##########
+Test loss:      0.23864
+Predictability: 41.35%
+Accuracy:       0.00%
+
+########## EPOCH 251 ##########
+Test loss:      0.23860
+Predictability: 41.39%
+Accuracy:       0.00%
+
+########## EPOCH 252 ##########
+Test loss:      0.23857
+Predictability: 41.36%
+Accuracy:       0.00%
+
+########## EPOCH 253 ##########
+Test loss:      0.23855
+Predictability: 41.53%
+Accuracy:       0.00%
+
+########## EPOCH 254 ##########
+Test loss:      0.23851
+Predictability: 41.27%
+Accuracy:       0.00%
+
+########## EPOCH 255 ##########
+Test loss:      0.23847
+Predictability: 41.71%
+Accuracy:       0.00%
+
+########## EPOCH 256 ##########
+Test loss:      0.23843
+Predictability: 41.52%
+Accuracy:       0.00%
+
+########## EPOCH 257 ##########
+Test loss:      0.23839
+Predictability: 41.48%
+Accuracy:       0.00%
+
+########## EPOCH 258 ##########
+Test loss:      0.23836
+Predictability: 41.68%
+Accuracy:       0.00%
+
+########## EPOCH 259 ##########
+Test loss:      0.23833
+Predictability: 41.64%
+Accuracy:       0.00%
+
+########## EPOCH 260 ##########
+Test loss:      0.23830
+Predictability: 41.90%
+Accuracy:       0.00%
+
+########## EPOCH 261 ##########
+Test loss:      0.23827
+Predictability: 41.66%
+Accuracy:       0.00%
+
+########## EPOCH 262 ##########
+Test loss:      0.23823
+Predictability: 41.94%
+Accuracy:       0.00%
+
+########## EPOCH 263 ##########
+Test loss:      0.23820
+Predictability: 41.80%
+Accuracy:       0.00%
+
+########## EPOCH 264 ##########
+Test loss:      0.23816
+Predictability: 41.81%
+Accuracy:       0.00%
+
+########## EPOCH 265 ##########
+Test loss:      0.23813
+Predictability: 41.87%
+Accuracy:       0.00%
+
+########## EPOCH 266 ##########
+Test loss:      0.23810
+Predictability: 41.91%
+Accuracy:       0.00%
+
+########## EPOCH 267 ##########
+Test loss:      0.23807
+Predictability: 42.01%
+Accuracy:       0.00%
+
+########## EPOCH 268 ##########
+Test loss:      0.23804
+Predictability: 42.04%
+Accuracy:       0.00%
+
+########## EPOCH 269 ##########
+Test loss:      0.23801
+Predictability: 42.17%
+Accuracy:       0.00%
+
+########## EPOCH 270 ##########
+Test loss:      0.23798
+Predictability: 42.00%
+Accuracy:       0.00%
+
+########## EPOCH 271 ##########
+Test loss:      0.23796
+Predictability: 42.35%
+Accuracy:       0.00%
+
+########## EPOCH 272 ##########
+Test loss:      0.23793
+Predictability: 41.92%
+Accuracy:       0.00%
+
+########## EPOCH 273 ##########
+Test loss:      0.23790
+Predictability: 42.44%
+Accuracy:       0.00%
+
+########## EPOCH 274 ##########
+Test loss:      0.23788
+Predictability: 41.93%
+Accuracy:       0.00%
+
+########## EPOCH 275 ##########
+Test loss:      0.23786
+Predictability: 42.63%
+Accuracy:       0.00%
+
+########## EPOCH 276 ##########
+Test loss:      0.23784
+Predictability: 41.86%
+Accuracy:       0.00%
+
+########## EPOCH 277 ##########
+Test loss:      0.23784
+Predictability: 42.67%
+Accuracy:       0.00%
+
+########## EPOCH 278 ##########
+Test loss:      0.23785
+Predictability: 42.06%
+Accuracy:       0.00%
+
+########## EPOCH 279 ##########
+Test loss:      0.23791
+Predictability: 42.83%
+Accuracy:       0.00%
+
+########## EPOCH 280 ##########
+Test loss:      0.23803
+Predictability: 41.84%
+Accuracy:       0.00%
+
+########## EPOCH 281 ##########
+Test loss:      0.23822
+Predictability: 43.28%
+Accuracy:       0.00%
+
+########## EPOCH 282 ##########
+Test loss:      0.23863
+Predictability: 41.56%
+Accuracy:       0.00%
+
+########## EPOCH 283 ##########
+Test loss:      0.23887
+Predictability: 43.62%
+Accuracy:       0.00%
+
+########## EPOCH 284 ##########
+Test loss:      0.23932
+Predictability: 41.25%
+Accuracy:       0.00%
+
+########## EPOCH 285 ##########
+Test loss:      0.23870
+Predictability: 43.86%
+Accuracy:       0.00%
+
+########## EPOCH 286 ##########
+Test loss:      0.23806
+Predictability: 42.01%
+Accuracy:       0.00%
+
+########## EPOCH 287 ##########
+Test loss:      0.23755
+Predictability: 42.89%
+Accuracy:       0.00%
+
+########## EPOCH 288 ##########
+Test loss:      0.23764
+Predictability: 43.10%
+Accuracy:       0.00%
+
+########## EPOCH 289 ##########
+Test loss:      0.23804
+Predictability: 42.09%
+Accuracy:       0.00%
+
+########## EPOCH 290 ##########
+Test loss:      0.23810
+Predictability: 43.81%
+Accuracy:       0.00%
+
+########## EPOCH 291 ##########
+Test loss:      0.23778
+Predictability: 42.36%
+Accuracy:       0.00%
+
+########## EPOCH 292 ##########
+Test loss:      0.23742
+Predictability: 43.00%
+Accuracy:       0.00%
+
+########## EPOCH 293 ##########
+Test loss:      0.23747
+Predictability: 43.15%
+Accuracy:       0.00%
+
+########## EPOCH 294 ##########
+Test loss:      0.23770
+Predictability: 42.35%
+Accuracy:       0.00%
+
+########## EPOCH 295 ##########
+Test loss:      0.23769
+Predictability: 43.50%
+Accuracy:       0.00%
+
+########## EPOCH 296 ##########
+Test loss:      0.23743
+Predictability: 42.44%
+Accuracy:       0.00%
+
+########## EPOCH 297 ##########
+Test loss:      0.23727
+Predictability: 42.73%
+Accuracy:       0.00%
+
+########## EPOCH 298 ##########
+Test loss:      0.23737
+Predictability: 43.30%
+Accuracy:       0.00%
+
+########## EPOCH 299 ##########
+Test loss:      0.23748
+Predictability: 42.24%
+Accuracy:       0.00%
+
+########## EPOCH 300 ##########
+Test loss:      0.23739
+Predictability: 43.43%
+Accuracy:       0.00%
+
+########## EPOCH 301 ##########
+Test loss:      0.23721
+Predictability: 42.57%
+Accuracy:       0.00%
+
+########## EPOCH 302 ##########
+Test loss:      0.23718
+Predictability: 42.74%
+Accuracy:       0.00%
+
+########## EPOCH 303 ##########
+Test loss:      0.23726
+Predictability: 43.57%
+Accuracy:       0.00%
+
+########## EPOCH 304 ##########
+Test loss:      0.23727
+Predictability: 42.32%
+Accuracy:       0.00%
+
+########## EPOCH 305 ##########
+Test loss:      0.23717
+Predictability: 43.59%
+Accuracy:       0.00%
+
+########## EPOCH 306 ##########
+Test loss:      0.23708
+Predictability: 42.89%
+Accuracy:       0.00%
+
+########## EPOCH 307 ##########
+Test loss:      0.23709
+Predictability: 42.64%
+Accuracy:       0.00%
+
+########## EPOCH 308 ##########
+Test loss:      0.23713
+Predictability: 43.52%
+Accuracy:       0.00%
+
+########## EPOCH 309 ##########
+Test loss:      0.23710
+Predictability: 42.42%
+Accuracy:       0.00%
+
+########## EPOCH 310 ##########
+Test loss:      0.23702
+Predictability: 43.40%
+Accuracy:       0.00%
+
+########## EPOCH 311 ##########
+Test loss:      0.23697
+Predictability: 43.02%
+Accuracy:       0.00%
+
+########## EPOCH 312 ##########
+Test loss:      0.23698
+Predictability: 42.83%
+Accuracy:       0.00%
+
+########## EPOCH 313 ##########
+Test loss:      0.23700
+Predictability: 43.47%
+Accuracy:       0.00%
+
+########## EPOCH 314 ##########
+Test loss:      0.23696
+Predictability: 42.84%
+Accuracy:       0.00%
+
+########## EPOCH 315 ##########
+Test loss:      0.23691
+Predictability: 43.36%
+Accuracy:       0.00%
+
+########## EPOCH 316 ##########
+Test loss:      0.23687
+Predictability: 43.08%
+Accuracy:       0.00%
+
+########## EPOCH 317 ##########
+Test loss:      0.23687
+Predictability: 42.92%
+Accuracy:       0.00%
+
+########## EPOCH 318 ##########
+Test loss:      0.23688
+Predictability: 43.64%
+Accuracy:       0.00%
+
+########## EPOCH 319 ##########
+Test loss:      0.23685
+Predictability: 43.00%
+Accuracy:       0.00%
+
+########## EPOCH 320 ##########
+Test loss:      0.23681
+Predictability: 43.51%
+Accuracy:       0.00%
+
+########## EPOCH 321 ##########
+Test loss:      0.23678
+Predictability: 43.15%
+Accuracy:       0.00%
+
+########## EPOCH 322 ##########
+Test loss:      0.23676
+Predictability: 43.19%
+Accuracy:       0.00%
+
+########## EPOCH 323 ##########
+Test loss:      0.23676
+Predictability: 43.61%
+Accuracy:       0.00%
+
+########## EPOCH 324 ##########
+Test loss:      0.23675
+Predictability: 43.20%
+Accuracy:       0.00%
+
+########## EPOCH 325 ##########
+Test loss:      0.23672
+Predictability: 43.64%
+Accuracy:       0.00%
+
+########## EPOCH 326 ##########
+Test loss:      0.23669
+Predictability: 43.27%
+Accuracy:       0.00%
+
+########## EPOCH 327 ##########
+Test loss:      0.23667
+Predictability: 43.48%
+Accuracy:       0.00%
+
+########## EPOCH 328 ##########
+Test loss:      0.23665
+Predictability: 43.74%
+Accuracy:       0.00%
+
+########## EPOCH 329 ##########
+Test loss:      0.23664
+Predictability: 43.37%
+Accuracy:       0.00%
+
+########## EPOCH 330 ##########
+Test loss:      0.23663
+Predictability: 43.88%
+Accuracy:       0.00%
+
+########## EPOCH 331 ##########
+Test loss:      0.23661
+Predictability: 43.37%
+Accuracy:       0.00%
+
+########## EPOCH 332 ##########
+Test loss:      0.23659
+Predictability: 43.93%
+Accuracy:       0.00%
+
+########## EPOCH 333 ##########
+Test loss:      0.23656
+Predictability: 43.77%
+Accuracy:       0.00%
+
+########## EPOCH 334 ##########
+Test loss:      0.23655
+Predictability: 43.85%
+Accuracy:       0.00%
+
+########## EPOCH 335 ##########
+Test loss:      0.23653
+Predictability: 43.97%
+Accuracy:       0.00%
+
+########## EPOCH 336 ##########
+Test loss:      0.23652
+Predictability: 43.74%
+Accuracy:       0.00%
+
+########## EPOCH 337 ##########
+Test loss:      0.23650
+Predictability: 44.00%
+Accuracy:       0.00%
+
+########## EPOCH 338 ##########
+Test loss:      0.23649
+Predictability: 43.84%
+Accuracy:       0.00%
+
+########## EPOCH 339 ##########
+Test loss:      0.23647
+Predictability: 44.03%
+Accuracy:       0.00%
+
+########## EPOCH 340 ##########
+Test loss:      0.23645
+Predictability: 43.83%
+Accuracy:       0.00%
+
+########## EPOCH 341 ##########
+Test loss:      0.23643
+Predictability: 44.07%
+Accuracy:       0.00%
+
+########## EPOCH 342 ##########
+Test loss:      0.23641
+Predictability: 44.01%
+Accuracy:       0.00%
+
+########## EPOCH 343 ##########
+Test loss:      0.23640
+Predictability: 44.07%
+Accuracy:       0.00%
+
+########## EPOCH 344 ##########
+Test loss:      0.23638
+Predictability: 44.01%
+Accuracy:       0.00%
+
+########## EPOCH 345 ##########
+Test loss:      0.23637
+Predictability: 44.12%
+Accuracy:       0.00%
+
+########## EPOCH 346 ##########
+Test loss:      0.23636
+Predictability: 44.02%
+Accuracy:       0.00%
+
+########## EPOCH 347 ##########
+Test loss:      0.23634
+Predictability: 44.05%
+Accuracy:       0.00%
+
+########## EPOCH 348 ##########
+Test loss:      0.23633
+Predictability: 44.03%
+Accuracy:       0.00%
+
+########## EPOCH 349 ##########
+Test loss:      0.23631
+Predictability: 44.04%
+Accuracy:       0.00%
+
+########## EPOCH 350 ##########
+Test loss:      0.23630
+Predictability: 44.07%
+Accuracy:       0.00%
+
+########## EPOCH 351 ##########
+Test loss:      0.23628
+Predictability: 44.07%
+Accuracy:       0.00%
+
+########## EPOCH 352 ##########
+Test loss:      0.23627
+Predictability: 44.01%
+Accuracy:       0.00%
+
+########## EPOCH 353 ##########
+Test loss:      0.23626
+Predictability: 44.02%
+Accuracy:       0.00%
+
+########## EPOCH 354 ##########
+Test loss:      0.23625
+Predictability: 44.02%
+Accuracy:       0.00%
+
+########## EPOCH 355 ##########
+Test loss:      0.23623
+Predictability: 44.18%
+Accuracy:       0.00%
+
+########## EPOCH 356 ##########
+Test loss:      0.23623
+Predictability: 44.09%
+Accuracy:       0.00%
+
+########## EPOCH 357 ##########
+Test loss:      0.23622
+Predictability: 44.10%
+Accuracy:       0.00%
+
+########## EPOCH 358 ##########
+Test loss:      0.23623
+Predictability: 44.02%
+Accuracy:       0.00%
+
+########## EPOCH 359 ##########
+Test loss:      0.23625
+Predictability: 44.00%
+Accuracy:       0.00%
+
+########## EPOCH 360 ##########
+Test loss:      0.23629
+Predictability: 44.25%
+Accuracy:       0.00%
+
+########## EPOCH 361 ##########
+Test loss:      0.23637
+Predictability: 43.96%
+Accuracy:       0.00%
+
+########## EPOCH 362 ##########
+Test loss:      0.23650
+Predictability: 44.67%
+Accuracy:       0.00%
+
+########## EPOCH 363 ##########
+Test loss:      0.23675
+Predictability: 43.77%
+Accuracy:       0.00%
+
+########## EPOCH 364 ##########
+Test loss:      0.23700
+Predictability: 44.69%
+Accuracy:       0.00%
+
+########## EPOCH 365 ##########
+Test loss:      0.23747
+Predictability: 43.74%
+Accuracy:       0.00%
+
+########## EPOCH 366 ##########
+Test loss:      0.23739
+Predictability: 44.74%
+Accuracy:       0.00%
+
+########## EPOCH 367 ##########
+Test loss:      0.23733
+Predictability: 43.79%
+Accuracy:       0.00%
+
+########## EPOCH 368 ##########
+Test loss:      0.23661
+Predictability: 44.88%
+Accuracy:       0.00%
+
+########## EPOCH 369 ##########
+Test loss:      0.23611
+Predictability: 44.24%
+Accuracy:       0.00%
+
+########## EPOCH 370 ##########
+Test loss:      0.23606
+Predictability: 44.41%
+Accuracy:       0.00%
+
+########## EPOCH 371 ##########
+Test loss:      0.23637
+Predictability: 44.91%
+Accuracy:       0.00%
+
+########## EPOCH 372 ##########
+Test loss:      0.23663
+Predictability: 43.87%
+Accuracy:       0.00%
+
+########## EPOCH 373 ##########
+Test loss:      0.23646
+Predictability: 44.93%
+Accuracy:       0.00%
+
+########## EPOCH 374 ##########
+Test loss:      0.23612
+Predictability: 44.06%
+Accuracy:       0.00%
+
+########## EPOCH 375 ##########
+Test loss:      0.23596
+Predictability: 43.98%
+Accuracy:       0.00%
+
+########## EPOCH 376 ##########
+Test loss:      0.23610
+Predictability: 44.54%
+Accuracy:       0.00%
+
+########## EPOCH 377 ##########
+Test loss:      0.23627
+Predictability: 43.96%
+Accuracy:       0.00%
+
+########## EPOCH 378 ##########
+Test loss:      0.23622
+Predictability: 44.57%
+Accuracy:       0.00%
+
+########## EPOCH 379 ##########
+Test loss:      0.23601
+Predictability: 44.14%
+Accuracy:       0.00%
+
+########## EPOCH 380 ##########
+Test loss:      0.23591
+Predictability: 44.25%
+Accuracy:       0.00%
+
+########## EPOCH 381 ##########
+Test loss:      0.23599
+Predictability: 44.43%
+Accuracy:       0.00%
+
+########## EPOCH 382 ##########
+Test loss:      0.23608
+Predictability: 44.10%
+Accuracy:       0.00%
+
+########## EPOCH 383 ##########
+Test loss:      0.23604
+Predictability: 44.51%
+Accuracy:       0.00%
+
+########## EPOCH 384 ##########
+Test loss:      0.23591
+Predictability: 44.34%
+Accuracy:       0.00%
+
+########## EPOCH 385 ##########
+Test loss:      0.23585
+Predictability: 44.40%
+Accuracy:       0.00%
+
+########## EPOCH 386 ##########
+Test loss:      0.23590
+Predictability: 44.31%
+Accuracy:       0.00%
+
+########## EPOCH 387 ##########
+Test loss:      0.23595
+Predictability: 44.37%
+Accuracy:       0.00%
+
+########## EPOCH 388 ##########
+Test loss:      0.23592
+Predictability: 44.40%
+Accuracy:       0.00%
+
+########## EPOCH 389 ##########
+Test loss:      0.23583
+Predictability: 44.23%
+Accuracy:       0.00%
+
+########## EPOCH 390 ##########
+Test loss:      0.23580
+Predictability: 44.35%
+Accuracy:       0.00%
+
+########## EPOCH 391 ##########
+Test loss:      0.23583
+Predictability: 44.37%
+Accuracy:       0.00%
+
+########## EPOCH 392 ##########
+Test loss:      0.23585
+Predictability: 44.42%
+Accuracy:       0.00%
+
+########## EPOCH 393 ##########
+Test loss:      0.23583
+Predictability: 44.54%
+Accuracy:       0.00%
+
+########## EPOCH 394 ##########
+Test loss:      0.23577
+Predictability: 44.46%
+Accuracy:       0.00%
+
+########## EPOCH 395 ##########
+Test loss:      0.23574
+Predictability: 44.46%
+Accuracy:       0.00%
+
+########## EPOCH 396 ##########
+Test loss:      0.23575
+Predictability: 44.50%
+Accuracy:       0.00%
+
+########## EPOCH 397 ##########
+Test loss:      0.23576
+Predictability: 44.49%
+Accuracy:       0.00%
+
+########## EPOCH 398 ##########
+Test loss:      0.23576
+Predictability: 44.58%
+Accuracy:       0.00%
+
+########## EPOCH 399 ##########
+Test loss:      0.23572
+Predictability: 44.50%
+Accuracy:       0.00%
+
+########## EPOCH 400 ##########
+Test loss:      0.23570
+Predictability: 44.52%
+Accuracy:       0.00%
+
+########## EPOCH 401 ##########
+Test loss:      0.23569
+Predictability: 44.56%
+Accuracy:       0.00%
+
+########## EPOCH 402 ##########
+Test loss:      0.23569
+Predictability: 44.52%
+Accuracy:       0.00%
+
+########## EPOCH 403 ##########
+Test loss:      0.23569
+Predictability: 44.59%
+Accuracy:       0.00%
+
+########## EPOCH 404 ##########
+Test loss:      0.23568
+Predictability: 44.57%
+Accuracy:       0.00%
+
+########## EPOCH 405 ##########
+Test loss:      0.23566
+Predictability: 44.59%
+Accuracy:       0.00%
+
+########## EPOCH 406 ##########
+Test loss:      0.23564
+Predictability: 44.55%
+Accuracy:       0.00%
+
+########## EPOCH 407 ##########
+Test loss:      0.23563
+Predictability: 44.57%
+Accuracy:       0.00%
+
+########## EPOCH 408 ##########
+Test loss:      0.23563
+Predictability: 44.62%
+Accuracy:       0.00%
+
+########## EPOCH 409 ##########
+Test loss:      0.23562
+Predictability: 44.58%
+Accuracy:       0.00%
+
+########## EPOCH 410 ##########
+Test loss:      0.23561
+Predictability: 44.70%
+Accuracy:       0.00%
+
+########## EPOCH 411 ##########
+Test loss:      0.23560
+Predictability: 44.58%
+Accuracy:       0.00%
+
+########## EPOCH 412 ##########
+Test loss:      0.23558
+Predictability: 44.62%
+Accuracy:       0.00%
+
+########## EPOCH 413 ##########
+Test loss:      0.23557
+Predictability: 44.47%
+Accuracy:       0.00%
+
+########## EPOCH 414 ##########
+Test loss:      0.23556
+Predictability: 44.55%
+Accuracy:       0.00%
+
+########## EPOCH 415 ##########
+Test loss:      0.23556
+Predictability: 44.73%
+Accuracy:       0.00%
+
+########## EPOCH 416 ##########
+Test loss:      0.23555
+Predictability: 44.62%
+Accuracy:       0.00%
+
+########## EPOCH 417 ##########
+Test loss:      0.23554
+Predictability: 44.80%
+Accuracy:       0.00%
+
+########## EPOCH 418 ##########
+Test loss:      0.23553
+Predictability: 44.63%
+Accuracy:       0.00%
+
+########## EPOCH 419 ##########
+Test loss:      0.23552
+Predictability: 44.70%
+Accuracy:       0.00%
+
+########## EPOCH 420 ##########
+Test loss:      0.23551
+Predictability: 44.65%
+Accuracy:       0.00%
+
+########## EPOCH 421 ##########
+Test loss:      0.23550
+Predictability: 44.70%
+Accuracy:       0.00%
+
+########## EPOCH 422 ##########
+Test loss:      0.23549
+Predictability: 44.71%
+Accuracy:       0.00%
+
+########## EPOCH 423 ##########
+Test loss:      0.23548
+Predictability: 44.70%
+Accuracy:       0.00%
+
+########## EPOCH 424 ##########
+Test loss:      0.23548
+Predictability: 44.73%
+Accuracy:       0.00%
+
+########## EPOCH 425 ##########
+Test loss:      0.23547
+Predictability: 44.73%
+Accuracy:       0.00%
+
+########## EPOCH 426 ##########
+Test loss:      0.23546
+Predictability: 44.78%
+Accuracy:       0.00%
+
+########## EPOCH 427 ##########
+Test loss:      0.23545
+Predictability: 44.73%
+Accuracy:       0.00%
+
+########## EPOCH 428 ##########
+Test loss:      0.23544
+Predictability: 44.74%
+Accuracy:       0.00%
+
+########## EPOCH 429 ##########
+Test loss:      0.23543
+Predictability: 44.81%
+Accuracy:       0.00%
+
+########## EPOCH 430 ##########
+Test loss:      0.23542
+Predictability: 44.71%
+Accuracy:       0.00%
+
+########## EPOCH 431 ##########
+Test loss:      0.23541
+Predictability: 44.70%
+Accuracy:       0.00%
+
+########## EPOCH 432 ##########
+Test loss:      0.23541
+Predictability: 44.70%
+Accuracy:       0.00%
+
+########## EPOCH 433 ##########
+Test loss:      0.23540
+Predictability: 44.65%
+Accuracy:       0.00%
+
+########## EPOCH 434 ##########
+Test loss:      0.23539
+Predictability: 44.73%
+Accuracy:       0.00%
+
+########## EPOCH 435 ##########
+Test loss:      0.23538
+Predictability: 44.73%
+Accuracy:       0.00%
+
+########## EPOCH 436 ##########
+Test loss:      0.23537
+Predictability: 44.76%
+Accuracy:       0.00%
+
+########## EPOCH 437 ##########
+Test loss:      0.23537
+Predictability: 44.76%
+Accuracy:       0.00%
+
+########## EPOCH 438 ##########
+Test loss:      0.23536
+Predictability: 44.76%
+Accuracy:       0.00%
+
+########## EPOCH 439 ##########
+Test loss:      0.23535
+Predictability: 44.79%
+Accuracy:       0.00%
+
+########## EPOCH 440 ##########
+Test loss:      0.23535
+Predictability: 44.75%
+Accuracy:       0.00%
+
+########## EPOCH 441 ##########
+Test loss:      0.23534
+Predictability: 44.88%
+Accuracy:       0.00%
+
+########## EPOCH 442 ##########
+Test loss:      0.23533
+Predictability: 44.93%
+Accuracy:       0.00%
+
+########## EPOCH 443 ##########
+Test loss:      0.23533
+Predictability: 44.80%
+Accuracy:       0.00%
+
+########## EPOCH 444 ##########
+Test loss:      0.23533
+Predictability: 44.98%
+Accuracy:       0.00%
+
+########## EPOCH 445 ##########
+Test loss:      0.23534
+Predictability: 44.86%
+Accuracy:       0.00%
+
+########## EPOCH 446 ##########
+Test loss:      0.23534
+Predictability: 45.03%
+Accuracy:       0.00%
+
+########## EPOCH 447 ##########
+Test loss:      0.23537
+Predictability: 45.07%
+Accuracy:       0.00%
+
+########## EPOCH 448 ##########
+Test loss:      0.23541
+Predictability: 45.16%
+Accuracy:       0.00%
+
+########## EPOCH 449 ##########
+Test loss:      0.23551
+Predictability: 45.16%
+Accuracy:       0.00%
+
+########## EPOCH 450 ##########
+Test loss:      0.23568
+Predictability: 44.92%
+Accuracy:       0.00%
+
+########## EPOCH 451 ##########
+Test loss:      0.23593
+Predictability: 45.31%
+Accuracy:       0.00%
+
+########## EPOCH 452 ##########
+Test loss:      0.23643
+Predictability: 44.74%
+Accuracy:       0.00%
+
+########## EPOCH 453 ##########
+Test loss:      0.23672
+Predictability: 45.50%
+Accuracy:       0.00%
+
+########## EPOCH 454 ##########
+Test loss:      0.23730
+Predictability: 44.49%
+Accuracy:       0.00%
+
+########## EPOCH 455 ##########
+Test loss:      0.23664
+Predictability: 45.58%
+Accuracy:       0.00%
+
+########## EPOCH 456 ##########
+Test loss:      0.23600
+Predictability: 44.96%
+Accuracy:       0.00%
+
+########## EPOCH 457 ##########
+Test loss:      0.23533
+Predictability: 45.19%
+Accuracy:       0.00%
+
+########## EPOCH 458 ##########
+Test loss:      0.23532
+Predictability: 45.24%
+Accuracy:       0.00%
+
+########## EPOCH 459 ##########
+Test loss:      0.23575
+Predictability: 45.09%
+Accuracy:       0.00%
+
+########## EPOCH 460 ##########
+Test loss:      0.23595
+Predictability: 45.46%
+Accuracy:       0.00%
+
+########## EPOCH 461 ##########
+Test loss:      0.23573
+Predictability: 45.14%
+Accuracy:       0.00%
+
+########## EPOCH 462 ##########
+Test loss:      0.23530
+Predictability: 44.96%
+Accuracy:       0.00%
+
+########## EPOCH 463 ##########
+Test loss:      0.23524
+Predictability: 45.04%
+Accuracy:       0.00%
+
+########## EPOCH 464 ##########
+Test loss:      0.23550
+Predictability: 45.15%
+Accuracy:       0.00%
+
+########## EPOCH 465 ##########
+Test loss:      0.23560
+Predictability: 44.99%
+Accuracy:       0.00%
+
+########## EPOCH 466 ##########
+Test loss:      0.23539
+Predictability: 45.58%
+Accuracy:       0.00%
+
+########## EPOCH 467 ##########
+Test loss:      0.23518
+Predictability: 44.83%
+Accuracy:       0.00%
+
+########## EPOCH 468 ##########
+Test loss:      0.23525
+Predictability: 44.99%
+Accuracy:       0.00%
+
+########## EPOCH 469 ##########
+Test loss:      0.23541
+Predictability: 45.56%
+Accuracy:       0.00%
+
+########## EPOCH 470 ##########
+Test loss:      0.23536
+Predictability: 45.22%
+Accuracy:       0.00%
+
+########## EPOCH 471 ##########
+Test loss:      0.23519
+Predictability: 45.60%
+Accuracy:       0.00%
+
+########## EPOCH 472 ##########
+Test loss:      0.23514
+Predictability: 45.09%
+Accuracy:       0.00%
+
+########## EPOCH 473 ##########
+Test loss:      0.23525
+Predictability: 45.06%
+Accuracy:       0.00%
+
+########## EPOCH 474 ##########
+Test loss:      0.23529
+Predictability: 45.59%
+Accuracy:       0.00%
+
+########## EPOCH 475 ##########
+Test loss:      0.23520
+Predictability: 45.02%
+Accuracy:       0.00%
+
+########## EPOCH 476 ##########
+Test loss:      0.23511
+Predictability: 45.13%
+Accuracy:       0.00%
+
+########## EPOCH 477 ##########
+Test loss:      0.23514
+Predictability: 45.44%
+Accuracy:       0.00%
+
+########## EPOCH 478 ##########
+Test loss:      0.23520
+Predictability: 45.05%
+Accuracy:       0.00%
+
+########## EPOCH 479 ##########
+Test loss:      0.23518
+Predictability: 45.67%
+Accuracy:       0.00%
+
+########## EPOCH 480 ##########
+Test loss:      0.23511
+Predictability: 45.13%
+Accuracy:       0.00%
+
+########## EPOCH 481 ##########
+Test loss:      0.23509
+Predictability: 45.14%
+Accuracy:       0.00%
+
+########## EPOCH 482 ##########
+Test loss:      0.23512
+Predictability: 45.51%
+Accuracy:       0.00%
+
+########## EPOCH 483 ##########
+Test loss:      0.23514
+Predictability: 45.15%
+Accuracy:       0.00%
+
+########## EPOCH 484 ##########
+Test loss:      0.23510
+Predictability: 45.45%
+Accuracy:       0.00%
+
+########## EPOCH 485 ##########
+Test loss:      0.23506
+Predictability: 45.25%
+Accuracy:       0.00%
+
+########## EPOCH 486 ##########
+Test loss:      0.23507
+Predictability: 45.05%
+Accuracy:       0.00%
+
+########## EPOCH 487 ##########
+Test loss:      0.23509
+Predictability: 45.49%
+Accuracy:       0.00%
+
+########## EPOCH 488 ##########
+Test loss:      0.23508
+Predictability: 45.13%
+Accuracy:       0.00%
+
+########## EPOCH 489 ##########
+Test loss:      0.23505
+Predictability: 45.40%
+Accuracy:       0.00%
+
+########## EPOCH 490 ##########
+Test loss:      0.23503
+Predictability: 45.22%
+Accuracy:       0.00%
+
+########## EPOCH 491 ##########
+Test loss:      0.23504
+Predictability: 45.06%
+Accuracy:       0.00%
+
+########## EPOCH 492 ##########
+Test loss:      0.23505
+Predictability: 45.56%
+Accuracy:       0.00%
+
+########## EPOCH 493 ##########
+Test loss:      0.23504
+Predictability: 45.08%
+Accuracy:       0.00%
+
+########## EPOCH 494 ##########
+Test loss:      0.23502
+Predictability: 45.26%
+Accuracy:       0.00%
+
+########## EPOCH 495 ##########
+Test loss:      0.23501
+Predictability: 45.25%
+Accuracy:       0.00%
+
+########## EPOCH 496 ##########
+Test loss:      0.23501
+Predictability: 45.16%
+Accuracy:       0.00%
+
+########## EPOCH 497 ##########
+Test loss:      0.23501
+Predictability: 45.45%
+Accuracy:       0.00%
+
+########## EPOCH 498 ##########
+Test loss:      0.23501
+Predictability: 45.24%
+Accuracy:       0.00%
+
+########## EPOCH 499 ##########
+Test loss:      0.23499
+Predictability: 45.47%
+Accuracy:       0.00%
+
+########## EPOCH 500 ##########
+Test loss:      0.23498
+Predictability: 45.31%
+Accuracy:       0.00%
+WARNING:tensorflow:Detecting that an object or model or tf.train.Checkpoint is being deleted with unrestored values. See the following logs for the specific values in question. To silence these warnings, use `status.expect_partial()`. See https://www.tensorflow.org/api_docs/python/tf/train/Checkpoint#restorefor details about the status object returned by the restore function.
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.iter
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.beta_1
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.beta_2
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.decay
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.learning_rate
