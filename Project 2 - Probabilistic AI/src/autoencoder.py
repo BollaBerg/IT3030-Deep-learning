@@ -19,14 +19,15 @@ class _Reshape(nn.Module):
 class AutoEncoder(nn.Module):
     def __init__(self, channels: int = 1):
         super(AutoEncoder, self).__init__()
+        self.channels = channels
         
         ##### Define model #####
         # Follows, at the time of writing, the structure given in
         # https://www.researchgate.net/publication/320658590_Deep_Clustering_with_Convolutional_Autoencoders
         self.encoder = nn.Sequential(
             nn.Conv2d(
-                in_channels=channels,   # "Layers" of input data - 1 for B/W, 3 for RGB
-                out_channels=32,         # "Filters" the convolutional layer applied. What it learns
+                in_channels=1,          # "Layers" of input data
+                out_channels=32,        # "Filters" the convolutional layer applied. What it learns
                 kernel_size=(2, 2),     # Size of kernel. Play around with this!
                 stride=2,               # "Length" of steps taken. 1=all inputs
             ),
@@ -64,18 +65,30 @@ class AutoEncoder(nn.Module):
             ),
             nn.ConvTranspose2d(
                 in_channels=32,
-                out_channels=channels,
+                out_channels=1,
                 kernel_size=(2, 2),
                 stride=2,
             )
         )
     
-    def forward(self, x):
-        z = self.encoder(x)
-        x_hat = self.decoder(z)
-        output = nn.Sigmoid()(x_hat)
-        return output
-    
+    def forward(self, x : torch.Tensor):
+        if self.channels == 1:
+            z = self.encoder(x)
+            x_hat = self.decoder(z)
+            output = nn.Sigmoid()(x_hat)
+            return output
+        
+        else:
+            output = torch.zeros(x.size(), device=x.device)
+            for i in range(self.channels):
+                inputs = x[:, i, :, :].view(-1, 1, 28, 28)
+                z = self.encoder(inputs)
+                x_hat = self.decoder(z)
+                outputs = nn.Sigmoid()(x_hat).view(-1, 28, 28)
+                output[:, i, :, :] = outputs
+            return output
+
+
     def decode(self, z):
         x_hat = self.decoder(z)
         output = nn.Sigmoid()(x_hat)
