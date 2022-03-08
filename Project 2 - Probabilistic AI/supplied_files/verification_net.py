@@ -2,6 +2,7 @@ from supplied_files.stacked_mnist import StackedMNISTData, DataMode
 from tensorflow import keras                                                        # type: ignore
 from tensorflow.keras.models import Sequential                                      # type: ignore
 from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D   # type: ignore
+import torch
 import numpy as np
 
 
@@ -59,6 +60,12 @@ class VerificationNet:
             # Get hold of data
             x_train, y_train = generator.get_full_data_set(training=True)
             x_test, y_test = generator.get_full_data_set(training=False)
+
+            # Convert to expected numpy arrays
+            x_train = torch.permute(x_train, (0, 2, 3, 1)).cpu().detach().numpy()
+            y_train = y_train.cpu().detach().numpy()
+            x_test = torch.permute(x_test, (0, 2, 3, 1)).cpu().detach().numpy()
+            y_test = y_test.cpu().detach().numpy()
 
             # "Translate": Only look at "red" channel; only use the last digit. Use one-hot for labels during training
             x_train = x_train[:, :, :, [0]]
@@ -156,6 +163,9 @@ if __name__ == "__main__":
 
     # I have no data generator (VAE or whatever) here, so just use a sampled set
     img, labels = gen.get_random_batch(training=True,  batch_size=25000)
+    img = torch.permute(img, (0, 2, 3, 1)).cpu().detach().numpy()
+    labels = labels.cpu().detach().numpy()
+    
     cov = net.check_class_coverage(data=img, tolerance=.98)
     pred, acc = net.check_predictability(data=img, correct_labels=labels)
     print(f"Coverage: {100*cov:.2f}%")
