@@ -178,13 +178,51 @@ def print_model_output(model_path: str, channels: int):
     print(output)
 
 
+def plot_generative_model(model_path: str, channels: int, plot_savepath: str):
+    if channels == 1:
+        datamode = DataMode.MONO_BINARY_COMPLETE
+    else:
+        datamode = DataMode.COLOR_BINARY_COMPLETE
+
+    data_generator = StackedMNISTData(datamode)
+    model = AutoEncoder(channels=channels)
+    model.load_state_dict(torch.load(model_path))
+    model.eval()
+
+    data, _ = data_generator.get_full_data_set(training=False)
+    encoded = model.encode(data)
+    maxes = torch.max(encoded, 0)
+    mins = torch.min(encoded, 0)
+
+    max_ = maxes.values.mean().item()
+    min_ = mins.values.mean().item()
+
+    z = (max_ - min_) * torch.rand((16, 10)) + min_
+    outputs = model.decode(z)
+    outputs = torch.permute(outputs, (0, 2, 3, 1)).detach().numpy()
+
+    fig, axes = plt.subplots(nrows=4, ncols=4, figsize=(20, 20))
+    axes = axes.flat
+    for i in range(16):
+        if channels == 1:
+            axes[i].imshow(outputs[i, :, :, 0], cmap="binary")
+        else:
+            axes[i].imshow(outputs[i, :, :, :].astype(float))
+
+        axes[i].set_xticks([])
+        axes[i].set_yticks([])
+    
+    # plt.show()
+    plt.savefig(plot_savepath)
+    print(f"Generative mode saved at {plot_savepath}")
+
 
 if __name__ == "__main__":
-    # Train single-layer image
-    train_autoencoder(
-        DataMode.MONO_BINARY_COMPLETE, 1, "models/autoencoder/mono.pt",
-        epochs=500
-    )
+    # # Train single-layer image
+    # train_autoencoder(
+    #     DataMode.MONO_BINARY_COMPLETE, 1, "models/autoencoder/mono.pt",
+    #     epochs=500
+    # )
 
     # # Train multi-layer image
     # train_autoencoder(
@@ -209,6 +247,11 @@ if __name__ == "__main__":
     #     "models/autoencoder/mono_demo.pt", "images/autoencoder/color_individually.png"
     # )
 
-    # Print model results
+    # # Print model results
     # print_model_output("models/autoencoder/mono_demo.pt", 1)
     # print_model_output("models/autoencoder/color_demo.pt", 3)
+
+    # Plot AE as generative model
+    plot_generative_model(
+        "models/autoencoder/mono_demo.pt", 1, "images/autoencoder/generative_mode.png"
+    )
