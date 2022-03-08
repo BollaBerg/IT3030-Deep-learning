@@ -1,0 +1,4 @@
+# TRAINING RESULTS
+Coverage: 100.00%
+Predictability: 97.91%
+Accuracy: 97.50%
