@@ -14,15 +14,20 @@ def train_autoencoder(
         predictability_tolerance: float = 0.8,
         learning_rate: float = 1e-3,
         epochs: int = 500,
-        batch_size: int = 10000):
+        batch_size: int = 10000,
+        plot_savepath: str = "images/autoencoder/training.png"):
 
     model = AutoEncoder(channels=channels).to(device)
     loss_fn = BCELoss()
     optimizer = Adam(model.parameters(), lr=learning_rate)
     data_generator = StackedMNISTData(datamode, default_batch_size=batch_size)
-    verification_net = VerificationNet()
+    verification_net = VerificationNet(file_name="./models/verification/verification_model")
+    verification_net.load_weights()
 
     model_save_path_base, model_extension = model_save_path.split(".")
+    
+    accuracies = []
+    predictabilities = []
 
     for epoch in range(epochs):
         print(f"\n########## EPOCH {epoch + 1} ##########")
@@ -52,6 +57,7 @@ def train_autoencoder(
         predictability_data = torch.permute(
             X_hat_test, (0, 2, 3, 1)
         ).cpu().detach().numpy()
+        y_test = y_test.cpu().detach().numpy()
 
         predictability, accuracy = verification_net.check_predictability(
             predictability_data, y_test, tolerance=predictability_tolerance
@@ -60,6 +66,9 @@ def train_autoencoder(
         print(f"Predictability: {100*predictability:.2f}%")
         print(f"Accuracy:       {100*accuracy:.2f}%")
 
+        predictabilities.append(predictability)
+        accuracies.append(accuracy)
+
         if epoch % 100 == 0:
             torch.save(
                 model.state_dict(),
@@ -67,6 +76,18 @@ def train_autoencoder(
             )
     
     torch.save(model.state_dict(), model_save_path)
+
+    plot_predictabilies_accuracies(predictabilities, accuracies, plot_savepath)
+
+
+def plot_predictabilies_accuracies(predictabilities, accuracies, plot_savepath):
+    fig, ax = plt.subplots(nrows=1, ncols=1)
+    ax.plot(predictabilities, label="Predictability")
+    ax.plot(accuracies, label="Accuracy")
+
+    fig.legend()
+    plt.tight_layout()
+    plt.savefig(plot_savepath)
 
 
 def plot_autoencoder_result(
@@ -162,7 +183,7 @@ if __name__ == "__main__":
     # Train single-layer image
     train_autoencoder(
         DataMode.MONO_BINARY_COMPLETE, 1, "models/autoencoder/mono.pt",
-        epochs=800
+        epochs=500
     )
 
     # # Train multi-layer image
