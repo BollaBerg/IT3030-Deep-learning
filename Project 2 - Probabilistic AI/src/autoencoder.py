@@ -88,6 +88,9 @@ class AutoEncoder(nn.Module):
                 output[:, i, :, :] = outputs
             return output
 
+    def encode(self, x):
+        z = self.encoder(x)
+        return z
 
     def decode(self, z):
         x_hat = self.decoder(z)
