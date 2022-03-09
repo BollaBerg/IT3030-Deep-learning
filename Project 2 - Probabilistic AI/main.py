@@ -224,17 +224,14 @@ def plot_generative_model(model_path: str, channels: int, plot_savepath: str):
 
     data, _ = data_generator.get_full_data_set(training=False)
     encoded = model.encode(data)
-    maxes = torch.max(encoded, 0)
-    mins = torch.min(encoded, 0)
+    maxes = torch.max(encoded, 0).values
+    mins = torch.min(encoded, 0).values
 
-    max_ = maxes.values.mean().item()
-    min_ = mins.values.mean().item()
-
-    z = (max_ - min_) * torch.rand((16, 10)) + min_
+    z = (maxes - mins) * torch.rand((16, 28)) + mins
     outputs = model.decode(z)
     outputs = torch.permute(outputs, (0, 2, 3, 1)).detach().numpy()
 
-    fig, axes = plt.subplots(nrows=4, ncols=4, figsize=(20, 20))
+    _, axes = plt.subplots(nrows=4, ncols=4, figsize=(20, 20))
     axes = axes.flat
     for i in range(16):
         if channels == 1:
@@ -251,16 +248,18 @@ def plot_generative_model(model_path: str, channels: int, plot_savepath: str):
 
 
 if __name__ == "__main__":
-    # Train single-layer image
-    train_autoencoder(
-        DataMode.MONO_BINARY_COMPLETE, 1, "models/autoencoder/mono.pt",
-        epochs=100
-    )
+    # # Train single-layer image
+    # train_autoencoder(
+    #     DataMode.MONO_BINARY_COMPLETE, 1, "models/autoencoder/mono.pt",
+    #     epochs=100
+    # )
 
+    # # NOT NEEDED, USE SINGLE-LAYER MODEL TO PREDICT COLORS AS WELL :)
     # # Train multi-layer image
     # train_autoencoder(
     #     DataMode.COLOR_BINARY_COMPLETE, 3, "models/autoencoder/color.pt", 0.5,
-    #     batch_size = 5000
+    #     epochs=100,
+    #     batch_size = 60000
     # )
     
     # # Plot single-layer results
@@ -282,9 +281,9 @@ if __name__ == "__main__":
 
     # # Print model results
     # print_model_output("models/autoencoder/mono_demo.pt", 1)
-    # print_model_output("models/autoencoder/color_demo.pt", 3)
+    # print_model_output("models/autoencoder/mono_demo.pt", 3)
 
     # Plot AE as generative model
-    # plot_generative_model(
-    #     "models/autoencoder/mono_demo.pt", 1, "images/autoencoder/generative_mode.png"
-    # )
+    plot_generative_model(
+        "models/autoencoder/mono_demo.pt", 1, f"images/autoencoder/generative_mode.png"
+    )
