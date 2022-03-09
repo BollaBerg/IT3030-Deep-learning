@@ -226,22 +226,60 @@ def plot_generative_model(model_path: str, channels: int, plot_savepath: str):
     model = load_model(model, model_path)
     model.eval()
 
-    z = torch.randn((16, 28))
+    verification_net = VerificationNet(file_name="./models/verification/verification_model")
+    verification_net.load_weights()
 
+    num_generatives = 10000
+    pred_tolerance = 0.8
+    class_tolerance = 0.95
+
+    z = torch.randn((num_generatives, 28))
     outputs = model.decode(z)
-    outputs = torch.permute(outputs, (0, 2, 3, 1)).detach().numpy()
+    images = torch.permute(outputs, (0, 2, 3, 1)).detach().numpy()
 
-    _, axes = plt.subplots(nrows=4, ncols=4, figsize=(20, 20))
+    predictability, _ = verification_net.check_predictability(
+        images, tolerance=pred_tolerance
+    )
+    coverage = verification_net.check_class_coverage(data=images, tolerance=class_tolerance)
+
+    # PLOT FIRST 16
+    fig, axes = plt.subplots(nrows=4, ncols=4, figsize=(20, 20))
     axes = axes.flat
     for i in range(16):
         if channels == 1:
-            axes[i].imshow(outputs[i, :, :, 0], cmap="binary")
+            axes[i].imshow(images[i, :, :, 0], cmap="binary")
         else:
-            axes[i].imshow(outputs[i, :, :, :].astype(float))
+            axes[i].imshow(images[i, :, :, :].astype(float))
 
         axes[i].set_xticks([])
         axes[i].set_yticks([])
     
+    fig.suptitle("VAE as generative model", fontsize=48)
+    axes[12].text(0.5, 0.0, 
+        f"{num_generatives} generated images",
+        horizontalalignment="center", verticalalignment="top",
+        transform=axes[12].transAxes,
+        fontsize=20
+    )
+    axes[13].text(0.5, 0.0, 
+        f"Predictability: {100*predictability:.2f}%",
+        horizontalalignment="center", verticalalignment="top",
+        transform=axes[13].transAxes,
+        fontsize=20
+    )
+    axes[14].text(0.5, 0.0,
+        f"Coverage: {100*coverage:.2f}%",
+        horizontalalignment="center", verticalalignment="top",
+        transform=axes[14].transAxes,
+        fontsize=20
+    )
+    axes[15].text(0.5, 0.0, 
+        f"Pred.tol.: {pred_tolerance}, class tol.: {class_tolerance}",
+        horizontalalignment="center", verticalalignment="top",
+        transform=axes[15].transAxes,
+        fontsize=20
+    )
+    fig.tight_layout()
     # plt.show()
     plt.savefig(plot_savepath)
     print(f"Generative mode saved at {plot_savepath}")
@@ -316,16 +354,16 @@ if __name__ == "__main__":
     # print_model_output("models/variableautoencoder/VAE_demo.pt", 3)
 
     # Plot VAE as generative model
-    # plot_generative_model(
-    #     "models/variableautoencoder/VAE_demo.pt", 1, "images/variableautoencoder/generative_mode.png"
-    # )
+    plot_generative_model(
+        "models/variableautoencoder/VAE_demo.pt", 1, "images/variableautoencoder/generative_mode.png"
+    )
 
     # # Train anomaly detector
     # train_VariableAutoEncoder(
     #     DataMode.MONO_BINARY_MISSING, 1, "models/variableautoencoder/VAE_anomaly.pt",
     #     epochs=100
     # )
-    # Use AE as anomaly detector
-    plot_anomaly_detection(
-        "models/variableautoencoder/VAE_anomaly.pt", 1, "images/variableautoencoder/anomaly_detection.png"
-    )
+    # # Use AE as anomaly detector
+    # plot_anomaly_detection(
+    #     "models/variableautoencoder/VAE_anomaly.pt", 1, "images/variableautoencoder/anomaly_detection.png"
+    # )
