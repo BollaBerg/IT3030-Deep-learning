@@ -230,6 +230,13 @@ def plot_generative_model(model_path: str, channels: int, plot_savepath: str):
     model = load_model(model, model_path)
     model.eval()
 
+    verification_net = VerificationNet(file_name="./models/verification/verification_model")
+    verification_net.load_weights()
+
+    num_generatives = 10000
+    pred_tolerance = 0.8
+    class_tolerance = 0.95
+
     data, _ = data_generator.get_full_data_set(training=False)
     encoded = model.encode(data)
     maxes = torch.max(encoded, 0).values
@@ -237,19 +244,50 @@ def plot_generative_model(model_path: str, channels: int, plot_savepath: str):
 
     z = (maxes - mins) * torch.rand((16, 28)) + mins
     outputs = model.decode(z)
-    outputs = torch.permute(outputs, (0, 2, 3, 1)).detach().numpy()
+    images = torch.permute(outputs, (0, 2, 3, 1)).detach().numpy()
 
-    _, axes = plt.subplots(nrows=4, ncols=4, figsize=(20, 20))
+    predictability, _ = verification_net.check_predictability(
+        images, tolerance=pred_tolerance
+    )
+    coverage = verification_net.check_class_coverage(data=images, tolerance=class_tolerance)
+
+    fig, axes = plt.subplots(nrows=4, ncols=4, figsize=(20, 20))
     axes = axes.flat
     for i in range(16):
         if channels == 1:
-            axes[i].imshow(outputs[i, :, :, 0], cmap="binary")
+            axes[i].imshow(images[i, :, :, 0], cmap="binary")
         else:
-            axes[i].imshow(outputs[i, :, :, :].astype(float))
+            axes[i].imshow(images[i, :, :, :].astype(float))
 
         axes[i].set_xticks([])
         axes[i].set_yticks([])
     
+    fig.suptitle("AE as generative model", fontsize=48)
+    axes[12].text(0.5, 0.0, 
+        f"{num_generatives} generated images",
+        horizontalalignment="center", verticalalignment="top",
+        transform=axes[12].transAxes,
+        fontsize=20
+    )
+    axes[13].text(0.5, 0.0, 
+        f"Predictability: {100*predictability:.2f}%",
+        horizontalalignment="center", verticalalignment="top",
+        transform=axes[13].transAxes,
+        fontsize=20
+    )
+    axes[14].text(0.5, 0.0,
+        f"Coverage: {100*coverage:.2f}%",
+        horizontalalignment="center", verticalalignment="top",
+        transform=axes[14].transAxes,
+        fontsize=20
+    )
+    axes[15].text(0.5, 0.0, 
+        f"Pred.tol.: {pred_tolerance}, class tol.: {class_tolerance}",
+        horizontalalignment="center", verticalalignment="top",
+        transform=axes[15].transAxes,
+        fontsize=20
+    )
+    fig.tight_layout()
     # plt.show()
     plt.savefig(plot_savepath)
     print(f"Generative mode saved at {plot_savepath}")
@@ -331,17 +369,17 @@ if __name__ == "__main__":
     # print_model_output("models/autoencoder/mono_demo.pt", 1)
     # print_model_output("models/autoencoder/mono_demo.pt", 3)
 
-    # # Plot AE as generative model
-    # plot_generative_model(
-    #     "models/autoencoder/mono_demo.pt", 1, "images/autoencoder/generative_mode.png"
-    # )
+    # Plot AE as generative model
+    plot_generative_model(
+        "models/autoencoder/mono_demo.pt", 1, "images/autoencoder/generative_mode.png"
+    )
 
     # # Train anomaly detector
     # train_autoencoder(
     #     DataMode.MONO_BINARY_MISSING, 1, "models/autoencoder/mono_anomaly.pt",
     #     epochs=100
     # )
-    # Use AE as anomaly detector
-    plot_anomaly_detection(
-        "models/autoencoder/mono_anomaly.pt", 1, "images/autoencoder/anomaly_detection.png"
-    )
+    # # Use AE as anomaly detector
+    # plot_anomaly_detection(
+    #     "models/autoencoder/mono_anomaly.pt", 1, "images/autoencoder/anomaly_detection.png"
+    # )
