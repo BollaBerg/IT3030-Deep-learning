@@ -7,6 +7,14 @@ import torch
 from torch.nn import BCELoss
 from torch.optim import Adam
 
+def load_model(model, model_path: str):
+    if torch.cuda.is_available():
+        model.load_state_dict(torch.load(model_path))
+    else:
+        model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
+    return model
+
+
 def train_autoencoder(
         datamode: DataMode,
         channels: int,
@@ -132,7 +140,7 @@ def plot_autoencoder_result(
         ):
     data_generator = StackedMNISTData(datamode)
     model = AutoEncoder(channels=channels)
-    model.load_state_dict(torch.load(model_path))
+    model = load_model(model, model_path)
     model.eval()
 
     mnist_batch, labels = data_generator.get_random_batch(training=False, batch_size=num_images)
@@ -170,7 +178,7 @@ def plot_color_result_individually(
         ):
     data_generator = StackedMNISTData(DataMode.COLOR_BINARY_COMPLETE)
     model = AutoEncoder(channels=3)
-    model.load_state_dict(torch.load(model_path))
+    model = load_model(model, model_path)
     model.eval()
 
     mnist_batch, labels = data_generator.get_random_batch(training=False, batch_size=num_images)
@@ -203,7 +211,7 @@ def print_model_output(model_path: str, channels: int):
 
     data_generator = StackedMNISTData(datamode)
     model = AutoEncoder(channels=channels)
-    model.load_state_dict(torch.load(model_path))
+    model = load_model(model, model_path)
     model.eval()
 
     data, _ = data_generator.get_random_batch(training=False, batch_size=1)
@@ -219,7 +227,7 @@ def plot_generative_model(model_path: str, channels: int, plot_savepath: str):
 
     data_generator = StackedMNISTData(datamode)
     model = AutoEncoder(channels=channels)
-    model.load_state_dict(torch.load(model_path))
+    model = load_model(model, model_path)
     model.eval()
 
     data, _ = data_generator.get_full_data_set(training=False)
@@ -256,7 +264,7 @@ def plot_anomaly_detection(model_path: str, channels: int, plot_savepath: str):
     data_generator = StackedMNISTData(datamode)
     loss_fn = BCELoss()
     model = AutoEncoder(channels=channels)
-    model.load_state_dict(torch.load(model_path))
+    model = load_model(model, model_path)
     model.eval()
 
     data, _ = data_generator.get_full_data_set(training=False)

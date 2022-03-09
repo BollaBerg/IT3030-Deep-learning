@@ -7,6 +7,13 @@ import matplotlib.pyplot as plt
 import torch
 from torch.optim import Adam
 
+def load_model(model, model_path: str):
+    if torch.cuda.is_available():
+        model.load_state_dict(torch.load(model_path))
+    else:
+        model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
+    return model
+
 def train_VariableAutoEncoder(
         datamode: DataMode,
         channels: int,
@@ -133,7 +140,7 @@ def plot_VariableAutoEncoder_result(
         ):
     data_generator = StackedMNISTData(datamode)
     model = VariableAutoEncoder(channels=channels)
-    model.load_state_dict(torch.load(model_path))
+    model = load_model(model, model_path)
     model.eval()
 
     mnist_batch, labels = data_generator.get_random_batch(training=False, batch_size=num_images)
@@ -172,7 +179,7 @@ def plot_color_result_individually(
         ):
     data_generator = StackedMNISTData(DataMode.COLOR_BINARY_COMPLETE)
     model = VariableAutoEncoder(channels=3)
-    model.load_state_dict(torch.load(model_path))
+    model = load_model(model, model_path)
     model.eval()
 
     mnist_batch, labels = data_generator.get_random_batch(training=False, batch_size=num_images)
@@ -206,7 +213,7 @@ def print_model_output(model_path: str, channels: int):
 
     data_generator = StackedMNISTData(datamode)
     model = VariableAutoEncoder(channels=channels)
-    model.load_state_dict(torch.load(model_path))
+    model = load_model(model, model_path)
     model.eval()
 
     data, _ = data_generator.get_random_batch(training=False, batch_size=1)
@@ -216,7 +223,7 @@ def print_model_output(model_path: str, channels: int):
 
 def plot_generative_model(model_path: str, channels: int, plot_savepath: str):
     model = VariableAutoEncoder(channels=channels)
-    model.load_state_dict(torch.load(model_path))
+    model = load_model(model, model_path)
     model.eval()
 
     z = torch.randn((16, 28))
@@ -249,22 +256,21 @@ def plot_anomaly_detection(model_path: str, channels: int, plot_savepath: str):
     data_generator = StackedMNISTData(datamode)
     loss_fn = elbo_loss_function
     model = VariableAutoEncoder(channels=channels)
-    model.load_state_dict(torch.load(model_path))
+    model = load_model(model, model_path)
     model.eval()
-
-    data, _ = data_generator.get_full_data_set(training=False)
-    data_hat, mu, logvar = model(data)
-
-    outputs = [
-        (i, loss_fn(data[i], data_hat[i], mu, logvar)) for i in range(len(data))
-    ]
-    
-    outputs.sort(key=lambda x: x[1], reverse=True)
 
     fig, axes = plt.subplots(nrows=4, ncols=4, figsize=(20, 20))
     axes = axes.flat
     for i in range(16):
-        image = torch.permute(data[outputs[i]], (1, 2, 0)).cpu().detach().numpy()
+        data, _ = data_generator.get_random_batch(training=False, batch_size=1000)
+        data_hat, mu, logvar = model(data)
+
+        outputs = [
+            (data[i], loss_fn(data[i], data_hat[i], mu, logvar)) for i in range(len(data))
+        ]
+        outputs.sort(key=lambda x: x[1], reverse=True)
+        
+        image = torch.permute(outputs[0][0], (1, 2, 0)).cpu().detach().numpy()
         if channels == 1:
             axes[i].imshow(image[:, :, 0], cmap="binary")
         else:
@@ -274,6 +280,7 @@ def plot_anomaly_detection(model_path: str, channels: int, plot_savepath: str):
         axes[i].set_yticks([])
         axes[i].set_title(f"Loss: {outputs[i][1]}")
     
+    fig.suptitle("VAE anomaly detector", fontsize=48)
     fig.tight_layout()
     plt.savefig(plot_savepath)
     print(f"Anomaly detection saved at {plot_savepath}")
