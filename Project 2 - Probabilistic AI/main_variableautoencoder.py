@@ -230,11 +230,12 @@ def plot_generative_model(model_path: str, channels: int, plot_savepath: str):
     verification_net.load_weights()
 
     num_generatives = 10000
-    pred_tolerance = 0.8
-    class_tolerance = 0.95
+    pred_tolerance = 0.8 if channels == 1 else 0.5
+    class_tolerance = 0.95 if channels == 1 else 0.9
 
-    z = torch.randn((num_generatives, 28))
+    z = torch.randn((channels * num_generatives, 28))
     outputs = model.decode(z)
+    outputs = outputs.reshape(-1, channels, 28, 28)
     images = torch.permute(outputs, (0, 2, 3, 1)).detach().numpy()
 
     predictability, _ = verification_net.check_predictability(
@@ -353,9 +354,13 @@ if __name__ == "__main__":
     # print_model_output("models/variableautoencoder/VAE_demo.pt", 1)
     # print_model_output("models/variableautoencoder/VAE_demo.pt", 3)
 
-    # Plot VAE as generative model
+    # # Plot VAE as generative model - single color
+    # plot_generative_model(
+    #     "models/variableautoencoder/VAE_demo.pt", 1, "images/variableautoencoder/generative_mode.png"
+    # )
+    # Plot VAE as generative model - multicolor
     plot_generative_model(
-        "models/variableautoencoder/VAE_demo.pt", 1, "images/variableautoencoder/generative_mode.png"
+        "models/variableautoencoder/VAE_demo.pt", 3, "images/variableautoencoder/generative_mode_color.png"
     )
 
     # # Train anomaly detector
@@ -363,7 +368,11 @@ if __name__ == "__main__":
     #     DataMode.MONO_BINARY_MISSING, 1, "models/variableautoencoder/VAE_anomaly.pt",
     #     epochs=100
     # )
-    # # Use AE as anomaly detector
+    # # Use AE as anomaly detector - single color
     # plot_anomaly_detection(
     #     "models/variableautoencoder/VAE_anomaly.pt", 1, "images/variableautoencoder/anomaly_detection.png"
     # )
+    # # Use AE as anomaly detector - multicolor
+    plot_anomaly_detection(
+        "models/variableautoencoder/VAE_anomaly.pt", 3, "images/variableautoencoder/anomaly_detection_color.png"
+    )
