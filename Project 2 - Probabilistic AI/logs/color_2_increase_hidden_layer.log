@@ -1,0 +1,52 @@
+2022-03-09 01:45:39.521898: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:936] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-03-09 01:45:39.522134: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcublas.so.11'; dlerror: libcublas.so.11: cannot open shared object file: No such file or directory
+2022-03-09 01:45:39.522168: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcublasLt.so.11'; dlerror: libcublasLt.so.11: cannot open shared object file: No such file or directory
+2022-03-09 01:45:39.522194: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcufft.so.10'; dlerror: libcufft.so.10: cannot open shared object file: No such file or directory
+2022-03-09 01:45:39.522218: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcurand.so.10'; dlerror: libcurand.so.10: cannot open shared object file: No such file or directory
+2022-03-09 01:45:39.522240: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcusolver.so.11'; dlerror: libcusolver.so.11: cannot open shared object file: No such file or directory
+2022-03-09 01:45:39.522262: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcusparse.so.11'; dlerror: libcusparse.so.11: cannot open shared object file: No such file or directory
+2022-03-09 01:45:39.522284: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudnn.so.8'; dlerror: libcudnn.so.8: cannot open shared object file: No such file or directory
+2022-03-09 01:45:39.522290: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1850] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+2022-03-09 01:45:39.522424: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+########## EPOCH 1 ##########
+Traceback (most recent call last):
+  File "/home/bolla/repos/skole/22-vaar/it3030-dyp-laring/Project 2 - Probabilistic AI/main.py", line 264, in <module>
+    train_autoencoder(
+  File "/home/bolla/repos/skole/22-vaar/it3030-dyp-laring/Project 2 - Probabilistic AI/main.py", line 65, in train_autoencoder
+    predictability, accuracy = verification_net.check_predictability(
+  File "/home/bolla/repos/skole/22-vaar/it3030-dyp-laring/Project 2 - Probabilistic AI/supplied_files/verification_net.py", line 146, in check_predictability
+    predictions, beliefs = self.predict(data=data)
+  File "/home/bolla/repos/skole/22-vaar/it3030-dyp-laring/Project 2 - Probabilistic AI/supplied_files/verification_net.py", line 110, in predict
+    channel_prediction = self.model.predict(data[:, :, :, [channel]])
+  File "/home/bolla/repos/skole/22-vaar/it3030-dyp-laring/Project 2 - Probabilistic AI/venv/lib/python3.10/site-packages/keras/utils/traceback_utils.py", line 64, in error_handler
+    return fn(*args, **kwargs)
+  File "/home/bolla/repos/skole/22-vaar/it3030-dyp-laring/Project 2 - Probabilistic AI/venv/lib/python3.10/site-packages/keras/engine/training.py", line 1974, in predict
+    self.predict_function = self.make_predict_function()
+  File "/home/bolla/repos/skole/22-vaar/it3030-dyp-laring/Project 2 - Probabilistic AI/venv/lib/python3.10/site-packages/keras/engine/training.py", line 1818, in make_predict_function
+    if not self.run_eagerly:
+  File "/home/bolla/repos/skole/22-vaar/it3030-dyp-laring/Project 2 - Probabilistic AI/venv/lib/python3.10/site-packages/keras/engine/training.py", line 778, in run_eagerly
+    if self.dynamic and self._run_eagerly is False:  # pylint:disable=g-bool-id-comparison
+  File "/home/bolla/repos/skole/22-vaar/it3030-dyp-laring/Project 2 - Probabilistic AI/venv/lib/python3.10/site-packages/keras/engine/base_layer.py", line 1274, in dynamic
+    return any(layer._dynamic for layer in self._flatten_layers())
+  File "/home/bolla/repos/skole/22-vaar/it3030-dyp-laring/Project 2 - Probabilistic AI/venv/lib/python3.10/site-packages/keras/engine/base_layer.py", line 1274, in <genexpr>
+    return any(layer._dynamic for layer in self._flatten_layers())
+  File "/home/bolla/repos/skole/22-vaar/it3030-dyp-laring/Project 2 - Probabilistic AI/venv/lib/python3.10/site-packages/keras/engine/base_layer.py", line 2939, in _flatten_layers
+    for m in self._flatten_modules(
+  File "/home/bolla/repos/skole/22-vaar/it3030-dyp-laring/Project 2 - Probabilistic AI/venv/lib/python3.10/site-packages/keras/engine/base_layer.py", line 2965, in _flatten_modules
+    if trackable_id in seen_object_ids:
+KeyboardInterrupt
+WARNING:tensorflow:Detecting that an object or model or tf.train.Checkpoint is being deleted with unrestored values. See the following logs for the specific values in question. To silence these warnings, use `status.expect_partial()`. See https://www.tensorflow.org/api_docs/python/tf/train/Checkpoint#restorefor details about the status object returned by the restore function.
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.iter
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.beta_1
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.beta_2
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.decay
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.learning_rate
+WARNING:tensorflow:Detecting that an object or model or tf.train.Checkpoint is being deleted with unrestored values. See the following logs for the specific values in question. To silence these warnings, use `status.expect_partial()`. See https://www.tensorflow.org/api_docs/python/tf/train/Checkpoint#restorefor details about the status object returned by the restore function.
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.iter
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.beta_1
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.beta_2
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.decay
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.learning_rate
