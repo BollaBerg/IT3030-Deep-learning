@@ -247,7 +247,7 @@ def plot_generative_model(model_path: str, channels: int, plot_savepath: str):
     print(f"Generative mode saved at {plot_savepath}")
 
 
-def plot_anomaly_detection(model_path: str, channels: int, image_path: str):
+def plot_anomaly_detection(model_path: str, channels: int, plot_savepath: str):
     if channels == 1:
         datamode = DataMode.MONO_BINARY_COMPLETE
     else:
@@ -261,8 +261,29 @@ def plot_anomaly_detection(model_path: str, channels: int, image_path: str):
 
     data, _ = data_generator.get_full_data_set(training=False)
     data_hat = model(data)
-    loss = loss_fn(data_hat, data)
-    print(loss)
+
+    outputs = []
+    for i in range(len(data)):
+        outputs.append((data[i], loss_fn(data[i], data_hat[i])))
+    
+    outputs.sort(key=lambda x: x[1], reverse=True)
+    
+    fig, axes = plt.subplots(nrows=4, ncols=4, figsize=(20, 20))
+    axes = axes.flat
+    for i in range(16):
+        image = torch.permute(outputs[i][0], (1, 2, 0)).cpu().detach().numpy()
+        if channels == 1:
+            axes[i].imshow(image[:, :, 0], cmap="binary")
+        else:
+            axes[i].imshow(image[:, :, :].astype(float))
+
+        axes[i].set_xticks([])
+        axes[i].set_yticks([])
+        axes[i].set_title(f"Loss: {outputs[i][1]}")
+    
+    fig.tight_layout()
+    plt.savefig(plot_savepath)
+    print(f"Anomaly detection saved at {plot_savepath}")
     
 
 
@@ -307,11 +328,12 @@ if __name__ == "__main__":
     #     "models/autoencoder/mono_demo.pt", 1, "images/autoencoder/generative_mode.png"
     # )
 
+    # # Train anomaly detector
+    # train_autoencoder(
+    #     DataMode.MONO_BINARY_MISSING, 1, "models/autoencoder/mono_anomaly.pt",
+    #     epochs=100
+    # )
     # Use AE as anomaly detector
-    train_autoencoder(
-        DataMode.MONO_BINARY_MISSING, 1, "models/autoencoder/mono_anomaly.pt",
-        epochs=100
-    )
     plot_anomaly_detection(
         "models/autoencoder/mono_anomaly.pt", 1, "images/autoencoder/anomaly_detection.png"
     )
