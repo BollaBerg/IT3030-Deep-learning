@@ -1,0 +1,534 @@
+2022-03-09 01:18:13.041356: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:936] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-03-09 01:18:13.041530: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcublas.so.11'; dlerror: libcublas.so.11: cannot open shared object file: No such file or directory
+2022-03-09 01:18:13.041573: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcublasLt.so.11'; dlerror: libcublasLt.so.11: cannot open shared object file: No such file or directory
+2022-03-09 01:18:13.041598: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcufft.so.10'; dlerror: libcufft.so.10: cannot open shared object file: No such file or directory
+2022-03-09 01:18:13.041619: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcurand.so.10'; dlerror: libcurand.so.10: cannot open shared object file: No such file or directory
+2022-03-09 01:18:13.041639: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcusolver.so.11'; dlerror: libcusolver.so.11: cannot open shared object file: No such file or directory
+2022-03-09 01:18:13.041659: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcusparse.so.11'; dlerror: libcusparse.so.11: cannot open shared object file: No such file or directory
+2022-03-09 01:18:13.041679: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudnn.so.8'; dlerror: libcudnn.so.8: cannot open shared object file: No such file or directory
+2022-03-09 01:18:13.041685: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1850] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+2022-03-09 01:18:13.041848: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+########## EPOCH 1 ##########
+Test loss:      0.64911
+Predictability: 100.00%
+Accuracy:       11.35%
+Plot saved at images/autoencoder/training/epoch_0.png
+
+########## EPOCH 2 ##########
+Test loss:      0.47828
+Predictability: 100.00%
+Accuracy:       11.35%
+
+########## EPOCH 3 ##########
+Test loss:      0.46018
+Predictability: 100.00%
+Accuracy:       11.35%
+
+########## EPOCH 4 ##########
+Test loss:      0.44754
+Predictability: 100.00%
+Accuracy:       11.35%
+
+########## EPOCH 5 ##########
+Test loss:      0.43465
+Predictability: 100.00%
+Accuracy:       11.35%
+
+########## EPOCH 6 ##########
+Test loss:      0.42293
+Predictability: 100.00%
+Accuracy:       11.35%
+
+########## EPOCH 7 ##########
+Test loss:      0.41044
+Predictability: 100.00%
+Accuracy:       11.35%
+
+########## EPOCH 8 ##########
+Test loss:      0.39252
+Predictability: 100.00%
+Accuracy:       11.35%
+
+########## EPOCH 9 ##########
+Test loss:      0.37031
+Predictability: 98.92%
+Accuracy:       11.35%
+
+########## EPOCH 10 ##########
+Test loss:      0.34476
+Predictability: 81.83%
+Accuracy:       12.40%
+
+########## EPOCH 11 ##########
+Test loss:      0.31963
+Predictability: 74.62%
+Accuracy:       16.45%
+Plot saved at images/autoencoder/training/epoch_10.png
+
+########## EPOCH 12 ##########
+Test loss:      0.29505
+Predictability: 70.37%
+Accuracy:       15.49%
+
+########## EPOCH 13 ##########
+Test loss:      0.26989
+Predictability: 64.98%
+Accuracy:       18.88%
+
+########## EPOCH 14 ##########
+Test loss:      0.24589
+Predictability: 58.37%
+Accuracy:       25.34%
+
+########## EPOCH 15 ##########
+Test loss:      0.22468
+Predictability: 56.81%
+Accuracy:       28.86%
+
+########## EPOCH 16 ##########
+Test loss:      0.20540
+Predictability: 56.10%
+Accuracy:       29.86%
+
+########## EPOCH 17 ##########
+Test loss:      0.18910
+Predictability: 56.07%
+Accuracy:       32.45%
+
+########## EPOCH 18 ##########
+Test loss:      0.17502
+Predictability: 56.69%
+Accuracy:       36.65%
+
+########## EPOCH 19 ##########
+Test loss:      0.16321
+Predictability: 57.78%
+Accuracy:       40.20%
+
+########## EPOCH 20 ##########
+Test loss:      0.15358
+Predictability: 59.23%
+Accuracy:       42.97%
+
+########## EPOCH 21 ##########
+Test loss:      0.14602
+Predictability: 61.03%
+Accuracy:       46.67%
+Plot saved at images/autoencoder/training/epoch_20.png
+
+########## EPOCH 22 ##########
+Test loss:      0.13986
+Predictability: 62.50%
+Accuracy:       49.01%
+
+########## EPOCH 23 ##########
+Test loss:      0.13478
+Predictability: 64.17%
+Accuracy:       51.48%
+
+########## EPOCH 24 ##########
+Test loss:      0.13038
+Predictability: 65.71%
+Accuracy:       53.92%
+
+########## EPOCH 25 ##########
+Test loss:      0.12642
+Predictability: 67.58%
+Accuracy:       56.35%
+
+########## EPOCH 26 ##########
+Test loss:      0.12281
+Predictability: 69.12%
+Accuracy:       58.78%
+
+########## EPOCH 27 ##########
+Test loss:      0.11953
+Predictability: 70.59%
+Accuracy:       60.75%
+
+########## EPOCH 28 ##########
+Test loss:      0.11654
+Predictability: 72.33%
+Accuracy:       62.98%
+
+########## EPOCH 29 ##########
+Test loss:      0.11376
+Predictability: 73.44%
+Accuracy:       64.60%
+
+########## EPOCH 30 ##########
+Test loss:      0.11116
+Predictability: 74.79%
+Accuracy:       66.40%
+
+########## EPOCH 31 ##########
+Test loss:      0.10873
+Predictability: 75.92%
+Accuracy:       68.04%
+Plot saved at images/autoencoder/training/epoch_30.png
+
+########## EPOCH 32 ##########
+Test loss:      0.10646
+Predictability: 77.05%
+Accuracy:       69.54%
+
+########## EPOCH 33 ##########
+Test loss:      0.10439
+Predictability: 78.22%
+Accuracy:       71.04%
+
+########## EPOCH 34 ##########
+Test loss:      0.10254
+Predictability: 79.15%
+Accuracy:       72.47%
+
+########## EPOCH 35 ##########
+Test loss:      0.10091
+Predictability: 80.17%
+Accuracy:       73.84%
+
+########## EPOCH 36 ##########
+Test loss:      0.09949
+Predictability: 80.83%
+Accuracy:       74.87%
+
+########## EPOCH 37 ##########
+Test loss:      0.09823
+Predictability: 81.53%
+Accuracy:       75.81%
+
+########## EPOCH 38 ##########
+Test loss:      0.09712
+Predictability: 81.94%
+Accuracy:       76.45%
+
+########## EPOCH 39 ##########
+Test loss:      0.09614
+Predictability: 82.45%
+Accuracy:       76.96%
+
+########## EPOCH 40 ##########
+Test loss:      0.09527
+Predictability: 82.86%
+Accuracy:       77.48%
+
+########## EPOCH 41 ##########
+Test loss:      0.09446
+Predictability: 83.01%
+Accuracy:       77.78%
+Plot saved at images/autoencoder/training/epoch_40.png
+
+########## EPOCH 42 ##########
+Test loss:      0.09370
+Predictability: 83.48%
+Accuracy:       78.32%
+
+########## EPOCH 43 ##########
+Test loss:      0.09298
+Predictability: 83.85%
+Accuracy:       78.81%
+
+########## EPOCH 44 ##########
+Test loss:      0.09231
+Predictability: 84.03%
+Accuracy:       79.13%
+
+########## EPOCH 45 ##########
+Test loss:      0.09170
+Predictability: 84.19%
+Accuracy:       79.44%
+
+########## EPOCH 46 ##########
+Test loss:      0.09115
+Predictability: 84.37%
+Accuracy:       79.73%
+
+########## EPOCH 47 ##########
+Test loss:      0.09064
+Predictability: 84.54%
+Accuracy:       79.96%
+
+########## EPOCH 48 ##########
+Test loss:      0.09018
+Predictability: 84.59%
+Accuracy:       80.03%
+
+########## EPOCH 49 ##########
+Test loss:      0.08975
+Predictability: 84.80%
+Accuracy:       80.28%
+
+########## EPOCH 50 ##########
+Test loss:      0.08936
+Predictability: 84.94%
+Accuracy:       80.44%
+
+########## EPOCH 51 ##########
+Test loss:      0.08900
+Predictability: 85.15%
+Accuracy:       80.66%
+Plot saved at images/autoencoder/training/epoch_50.png
+
+########## EPOCH 52 ##########
+Test loss:      0.08866
+Predictability: 85.18%
+Accuracy:       80.79%
+
+########## EPOCH 53 ##########
+Test loss:      0.08833
+Predictability: 85.26%
+Accuracy:       80.96%
+
+########## EPOCH 54 ##########
+Test loss:      0.08802
+Predictability: 85.25%
+Accuracy:       81.08%
+
+########## EPOCH 55 ##########
+Test loss:      0.08771
+Predictability: 85.33%
+Accuracy:       81.28%
+
+########## EPOCH 56 ##########
+Test loss:      0.08741
+Predictability: 85.51%
+Accuracy:       81.47%
+
+########## EPOCH 57 ##########
+Test loss:      0.08714
+Predictability: 85.64%
+Accuracy:       81.65%
+
+########## EPOCH 58 ##########
+Test loss:      0.08689
+Predictability: 85.80%
+Accuracy:       81.83%
+
+########## EPOCH 59 ##########
+Test loss:      0.08667
+Predictability: 85.91%
+Accuracy:       81.95%
+
+########## EPOCH 60 ##########
+Test loss:      0.08647
+Predictability: 86.00%
+Accuracy:       82.06%
+
+########## EPOCH 61 ##########
+Test loss:      0.08629
+Predictability: 86.04%
+Accuracy:       82.13%
+Plot saved at images/autoencoder/training/epoch_60.png
+
+########## EPOCH 62 ##########
+Test loss:      0.08612
+Predictability: 86.09%
+Accuracy:       82.24%
+
+########## EPOCH 63 ##########
+Test loss:      0.08597
+Predictability: 86.13%
+Accuracy:       82.28%
+
+########## EPOCH 64 ##########
+Test loss:      0.08583
+Predictability: 86.16%
+Accuracy:       82.29%
+
+########## EPOCH 65 ##########
+Test loss:      0.08569
+Predictability: 86.19%
+Accuracy:       82.35%
+
+########## EPOCH 66 ##########
+Test loss:      0.08557
+Predictability: 86.16%
+Accuracy:       82.39%
+
+########## EPOCH 67 ##########
+Test loss:      0.08545
+Predictability: 86.24%
+Accuracy:       82.53%
+
+########## EPOCH 68 ##########
+Test loss:      0.08534
+Predictability: 86.20%
+Accuracy:       82.52%
+
+########## EPOCH 69 ##########
+Test loss:      0.08524
+Predictability: 86.24%
+Accuracy:       82.57%
+
+########## EPOCH 70 ##########
+Test loss:      0.08514
+Predictability: 86.28%
+Accuracy:       82.58%
+
+########## EPOCH 71 ##########
+Test loss:      0.08506
+Predictability: 86.28%
+Accuracy:       82.59%
+Plot saved at images/autoencoder/training/epoch_70.png
+
+########## EPOCH 72 ##########
+Test loss:      0.08497
+Predictability: 86.32%
+Accuracy:       82.60%
+
+########## EPOCH 73 ##########
+Test loss:      0.08489
+Predictability: 86.35%
+Accuracy:       82.67%
+
+########## EPOCH 74 ##########
+Test loss:      0.08481
+Predictability: 86.39%
+Accuracy:       82.70%
+
+########## EPOCH 75 ##########
+Test loss:      0.08473
+Predictability: 86.35%
+Accuracy:       82.67%
+
+########## EPOCH 76 ##########
+Test loss:      0.08466
+Predictability: 86.36%
+Accuracy:       82.68%
+
+########## EPOCH 77 ##########
+Test loss:      0.08460
+Predictability: 86.39%
+Accuracy:       82.72%
+
+########## EPOCH 78 ##########
+Test loss:      0.08453
+Predictability: 86.44%
+Accuracy:       82.79%
+
+########## EPOCH 79 ##########
+Test loss:      0.08447
+Predictability: 86.49%
+Accuracy:       82.83%
+
+########## EPOCH 80 ##########
+Test loss:      0.08441
+Predictability: 86.51%
+Accuracy:       82.84%
+
+########## EPOCH 81 ##########
+Test loss:      0.08435
+Predictability: 86.55%
+Accuracy:       82.88%
+Plot saved at images/autoencoder/training/epoch_80.png
+
+########## EPOCH 82 ##########
+Test loss:      0.08429
+Predictability: 86.58%
+Accuracy:       82.90%
+
+########## EPOCH 83 ##########
+Test loss:      0.08424
+Predictability: 86.58%
+Accuracy:       82.93%
+
+########## EPOCH 84 ##########
+Test loss:      0.08418
+Predictability: 86.64%
+Accuracy:       82.96%
+
+########## EPOCH 85 ##########
+Test loss:      0.08414
+Predictability: 86.67%
+Accuracy:       82.97%
+
+########## EPOCH 86 ##########
+Test loss:      0.08409
+Predictability: 86.71%
+Accuracy:       83.03%
+
+########## EPOCH 87 ##########
+Test loss:      0.08404
+Predictability: 86.73%
+Accuracy:       83.05%
+
+########## EPOCH 88 ##########
+Test loss:      0.08400
+Predictability: 86.80%
+Accuracy:       83.12%
+
+########## EPOCH 89 ##########
+Test loss:      0.08396
+Predictability: 86.84%
+Accuracy:       83.13%
+
+########## EPOCH 90 ##########
+Test loss:      0.08392
+Predictability: 86.82%
+Accuracy:       83.12%
+
+########## EPOCH 91 ##########
+Test loss:      0.08388
+Predictability: 86.81%
+Accuracy:       83.13%
+Plot saved at images/autoencoder/training/epoch_90.png
+
+########## EPOCH 92 ##########
+Test loss:      0.08384
+Predictability: 86.81%
+Accuracy:       83.15%
+
+########## EPOCH 93 ##########
+Test loss:      0.08380
+Predictability: 86.78%
+Accuracy:       83.14%
+
+########## EPOCH 94 ##########
+Test loss:      0.08377
+Predictability: 86.81%
+Accuracy:       83.14%
+
+########## EPOCH 95 ##########
+Test loss:      0.08373
+Predictability: 86.86%
+Accuracy:       83.16%
+
+########## EPOCH 96 ##########
+Test loss:      0.08370
+Predictability: 86.91%
+Accuracy:       83.18%
+
+########## EPOCH 97 ##########
+Test loss:      0.08367
+Predictability: 86.92%
+Accuracy:       83.19%
+
+########## EPOCH 98 ##########
+Test loss:      0.08364
+Predictability: 86.88%
+Accuracy:       83.15%
+
+########## EPOCH 99 ##########
+Test loss:      0.08360
+Predictability: 86.89%
+Accuracy:       83.18%
+
+########## EPOCH 100 ##########
+Test loss:      0.08358
+Predictability: 86.87%
+Accuracy:       83.16%
+WARNING:tensorflow:Detecting that an object or model or tf.train.Checkpoint is being deleted with unrestored values. See the following logs for the specific values in question. To silence these warnings, use `status.expect_partial()`. See https://www.tensorflow.org/api_docs/python/tf/train/Checkpoint#restorefor details about the status object returned by the restore function.
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.iter
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.beta_1
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.beta_2
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.decay
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.learning_rate
+WARNING:tensorflow:Detecting that an object or model or tf.train.Checkpoint is being deleted with unrestored values. See the following logs for the specific values in question. To silence these warnings, use `status.expect_partial()`. See https://www.tensorflow.org/api_docs/python/tf/train/Checkpoint#restorefor details about the status object returned by the restore function.
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.iter
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.beta_1
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.beta_2
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.decay
+WARNING:tensorflow:Value in checkpoint could not be found in the restored object: (root).optimizer.learning_rate
