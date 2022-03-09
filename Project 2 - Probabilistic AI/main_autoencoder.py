@@ -31,8 +31,6 @@ def train_autoencoder(
     data_generator = StackedMNISTData(datamode, default_batch_size=batch_size)
     verification_net = VerificationNet(file_name="./models/verification/verification_model")
     verification_net.load_weights()
-
-    model_save_path_base, model_extension = model_save_path.split(".")
     
     accuracies = []
     predictabilities = []
@@ -80,7 +78,7 @@ def train_autoencoder(
         if epoch % 10 == 0:
             torch.save(
                 model.state_dict(),
-                f"models/autoencoder/training/epoch_{epoch}_{test_loss}.{model_extension}"
+                f"models/autoencoder/training/epoch_{epoch}_{test_loss}.pt"
             )
             plot_model_results(
                 X_test, X_hat_test, 10, channels, f"images/autoencoder/training/epoch_{epoch}.png"
@@ -97,6 +95,7 @@ def plot_predictabilies_accuracies(predictabilities, accuracies, plot_savepath):
     ax.plot(accuracies, label="Accuracy")
 
     fig.legend()
+    fig.suptitle("Predictability and accuracy - AE training", fontsize=48)
     plt.tight_layout()
     plt.savefig(plot_savepath)
 
@@ -126,6 +125,8 @@ def plot_model_results(mnist_batch,
         # axes[row][0].set_title(str(labels[row].item()))
         # axes[row][1].set_title(str(labels[row].item()))
     
+    fig.suptitle("Examples of model performance", fontsize=48)
+    fig.tight_layout()
     # plt.show()
     plt.savefig(plot_savepath)
     print(f"Plot saved at {plot_savepath}")
@@ -146,29 +147,7 @@ def plot_autoencoder_result(
     mnist_batch, labels = data_generator.get_random_batch(training=False, batch_size=num_images)
     generated_batch = model(mnist_batch)
 
-    generated_batch = torch.permute(generated_batch, (0, 2, 3, 1)).detach().numpy()
-    mnist_batch = torch.permute(mnist_batch, (0, 2, 3, 1)).detach().numpy()
-
-    fig, axes = plt.subplots(nrows=num_images, ncols=2, figsize=(20, 10*num_images))
-    for row in range(num_images):
-        if channels == 1:
-            axes[row][0].imshow(mnist_batch[row, :, :, 0], cmap="binary")
-            axes[row][1].imshow(generated_batch[row, :, :, 0], cmap="binary")
-        else:
-            axes[row][0].imshow(mnist_batch[row, :, :, :].astype(float))
-            axes[row][1].imshow(generated_batch[row, :, :, :].astype(float))
-        
-        axes[row][0].set_xticks([])
-        axes[row][0].set_yticks([])
-        axes[row][1].set_xticks([])
-        axes[row][1].set_yticks([])
-
-        # axes[row][0].set_title(str(labels[row].item()))
-        # axes[row][1].set_title(str(labels[row].item()))
-    
-    # plt.show()
-    plt.savefig(plot_savepath)
-    print(f"Plot saved at {plot_savepath}")
+    plot_model_results(mnist_batch, generated_batch, num_images, channels, plot_savepath)
 
 
 def plot_color_result_individually(
@@ -198,6 +177,7 @@ def plot_color_result_individually(
             axes[row][i].set_xticks([])
             axes[row][i].set_yticks([])
     
+    fig.suptitle("AE on color data - each color plotted individually", fontsize=48)
     # plt.show()
     plt.savefig(plot_savepath)
     print(f"Plot saved at {plot_savepath}")
@@ -234,16 +214,17 @@ def plot_generative_model(model_path: str, channels: int, plot_savepath: str):
     verification_net.load_weights()
 
     num_generatives = 10000
-    pred_tolerance = 0.8
-    class_tolerance = 0.95
+    pred_tolerance = 0.8 if channels == 1 else 0.5
+    class_tolerance = 0.95 if channels == 1 else 0.9
 
     data, _ = data_generator.get_full_data_set(training=False)
-    encoded = model.encode(data)
+    encoded = model.encode(data.reshape(-1, 1, 28, 28))
     maxes = torch.max(encoded, 0).values
     mins = torch.min(encoded, 0).values
 
-    z = (maxes - mins) * torch.rand((16, 28)) + mins
+    z = (maxes - mins) * torch.rand((channels * num_generatives, 28)) + mins
     outputs = model.decode(z)
+    outputs = outputs.reshape(-1, channels, 28, 28)
     images = torch.permute(outputs, (0, 2, 3, 1)).detach().numpy()
 
     predictability, _ = verification_net.check_predictability(
@@ -327,6 +308,7 @@ def plot_anomaly_detection(model_path: str, channels: int, plot_savepath: str):
         axes[i].set_yticks([])
         axes[i].set_title(f"Loss: {outputs[i][1]}")
     
+    fig.suptitle("AE anomaly detector", fontsize=48)
     fig.tight_layout()
     plt.savefig(plot_savepath)
     print(f"Anomaly detection saved at {plot_savepath}")
@@ -369,9 +351,13 @@ if __name__ == "__main__":
     # print_model_output("models/autoencoder/mono_demo.pt", 1)
     # print_model_output("models/autoencoder/mono_demo.pt", 3)
 
-    # Plot AE as generative model
+    # # Plot AE as generative model - single color
+    # plot_generative_model(
+    #     "models/autoencoder/mono_demo.pt", 1, "images/autoencoder/generative_mode.png"
+    # )
+    # Plot AE as generative model - multicolor
     plot_generative_model(
-        "models/autoencoder/mono_demo.pt", 1, "images/autoencoder/generative_mode.png"
+        "models/autoencoder/mono_demo.pt", 3, "images/autoencoder/generative_mode_color.png"
     )
 
     # # Train anomaly detector
@@ -379,7 +365,11 @@ if __name__ == "__main__":
     #     DataMode.MONO_BINARY_MISSING, 1, "models/autoencoder/mono_anomaly.pt",
     #     epochs=100
     # )
-    # # Use AE as anomaly detector
+    # # Use AE as anomaly detector - single color
     # plot_anomaly_detection(
     #     "models/autoencoder/mono_anomaly.pt", 1, "images/autoencoder/anomaly_detection.png"
+    # )
+    # # Use AE as anomaly detector - multicolor
+    # plot_anomaly_detection(
+    #     "models/autoencoder/mono_anomaly.pt", 3, "images/autoencoder/anomaly_detection_color.png"
     # )
