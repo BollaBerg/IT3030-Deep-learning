@@ -24,6 +24,10 @@ class AutoEncoder(nn.Module):
         ##### Define model #####
         # Follows, at the time of writing, the structure given in
         # https://www.researchgate.net/publication/320658590_Deep_Clustering_with_Convolutional_Autoencoders
+        # Note that we struggled with accuracy not increasing above ~30% (see
+        # images/autoencoder/training_weird_results.png). I figured this was
+        # likely due to too small of a "mid-layer" (between encoder and decoder),
+        # so I increased this from 10 (in the source).
         self.encoder = nn.Sequential(
             nn.Conv2d(
                 in_channels=1,          # "Layers" of input data
@@ -44,11 +48,11 @@ class AutoEncoder(nn.Module):
                 stride=2
             ),
             nn.Flatten(),
-            nn.Linear(1152, 10)
+            nn.Linear(1152, 28)
         )
 
         self.decoder = nn.Sequential(
-            nn.Linear(10, 1152),
+            nn.Linear(28, 1152),
             _Reshape((-1, 128, 3, 3)),
             nn.ConvTranspose2d(
                 in_channels=128,
