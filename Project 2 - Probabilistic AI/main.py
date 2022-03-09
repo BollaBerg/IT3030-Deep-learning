@@ -69,10 +69,13 @@ def train_autoencoder(
         predictabilities.append(predictability)
         accuracies.append(accuracy)
 
-        if epoch % 100 == 0:
+        if epoch % 10 == 0:
             torch.save(
                 model.state_dict(),
-                f"{model_save_path_base}_{epoch}_{test_loss}.{model_extension}"
+                f"models/autoencoder/training/epoch_{epoch}_{test_loss}.{model_extension}"
+            )
+            plot_model_results(
+                X_test, X_hat_test, 10, channels, f"images/autoencoder/training/epoch_{epoch}.png"
             )
     
     torch.save(model.state_dict(), model_save_path)
@@ -88,6 +91,36 @@ def plot_predictabilies_accuracies(predictabilities, accuracies, plot_savepath):
     fig.legend()
     plt.tight_layout()
     plt.savefig(plot_savepath)
+
+
+def plot_model_results(mnist_batch,
+                       generated_batch,
+                       num_images: int,
+                       channels: int,
+                       plot_savepath: str):
+    generated_batch = torch.permute(generated_batch, (0, 2, 3, 1)).cpu().detach().numpy()
+    mnist_batch = torch.permute(mnist_batch, (0, 2, 3, 1)).cpu().detach().numpy()
+
+    fig, axes = plt.subplots(nrows=num_images, ncols=2, figsize=(20, 10*num_images))
+    for row in range(num_images):
+        if channels == 1:
+            axes[row][0].imshow(mnist_batch[row, :, :, 0], cmap="binary")
+            axes[row][1].imshow(generated_batch[row, :, :, 0], cmap="binary")
+        else:
+            axes[row][0].imshow(mnist_batch[row, :, :, :].astype(float))
+            axes[row][1].imshow(generated_batch[row, :, :, :].astype(float))
+        
+        axes[row][0].set_xticks([])
+        axes[row][0].set_yticks([])
+        axes[row][1].set_xticks([])
+        axes[row][1].set_yticks([])
+
+        # axes[row][0].set_title(str(labels[row].item()))
+        # axes[row][1].set_title(str(labels[row].item()))
+    
+    # plt.show()
+    plt.savefig(plot_savepath)
+    print(f"Plot saved at {plot_savepath}")
 
 
 def plot_autoencoder_result(
@@ -218,11 +251,11 @@ def plot_generative_model(model_path: str, channels: int, plot_savepath: str):
 
 
 if __name__ == "__main__":
-    # # Train single-layer image
-    # train_autoencoder(
-    #     DataMode.MONO_BINARY_COMPLETE, 1, "models/autoencoder/mono.pt",
-    #     epochs=500
-    # )
+    # Train single-layer image
+    train_autoencoder(
+        DataMode.MONO_BINARY_COMPLETE, 1, "models/autoencoder/mono.pt",
+        epochs=100
+    )
 
     # # Train multi-layer image
     # train_autoencoder(
@@ -252,6 +285,6 @@ if __name__ == "__main__":
     # print_model_output("models/autoencoder/color_demo.pt", 3)
 
     # Plot AE as generative model
-    plot_generative_model(
-        "models/autoencoder/mono_demo.pt", 1, "images/autoencoder/generative_mode.png"
-    )
+    # plot_generative_model(
+    #     "models/autoencoder/mono_demo.pt", 1, "images/autoencoder/generative_mode.png"
+    # )
