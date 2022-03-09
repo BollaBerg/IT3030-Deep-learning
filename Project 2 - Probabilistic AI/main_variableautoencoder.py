@@ -215,22 +215,13 @@ def print_model_output(model_path: str, channels: int):
 
 
 def plot_generative_model(model_path: str, channels: int, plot_savepath: str):
-    if channels == 1:
-        datamode = DataMode.MONO_BINARY_COMPLETE
-    else:
-        datamode = DataMode.COLOR_BINARY_COMPLETE
-
-    data_generator = StackedMNISTData(datamode)
     model = VariableAutoEncoder(channels=channels)
     model.load_state_dict(torch.load(model_path))
     model.eval()
 
-    data, _ = data_generator.get_full_data_set(training=False)
-    encoded, mu, logvar = model.encode(data)
-
     z = torch.randn((16, 28))
 
-    outputs, mu, logvar = model.decode(z)
+    outputs = model.decode(z)
     outputs = torch.permute(outputs, (0, 2, 3, 1)).detach().numpy()
 
     _, axes = plt.subplots(nrows=4, ncols=4, figsize=(20, 20))
@@ -264,16 +255,16 @@ def plot_anomaly_detection(model_path: str, channels: int, plot_savepath: str):
     data, _ = data_generator.get_full_data_set(training=False)
     data_hat, mu, logvar = model(data)
 
-    outputs = []
-    for i in range(len(data)):
-        outputs.append((data[i], loss_fn(data[i], data_hat[i])))
+    outputs = [
+        (i, loss_fn(data[i], data_hat[i], mu, logvar)) for i in range(len(data))
+    ]
     
     outputs.sort(key=lambda x: x[1], reverse=True)
-    
+
     fig, axes = plt.subplots(nrows=4, ncols=4, figsize=(20, 20))
     axes = axes.flat
     for i in range(16):
-        image = torch.permute(outputs[i][0], (1, 2, 0)).cpu().detach().numpy()
+        image = torch.permute(data[outputs[i]], (1, 2, 0)).cpu().detach().numpy()
         if channels == 1:
             axes[i].imshow(image[:, :, 0], cmap="binary")
         else:
@@ -290,20 +281,20 @@ def plot_anomaly_detection(model_path: str, channels: int, plot_savepath: str):
 
 
 if __name__ == "__main__":
-    # Train single-layer image
-    train_VariableAutoEncoder(
-        DataMode.MONO_BINARY_COMPLETE, 1, "models/variableautoencoder/VAE.pt",
-        epochs=100
-    )
+    # # Train single-layer image
+    # train_VariableAutoEncoder(
+    #     DataMode.MONO_BINARY_COMPLETE, 1, "models/variableautoencoder/VAE.pt",
+    #     epochs=100
+    # )
     
     # # Plot single-layer results
-    # plot_autoencoder_result(
+    # plot_VariableAutoEncoder_result(
     #     DataMode.MONO_BINARY_COMPLETE, 1, "models/variableautoencoder/VAE_demo.pt",
     #     plot_savepath="images/variableautoencoder/mono.png", num_images=10
     # )
 
     # # Plot multi-layer results
-    # plot_autoencoder_result(
+    # plot_VariableAutoEncoder_result(
     #     DataMode.COLOR_BINARY_COMPLETE, 3, "models/variableautoencoder/VAE_demo.pt",
     #     plot_savepath="images/variableautoencoder/color.png", num_images=10
     # )
@@ -317,17 +308,17 @@ if __name__ == "__main__":
     # print_model_output("models/variableautoencoder/VAE_demo.pt", 1)
     # print_model_output("models/variableautoencoder/VAE_demo.pt", 3)
 
-    # # Plot VAE as generative model
+    # Plot VAE as generative model
     # plot_generative_model(
-    #     "models/variableautoencoder/VAE_demo.pt", 1, "images/autoencoder/generative_mode.png"
+    #     "models/variableautoencoder/VAE_demo.pt", 1, "images/variableautoencoder/generative_mode.png"
     # )
 
     # # Train anomaly detector
-    # train_autoencoder(
+    # train_VariableAutoEncoder(
     #     DataMode.MONO_BINARY_MISSING, 1, "models/variableautoencoder/VAE_anomaly.pt",
     #     epochs=100
     # )
-    # # Use AE as anomaly detector
-    # plot_anomaly_detection(
-    #     "models/variableautoencoder/VAE_anomaly.pt", 1, "images/variableautoencoder/anomaly_detection.png"
-    # )
+    # Use AE as anomaly detector
+    plot_anomaly_detection(
+        "models/variableautoencoder/VAE_anomaly.pt", 1, "images/variableautoencoder/anomaly_detection.png"
+    )
