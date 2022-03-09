@@ -6,7 +6,7 @@ from torch.nn.functional import binary_cross_entropy
 
 def elbo_loss_function(recon_x, x, mu, logvar):
     # https://github.com/pytorch/examples/blob/a74badde33f924c2ce5391141b86c40483150d5a/vae/main.py#L73
-    BCE = binary_cross_entropy(recon_x, x.view(-1, 28*28), reduction="sum")
+    BCE = binary_cross_entropy(recon_x, x, reduction="sum")
     KLD = -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp())
     return BCE + KLD
 
