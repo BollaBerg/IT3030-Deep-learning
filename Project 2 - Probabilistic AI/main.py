@@ -247,6 +247,25 @@ def plot_generative_model(model_path: str, channels: int, plot_savepath: str):
     print(f"Generative mode saved at {plot_savepath}")
 
 
+def plot_anomaly_detection(model_path: str, channels: int, image_path: str):
+    if channels == 1:
+        datamode = DataMode.MONO_BINARY_COMPLETE
+    else:
+        datamode = DataMode.COLOR_BINARY_COMPLETE
+
+    data_generator = StackedMNISTData(datamode)
+    loss_fn = BCELoss()
+    model = AutoEncoder(channels=channels)
+    model.load_state_dict(torch.load(model_path))
+    model.eval()
+
+    data, _ = data_generator.get_full_data_set(training=False)
+    data_hat = model(data)
+    loss = loss_fn(data_hat, data)
+    print(loss)
+    
+
+
 if __name__ == "__main__":
     # # Train single-layer image
     # train_autoencoder(
@@ -283,7 +302,16 @@ if __name__ == "__main__":
     # print_model_output("models/autoencoder/mono_demo.pt", 1)
     # print_model_output("models/autoencoder/mono_demo.pt", 3)
 
-    # Plot AE as generative model
-    plot_generative_model(
-        "models/autoencoder/mono_demo.pt", 1, f"images/autoencoder/generative_mode.png"
+    # # Plot AE as generative model
+    # plot_generative_model(
+    #     "models/autoencoder/mono_demo.pt", 1, "images/autoencoder/generative_mode.png"
+    # )
+
+    # Use AE as anomaly detector
+    train_autoencoder(
+        DataMode.MONO_BINARY_MISSING, 1, "models/autoencoder/mono_anomaly.pt",
+        epochs=100
+    )
+    plot_anomaly_detection(
+        "models/autoencoder/mono_anomaly.pt", 1, "images/autoencoder/anomaly_detection.png"
     )
