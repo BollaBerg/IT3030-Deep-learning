@@ -4,6 +4,7 @@ from tensorflow.keras.models import Sequential                                  
 from tensorflow.keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D   # type: ignore
 import torch
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class VerificationNet:
@@ -171,3 +172,14 @@ if __name__ == "__main__":
     print(f"Coverage: {100*cov:.2f}%")
     print(f"Predictability: {100*pred:.2f}%")
     print(f"Accuracy: {100 * acc:.2f}%")
+
+    # Plot predictions
+    predictions, _ = net.predict(img)
+    fig, axes = plt.subplots(nrows=4, ncols=4)
+    for i, ax in enumerate(axes.flat):
+        ax.imshow(img[i, :, :, 0], cmap="binary")
+        ax.set_title(f"P={int(predictions[i])} A={labels[i]}")
+        ax.set_xticks([])
+        ax.set_yticks([])
+    fig.tight_layout()
+    plt.savefig("images/VerificationNet_training.png")
