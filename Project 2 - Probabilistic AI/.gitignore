@@ -3,3 +3,9 @@ models/autoencoder/training/*
 
 images/autoencoder/training/*
 !images/autoencoder/training/.gitkeep
+
+models/variableautoencoder/training/*
+!models/variableautoencoder/training/.gitkeep
+
+images/variableautoencoder/training/*
+!images/variableautoencoder/training/.gitkeep
