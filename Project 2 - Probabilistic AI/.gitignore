@@ -1,0 +1,5 @@
+models/autoencoder/training/*
+!models/autoencoder/training/.gitkeep
+
+images/autoencoder/training/*
+!images/autoencoder/training/.gitkeep
