@@ -78,13 +78,23 @@ class VariableAutoEncoder(nn.Module):
     
     def decode(self, z):
         x_hat = self.decoder(z)
-        output = nn.Sigmoid()(x_hat)
+        output = torch.sigmoid(x_hat)
         return output
     
     def forward(self, x):
-        mu, logvar = self.encode(x)
-        z = self.reparameterize(mu, logvar)
-        return self.decode(z), mu, logvar
+        if self.channels == 1:
+            mu, logvar = self.encode(x)
+            z = self.reparameterize(mu, logvar)
+            return self.decode(z), mu, logvar
+        else:
+            outputs = torch.zeros(x.size(), device=x.device)
+            for i in range(self.channels):
+                inputs = x[:, i, :, :].view(-1, 1, 28, 28)
+                mu, logvar = self.encode(inputs)
+                z = self.reparameterize(mu, logvar)
+                output = self.decode(z).view(-1, 28, 28)
+                outputs[:, i, :, :] = output
+            return outputs, mu, logvar
 
 
 if __name__ == "__main__":
