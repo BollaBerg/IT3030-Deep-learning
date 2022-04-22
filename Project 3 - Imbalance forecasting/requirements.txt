@@ -1,6 +1,9 @@
 # Pandas for preprocessing
 pandas==1.4.2
 
+# iPykernel for running data exploration ipynbs
+ipykernel==6.13.0
+
 # Pytorch (with / without CUDA)
 torch==1.11.0 --extra-index-url https://download.pytorch.org/whl/cu113      # with CUDA
 # torch
