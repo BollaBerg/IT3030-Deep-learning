@@ -1,5 +1,7 @@
-# Pandas for preprocessing
+# Preprocessing and plotting
 pandas==1.4.2
+matplotlib==3.5.1
+seaborn==0.11.2
 
 # iPykernel for running data exploration ipynbs
 ipykernel==6.13.0
