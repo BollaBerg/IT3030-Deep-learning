@@ -1,6 +1,6 @@
 import pandas as pd
 
-from src.preprocessing import clamp_column
+from src.preprocessing.functions import clamp_column
 
 def test_clamp_y_limits_values():
     df = pd.DataFrame(
