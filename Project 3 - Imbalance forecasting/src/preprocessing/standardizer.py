@@ -1,6 +1,6 @@
 import pandas as pd
 
-class Normalizer:
+class Standardizer:
     is_fitted = False
 
     def fit(self, data: pd.Series):
@@ -10,7 +10,7 @@ class Normalizer:
 
     def transform(self, data: pd.Series) -> pd.Series:
         if not self.is_fitted:
-            raise ValueError("Normalizer must be fitted before transforming data")
+            raise ValueError("Standardizer must be fitted before transforming data")
         
         transformed_data = data.copy()
         return (transformed_data - self.mean) / self.std
