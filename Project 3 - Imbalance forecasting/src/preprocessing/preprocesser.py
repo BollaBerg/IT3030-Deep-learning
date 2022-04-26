@@ -31,7 +31,9 @@ class Preprocesser:
             output[column] = self.transformers[column].transform(data[column])
         
         try:
-            output["y"] = data["y"]
+            output["y"] = clamp_column(
+                data, column="y", lower=self.min_y_value, upper=self.max_y_value
+            )
         except KeyError:
             pass
         
