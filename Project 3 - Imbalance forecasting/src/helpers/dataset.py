@@ -10,12 +10,15 @@ class TimeSeriesDataset(Dataset):
         https://discuss.pytorch.org/t/dataloader-for-a-lstm-model-with-a-sliding-window/22235/2
 
     """
-    def __init__(self, data: Tensor, window: int):
-        self.data = data
+    def __init__(self, inputs: Tensor, targets: Tensor, window: int):
+        self.inputs = inputs
+        self.targets = targets
         self.window = window
     
     def __getitem__(self, index: int) -> T_co:
-        return self.data[index: index + self.window]
+        inputs = self.inputs[index: index + self.window]
+        target = self.targets[index + self.window + 1]
+        return inputs, target
     
     def __len__(self):
-        return len(self.data) - self.window
+        return len(self.data) - self.window - 1
