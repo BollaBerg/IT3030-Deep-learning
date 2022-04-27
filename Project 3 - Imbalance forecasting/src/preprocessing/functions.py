@@ -1,4 +1,5 @@
 import pandas as pd
+import torch
 
 def clamp_column(data: pd.DataFrame,
                  column: str,
@@ -19,3 +20,7 @@ def split_data(data: pd.DataFrame,
     targets = data[target_columns]
 
     return output, targets
+
+
+def pd_to_tensor(data: pd.DataFrame) -> torch.Tensor:
+    return torch.tensor(data.values)
