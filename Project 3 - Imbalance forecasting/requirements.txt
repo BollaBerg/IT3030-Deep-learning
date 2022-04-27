@@ -2,6 +2,7 @@
 pandas==1.4.2
 matplotlib==3.5.1
 seaborn==0.11.2
+tqdm==4.64.0
 
 # Testing
 pytest==7.1.1
