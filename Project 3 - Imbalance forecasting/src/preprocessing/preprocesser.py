@@ -2,6 +2,7 @@ import pandas as pd
 
 from src.helpers.path import DATA_PATH
 from src.preprocessing.functions import clamp_column
+from src.preprocessing.normalizer import Normalizer
 from src.preprocessing.standardizer import Standardizer
 
 
@@ -44,6 +45,9 @@ class Preprocesser:
             self.transformers[column] = Standardizer()
             self.transformers[column].fit(data[column])
         
+        self.y_transformer = Normalizer()
+        self.y_transformer.fit(clamp_column(data, "y", self.min_y_value, self.max_y_value))
+        
         self.is_fitted = True
     
 
@@ -69,8 +73,10 @@ class Preprocesser:
         for column in self.transform_columns:
             output[column] = self.transformers[column].transform(data[column])
         
-        output["y"] = clamp_column(
-            data, column="y", lower=self.min_y_value, upper=self.max_y_value
+        output["y"] = self.y_transformer.transform(
+            clamp_column(
+                data, column="y", lower=self.min_y_value, upper=self.max_y_value
+            )
         )
 
         # TODO: Create new features
@@ -90,6 +96,10 @@ class Preprocesser:
         """
         self.fit(data)
         return self.transform(data)
+    
+    
+    def reverse_y(self, y_column: pd.Series) -> pd.Series:
+        return self.y_transformer.reverse(y_column)
 
 
 if __name__ == "__main__":
