@@ -18,3 +18,7 @@ class Normalizer:
     def fit_transform(self, data: pd.Series) -> pd.Series:
         self.fit(data)
         return self.transform(data)
+    
+    def reverse(self, transformed_data: pd.Series) -> pd.Series:
+        reversed_data = transformed_data.copy()
+        return reversed_data * (self.max - self.min) + self.min

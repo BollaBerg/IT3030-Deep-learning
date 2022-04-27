@@ -52,3 +52,15 @@ def test_normalizer_raises_if_not_fitted():
     with pytest.raises(ValueError):
         df["new_col_1"] = normalizer.transform(df["col_1"])
 
+
+def test_normalizer_reversed():
+    df = pd.DataFrame({
+        "col_1": [0, 1, 2, 3, 4],
+        "col_2": [-4, -6, 2, 9, 0],
+    })
+
+    normalizer = Normalizer()
+    normalized = normalizer.fit_transform(df["col_1"])
+    un_normalized = normalizer.reverse(normalized)
+
+    assert df["col_1"].equals(un_normalized.astype(int))
