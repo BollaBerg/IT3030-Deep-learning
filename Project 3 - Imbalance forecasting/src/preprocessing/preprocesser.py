@@ -1,7 +1,8 @@
 import pandas as pd
+from torch import clamp_
 
 from src.helpers.path import DATA_PATH
-from src.preprocessing.functions import clamp_column
+from src.preprocessing.functions import clamp_series
 from src.preprocessing.normalizer import Normalizer
 from src.preprocessing.standardizer import Standardizer
 
@@ -22,7 +23,7 @@ class Preprocesser:
         >>> validation_data = preprocesser.transform(validation_data)
     
     """
-    keep_columns = ["start_time"]
+    keep_columns = []
     transform_columns = ["hydro", "micro", "thermal", "wind", "total", "sys_reg", "flow"]
     if_fitted = False
 
@@ -46,7 +47,7 @@ class Preprocesser:
             self.transformers[column].fit(data[column])
         
         self.y_transformer = Normalizer()
-        self.y_transformer.fit(clamp_column(data, "y", self.min_y_value, self.max_y_value))
+        self.y_transformer.fit(clamp_series(data["y"], self.min_y_value, self.max_y_value))
         
         self.is_fitted = True
     
@@ -73,14 +74,27 @@ class Preprocesser:
         for column in self.transform_columns:
             output[column] = self.transformers[column].transform(data[column])
         
-        output["y"] = self.y_transformer.transform(
-            clamp_column(
-                data, column="y", lower=self.min_y_value, upper=self.max_y_value
+        output["target"] = self.y_transformer.transform(
+            clamp_series(
+                data["y"], lower=self.min_y_value, upper=self.max_y_value
+            )
+        )
+
+        output["last_y"] = self.y_transformer.transform(
+            clamp_series(
+                data["y"].shift(-1), lower=self.min_y_value, upper=self.max_y_value
             )
         )
 
         # TODO: Create new features
         
+        # Change order of columns to get similar Tensors
+        column_order = self.keep_columns + self.transform_columns + ["last_y", "target"]
+        output = output[column_order]
+
+        # Remove last row of data (due to shifting last_y one row)
+        _drop_rows = 1
+        output.drop(output.tail(_drop_rows).index, inplace=True)
         return output
     
 
