@@ -54,6 +54,7 @@ class LSTM(nn.Module):
 
         hidden_states = [torch.zeros(batch_size, self.hidden_layers, dtype=float) for _ in range(len(self.cells))]
         cell_states = [torch.zeros(batch_size, self.hidden_layers, dtype=float) for _ in range(len(self.cells))]
+        input_hidden_state = torch.zeros(batch_size, self.hidden_layers, dtype=float)
 
         for time_step in x.split(1, dim=1):
             # time_step is each step in each sequence/sample.
@@ -65,7 +66,7 @@ class LSTM(nn.Module):
             time_step = torch.squeeze(time_step, dim=1)
 
             # Compute value from first layer separately
-            hidden_states[0], cell_states[0] = self.cells[0](time_step)
+            hidden_states[0], cell_states[0] = self.cells[0](time_step, (input_hidden_state, cell_states[0]))
             cell_input = hidden_states[0]
 
             for i, cell in enumerate(self.cells[1:], start=1):
