@@ -14,7 +14,7 @@ def clamp_series(data: pd.Series,
 
 
 def split_data(data: pd.DataFrame,
-               target_columns: list = ["y"]
+               target_columns: list = ["target"]
         ) -> tuple[pd.DataFrame, pd.DataFrame]:
     output = data.drop(columns=target_columns)
     targets = data[target_columns]
