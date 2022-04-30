@@ -1,5 +1,5 @@
 from torch import Tensor
-from torch.utils.data import Dataset, T_co
+from torch.utils.data import Dataset
 
 class TimeSeriesDataset(Dataset):
     """
@@ -15,10 +15,10 @@ class TimeSeriesDataset(Dataset):
         self.targets = targets
         self.window = window
     
-    def __getitem__(self, index: int) -> T_co:
+    def __getitem__(self, index: int):
         inputs = self.inputs[index: index + self.window]
-        target = self.targets[index + self.window + 1]
+        target = self.targets[index + self.window]
         return inputs, target
     
     def __len__(self):
-        return len(self.data) - self.window - 1
+        return len(self.inputs) - self.window
