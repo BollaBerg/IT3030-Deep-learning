@@ -27,13 +27,13 @@ class LSTM(nn.Module):
 
         self.hidden_layers = hidden_layers
         
-        cells = [nn.LSTMCell(input_size, hidden_layers)]
+        cells = [nn.LSTMCell(input_size, hidden_layers, dtype=float)]
         for i in range(lstm_depth - 1):
-            cell = nn.LSTMCell(hidden_layers, hidden_layers)
+            cell = nn.LSTMCell(hidden_layers, hidden_layers, dtype=float)
             cells.append(cell)
 
         self.cells = nn.ModuleList(cells)
-        self.output_layer = nn.Linear(hidden_layers, 1)
+        self.output_layer = nn.Linear(hidden_layers, 1, dtype=float)
 
     
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -52,8 +52,8 @@ class LSTM(nn.Module):
         # x has shape (number of samples, sample length, input_size)
         batch_size = x.size(0)
 
-        hidden_states = [torch.zeros(batch_size, self.hidden_layers) for _ in range(len(self.cells))]
-        cell_states = [torch.zeros(batch_size, self.hidden_layers) for _ in range(len(self.cells))]
+        hidden_states = [torch.zeros(batch_size, self.hidden_layers, dtype=float) for _ in range(len(self.cells))]
+        cell_states = [torch.zeros(batch_size, self.hidden_layers, dtype=float) for _ in range(len(self.cells))]
 
         for time_step in x.split(1, dim=1):
             # time_step is each step in each sequence/sample.
