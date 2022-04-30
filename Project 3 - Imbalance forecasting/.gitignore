@@ -1,1 +1,7 @@
 testfile.py
+
+models/training/*
+!models/training/.gitkeep
+
+plots/training/*
+!plots/training/.gitkeep
