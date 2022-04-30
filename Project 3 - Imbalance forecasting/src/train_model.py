@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+import torch
 from torch.nn import MSELoss
 from torch.optim import Adam, LBFGS
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, default_collate
 from tqdm import tqdm
 
 from src.helpers.config import read_config
@@ -11,6 +12,8 @@ from src.helpers.path import DATA_PATH, ROOT_PATH
 from src.lstm import LSTM
 from src.preprocessing import Preprocesser, split_data, pd_to_tensor
 
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("cpu")
 
 def _train_epoch(model, dataloader, optimizer, loss_fn):
     for inputs, targets in dataloader:
@@ -70,6 +73,7 @@ def train_model():
         lstm_depth=config.model.lstm_depth,
         hidden_layers=config.model.hidden_layers
     )
+    model.to(device)
     
     # Setup optimizer and loss function
     optimizer = LBFGS(model.parameters(), lr=config.training.learning_rate)
@@ -97,11 +101,17 @@ def train_model():
 
     # Create train dataset and dataloader
     dataset = TimeSeriesDataset(inputs, targets, window=config.data.sequence_length)
-    dataloader = DataLoader(dataset, batch_size=len(dataset), shuffle=True)
+    dataloader = DataLoader(dataset, batch_size=len(dataset), shuffle=True,
+        # Move both training and test data to device, for CUDA training
+        collate_fn=lambda x: tuple(x_.to(device) for x_ in default_collate(x))
+    )
 
     # Create validation dataset and dataloader
     validation_dataset = TimeSeriesDataset(validation_inputs, validation_targets, window=config.data.sequence_length)
-    validation_dataloader = DataLoader(validation_dataset, batch_size=len(validation_dataset), shuffle=False)
+    validation_dataloader = DataLoader(validation_dataset, batch_size=len(validation_dataset), shuffle=False,
+        # Move both training and test data to device, for CUDA training
+        collate_fn=lambda x: tuple(x_.to(device) for x_ in default_collate(x))
+    )
 
     # Train model and plot with frequency save_frequency
     for epoch in tqdm(range(1, config.training.epochs + 1), unit="epoch"):
