@@ -1,5 +1,5 @@
 training:
-  epochs: 10
+  epochs: 30
   save_frequency: 1
   learning_rate: 0.08
 
@@ -8,4 +8,4 @@ data:
 
 model:
   lstm_depth: 2
-  hidden_layers: 64
+  hidden_layers: 10
