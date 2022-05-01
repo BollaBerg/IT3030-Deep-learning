@@ -36,13 +36,21 @@ def _train_epoch(model, dataloader, optimizer, loss_fn):
 
 def _get_validation_loss(model, dataloader, loss_fn):
     losses = []
-    for val_input, val_target in dataloader:
-        val_output = model(val_input)
-        loss = loss_fn(val_output, val_target)
+    with torch.no_grad():
+        for val_input, val_target in dataloader:
+            val_output = model(val_input)
+            loss = loss_fn(val_output, val_target)
 
-        losses.append(loss)
+            losses.append(loss)
     
     return sum(losses) / len(losses)
+
+
+def _plot_loss_data(losses: list, ax: plt.Axes):
+    ax.set_title("Losses per epoch")
+    ax.set_xlabel("Epoch")
+    ax.set_ylabel("Loss (MSE)")
+    ax.plot(losses)
 
 
 def plot_validation_prediction(model,
@@ -66,22 +74,26 @@ def plot_validation_prediction(model,
         for inputs, targets in dataloader:
             outputs = model(inputs)
 
-            post_outputs = postprocess_target(outputs)
-            post_targets = postprocess_target(targets)
+            post_outputs = postprocess_target(outputs).detach().numpy().flatten()
+            post_targets = postprocess_target(targets).detach().numpy().flatten()
 
-            ax.plot(post_outputs.detach().numpy(), label="Model outputs")
-            ax.plot(post_targets.detach().numpy(), label="Targets")
+            ax.plot(post_outputs, label="Model outputs")
+            ax.plot(post_targets, label="Targets")
+            ax.fill_between(
+                range(len(post_outputs)), post_outputs, post_targets,
+                color="black", alpha=0.1
+            )
             ax.set_ylabel("Predicted output")
 
-            ax_diff = ax.twinx()
-            difference = post_outputs - post_targets
-            ax_diff.plot(difference.detach().numpy(), label="Difference", color="cyan")
-            ax_diff.set_ylabel("Predicted output - targets", color="cyan")
-            ax_diff.tick_params(axis="y", labelcolor="cyan")
+            # ax_diff = ax.twinx()
+            # difference = post_outputs - post_targets
+            # ax_diff.plot(difference.detach().numpy(), label="Difference", color="cyan")
+            # ax_diff.set_ylabel("Predicted output - targets", color="cyan")
+            # ax_diff.tick_params(axis="y", labelcolor="cyan")
 
     ax.set_xticks([])
     ax.legend()
-    ax_diff.legend()
+    # ax_diff.legend()
     
     if create_new:
         fig.savefig(savepath)
@@ -157,7 +169,7 @@ def train_model():
     fig, axes = plt.subplots(
         nrows=config.training.epochs + 1,
         ncols=1,
-        figsize=((config.training.epochs + 1) * 5, 10)
+        figsize=(20, (config.training.epochs + 1) * 10)
     )
     losses = [_get_validation_loss(model, validation_dataloader, loss_fn)]
     ax = axes.flat
@@ -186,12 +198,14 @@ def train_model():
             model_savepath = ROOT_PATH / f"models/training/LSTM_{epoch}.pt"
             model.save_model(model_savepath)
 
-    # Plot loss data
-    ax[0].set_title("Losses per epoch")
-    ax[0].set_xlabel("Epoch")
-    ax[0].set_ylabel("Loss (MSE)")
-    ax[0].plot(losses)
+    # Plot loss data to gigaplot
+    _plot_loss_data(losses, ax[0])
+
+    # Plot loss data as own plot, as well
+    loss_fig, loss_ax = plt.subplots(1, 1, figsize=(20, 10))
+    _plot_loss_data(losses, loss_ax)
 
     plt.tight_layout()
     fig.savefig(ROOT_PATH / "plots/training/LSTM.png")
+    loss_fig.savefig(ROOT_PATH / "plots/training/loss.png")
     plt.close(fig)
