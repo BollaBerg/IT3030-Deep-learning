@@ -45,11 +45,11 @@ def _get_validation_loss(model, dataloader, loss_fn):
     return sum(losses) / len(losses)
 
 
-def _plot_validation_prediction(model,
+def plot_validation_prediction(model,
                                 dataloader,
                                 epoch: int,
                                 postprocess_target = lambda x: x,
-                                in_ax: plt.Axes = None
+                                ax: plt.Axes = None
     ):
     if ax is None:
         create_new = True
@@ -60,18 +60,28 @@ def _plot_validation_prediction(model,
 
     ax.set_title(f"Epoch {epoch}, single day prediction")
 
-    for inputs, targets in dataloader:
-        outputs = model(inputs)
+    with torch.no_grad():
+        # Assumes that dataloader has batchsize = full length, so this is
+        # simply a way to get the full dataset
+        for inputs, targets in dataloader:
+            outputs = model(inputs)
 
-        ax.plot(
-            postprocess_target(outputs.detach().numpy(), label="Model outputs")
-        )
-        ax.plot(
-            postprocess_target(targets.detach().numpy(), label="Targets")
-        )
+            post_outputs = postprocess_target(outputs)
+            post_targets = postprocess_target(targets)
+
+            ax.plot(post_outputs.detach().numpy(), label="Model outputs")
+            ax.plot(post_targets.detach().numpy(), label="Targets")
+            ax.set_ylabel("Predicted output")
+
+            ax_diff = ax.twinx()
+            difference = post_outputs - post_targets
+            ax_diff.plot(difference.detach().numpy(), label="Difference", color="cyan")
+            ax_diff.set_ylabel("Predicted output - targets", color="cyan")
+            ax_diff.tick_params(axis="y", labelcolor="cyan")
 
     ax.set_xticks([])
     ax.legend()
+    ax_diff.legend()
     
     if create_new:
         fig.savefig(savepath)
@@ -101,9 +111,15 @@ def train_model():
     validation_data = pd.read_csv(DATA_PATH / "validation.csv", parse_dates=["start_time"])
 
     # Fit preprocesser to train data, and transform test data
-    preprocesser = Preprocesser()
+    preprocesser = Preprocesser(
+        time_of_day=config.data.time_of_day,
+        time_of_week=config.data.time_of_week,
+        time_of_year=config.data.time_of_year,
+        last_day_y=config.data.last_day_y,
+        two_last_day_y=config.data.two_last_day_y
+    )
     processed = preprocesser.fit_transform(data)
-    validation_processed = preprocesser.transform(validation_data)
+    validation_processed = preprocesser.transform(validation_data, train=False)
 
     # Split train data, convert to tensors
     inputs_df, target_df = split_data(processed)
@@ -129,6 +145,15 @@ def train_model():
         collate_fn=lambda x: tuple(x_.to(device) for x_ in default_collate(x))
     )
 
+    # Create combined giga-plot, for use later
+    fig, axes = plt.subplots(
+        nrows=config.training.epochs + 1,
+        ncols=1,
+        figsize=((config.training.epochs + 1) * 5, 10)
+    )
+    losses = [_get_validation_loss(model, validation_dataloader, loss_fn)]
+    ax = axes.flat
+
     # Train model and plot with frequency save_frequency
     for epoch in tqdm(range(1, config.training.epochs + 1), unit="epoch"):
         _train_epoch(model, dataloader, optimizer, loss_fn)
@@ -136,8 +161,29 @@ def train_model():
         if epoch % config.training.save_frequency == 0:
             loss = _get_validation_loss(model, validation_dataloader, loss_fn)
             tqdm.write(f"Loss epoch {epoch}: \t {loss}")
+            losses.append(loss)
 
-            _plot_validation_prediction(model, validation_dataloader, epoch)
+            plot_validation_prediction(
+                model, validation_dataloader, epoch,
+                postprocess_target=preprocesser.reverse_y
+            )
+
+            # Add plot to combined plot
+            plot_validation_prediction(
+                model, validation_dataloader, epoch,
+                postprocess_target=preprocesser.reverse_y,
+                ax=ax[epoch]
+            )
 
             model_savepath = ROOT_PATH / f"models/training/LSTM_{epoch}.pt"
             model.save_model(model_savepath)
+
+    # Plot loss data
+    ax[0].set_title("Losses per epoch")
+    ax[0].set_xlabel("Epoch")
+    ax[0].set_ylabel("Loss (MSE)")
+    ax[0].plot(losses)
+
+    plt.tight_layout()
+    fig.savefig(ROOT_PATH / "plots/training/LSTM.png")
+    plt.close(fig)
