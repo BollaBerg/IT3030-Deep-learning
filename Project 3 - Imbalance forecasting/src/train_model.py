@@ -94,8 +94,16 @@ def train_model():
     config = read_config(ROOT_PATH / "config.yml")
 
     # Setup model
+    input_size = (
+        8   # Standard, from the actual input data
+        + (2 if config.data.time_of_day else 0)    # time_of_day has two cols
+        + (2 if config.data.time_of_week else 0)   # time_of_week has two cols
+        + (2 if config.data.time_of_year else 0)   # time_of_year has two cols
+        + (1 if config.data.last_day_y else 0)     # last_day_y has one col
+        + (1 if config.data.two_last_day_y else 0) # two_last_day_y has one col
+    )
     model = LSTM(
-        input_size = 8,
+        input_size = input_size,
         lstm_depth=config.model.lstm_depth,
         hidden_layers=config.model.hidden_layers
     )
@@ -119,7 +127,7 @@ def train_model():
         two_last_day_y=config.data.two_last_day_y
     )
     processed = preprocesser.fit_transform(data)
-    validation_processed = preprocesser.transform(validation_data, train=False)
+    validation_processed = preprocesser.transform(validation_data)
 
     # Split train data, convert to tensors
     inputs_df, target_df = split_data(processed)
