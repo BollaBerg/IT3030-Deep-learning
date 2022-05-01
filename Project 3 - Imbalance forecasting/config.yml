@@ -5,6 +5,11 @@ training:
 
 data:
   sequence_length: 10
+  time_of_day: False
+  time_of_week: False
+  time_of_year: False
+  last_day_y: False
+  two_last_day_y: False
 
 model:
   lstm_depth: 2
