@@ -45,21 +45,37 @@ def _get_validation_loss(model, dataloader, loss_fn):
     return sum(losses) / len(losses)
 
 
-def _plot_validation_prediction(model, dataloader, epoch: int):
-    savepath = ROOT_PATH / f"plots/training/LSTM_{epoch}.png"
+def _plot_validation_prediction(model,
+                                dataloader,
+                                epoch: int,
+                                postprocess_target = lambda x: x,
+                                in_ax: plt.Axes = None
+    ):
+    if ax is None:
+        create_new = True
+        savepath = ROOT_PATH / f"plots/training/LSTM_{epoch}.png"
+        fig, ax = plt.subplots(1, 1, figsize=(20, 10))
+    else:
+        create_new = False
 
-    fig, ax = plt.subplots(1, 1, figsize=(20, 10))
     ax.set_title(f"Epoch {epoch}, single day prediction")
 
     for inputs, targets in dataloader:
         outputs = model(inputs)
 
-        ax.plot(outputs.detach().numpy(), label="Model outputs")
-        ax.plot(targets.detach().numpy(), label="Targets")
+        ax.plot(
+            postprocess_target(outputs.detach().numpy(), label="Model outputs")
+        )
+        ax.plot(
+            postprocess_target(targets.detach().numpy(), label="Targets")
+        )
 
     ax.set_xticks([])
     ax.legend()
-    fig.savefig(savepath)
+    
+    if create_new:
+        fig.savefig(savepath)
+        plt.close(fig)
 
 
 
