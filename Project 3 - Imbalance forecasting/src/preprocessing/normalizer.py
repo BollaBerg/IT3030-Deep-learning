@@ -1,4 +1,5 @@
 import pandas as pd
+import torch
 
 class Normalizer:
     is_fitted = False
@@ -19,6 +20,5 @@ class Normalizer:
         self.fit(data)
         return self.transform(data)
     
-    def reverse(self, transformed_data: pd.Series) -> pd.Series:
-        reversed_data = transformed_data.copy()
-        return reversed_data * (self.max - self.min) + self.min
+    def reverse(self, transformed_data: torch.Tensor) -> torch.Tensor:
+        return transformed_data * (self.max - self.min) + self.min
