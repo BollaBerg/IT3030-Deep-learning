@@ -1,5 +1,5 @@
+from numpy import sin, cos, pi
 import pandas as pd
-from torch import clamp_
 
 from src.helpers.path import DATA_PATH
 from src.preprocessing.functions import clamp_series
@@ -29,9 +29,38 @@ class Preprocesser:
 
     def __init__(self,
                  min_y_value: float = -1000,
-                 max_y_value: float = 1370,):
+                 max_y_value: float = 1370,
+                 time_of_day: bool = False,
+                 time_of_week: bool = False,
+                 time_of_year: bool = False,
+                 last_day_y: bool = False,
+                 two_last_day_y: bool = False):
+        """Create an instance of Preprocesser
+
+        Args:
+            min_y_value (float, optional): Minimum value of all target-related
+                columns, for clamping. Defaults to -1000.
+            max_y_value (float, optional): Maximum value of all target-related
+                columns, for clamping. Defaults to 1370.
+            time_of_day (bool, optional): Whether the data should include a
+                representation of time of day. Defaults to False.
+            time_of_week (bool, optional): Whether the data should include a
+                representation of time of week / weekday. Defaults to False.
+            time_of_year (bool, optional): Whether the data should include a
+                representation of time of year / yearday. Defaults to False.
+            last_day_y (bool, optional): Whether the data should include target
+                from yesterday as an input. Defaults to False.
+            two_last_day_y (bool, optional): Whether the data should include
+                target from two days ago as an input. Defaults to False.
+        """
         self.min_y_value = min_y_value
         self.max_y_value = max_y_value
+
+        self.time_of_day = time_of_day
+        self.time_of_week = time_of_week
+        self.time_of_year = time_of_year
+        self.last_day_y = last_day_y
+        self.two_last_day_y = two_last_day_y
 
         self.transformers = dict()
     
@@ -52,7 +81,7 @@ class Preprocesser:
         self.is_fitted = True
     
 
-    def transform(self, data: pd.DataFrame) -> pd.DataFrame:
+    def transform(self, data: pd.DataFrame, train: bool = True) -> pd.DataFrame:
         """Transform a DataFrame using the fitted Preprocesser.
 
         Note: Requires that the Preprocesser has previously been fitted.
@@ -74,31 +103,80 @@ class Preprocesser:
         for column in self.transform_columns:
             output[column] = self.transformers[column].transform(data[column])
         
-        output["target"] = self.y_transformer.transform(
-            clamp_series(
-                data["y"], lower=self.min_y_value, upper=self.max_y_value
-            )
+
+        clamped_y = clamp_series(
+            data["y"], lower=self.min_y_value, upper=self.max_y_value
         )
 
-        output["last_y"] = self.y_transformer.transform(
-            clamp_series(
-                data["y"].shift(-1), lower=self.min_y_value, upper=self.max_y_value
-            )
-        )
+        output["target"] = self.y_transformer.transform(clamped_y)
+        output["last_y"] = output["target"].shift(-1)
 
-        # TODO: Create new features
+        # Create new features
+        time_columns = []
+
+        # Create time-of-day feature
+        ## We use a two-component representation if the time, using sin and cos
+        ## This has two useful properties:
+        ##  1) Always between 0 and 1
+        ##  2) Rotational symmetry - the distance between 23:50 and 00:10 is
+        ##      the same as the distance between 11:50 and 12:10, which is
+        ##      lost with a straight-line representation of the time
+        if self.time_of_day:
+            hour = data["start_time"].dt.hour
+            minute = data["start_time"].dt.minute
+            total_minute = hour * 60 + minute
+            _max_total_minute = 24 * 60 - 1
+
+            output["time_of_day_sin"] = sin(total_minute * 2 * pi / _max_total_minute)
+            output["time_of_day_cos"] = cos(total_minute * 2 * pi / _max_total_minute)
+            time_columns.extend(["time_of_day_sin", "time_of_day_cos"])
+
+        # Create time-of-week feature
+        # We do the same here, using sin and cos. This way, the distance from
+        # Sunday to Monday is the same as the distance from Friday to Saturday
+        if self.time_of_week:
+            day = data["start_time"].dt.day_of_week
+            output["day_sin"] = sin(day * 2 * pi / 6)
+            output["day_cos"] = cos(day * 2 * pi / 6)
+            time_columns.extend(["day_sin", "day_cos"])
+
+        # Create time-of-year feature
+        # We do the same here as well, using sin and cos
+        # Note that we only convert the day, as we do not need the granularity
+        # of the actual time
+        if self.time_of_year:
+            year_day = data["start_time"].dt.day_of_year
+            output["time_of_year_sin"] = sin(year_day * 2 * pi / 365)
+            output["time_of_year_cos"] = cos(year_day * 2 * pi / 365)
+            time_columns.extend(["time_of_year_sin", "time_of_year_cos"])
+
+        # Create lag features
+        shifted_columns = []
+        # Yesterday's output = target shifted by 24 hrs/day * 60 min/hr / 5 min data
+        if self.last_day_y:
+            output["yesterday_y"] = output["target"].shift(-24 * 60 / 5)
+            shifted_columns.append("yesterday_y")
+
+        # Two days ago's output = target shifted 2 * 24 * 60 / 5
+        if self.two_last_day_y:
+            output["2_yesterday_y"] = output["target"].shift(-2 * 24 * 60 / 5)
+            shifted_columns.append("2_yesterday_y")
         
         # Change order of columns to get similar Tensors
-        column_order = self.keep_columns + self.transform_columns + ["last_y", "target"]
+        column_order = (
+            self.keep_columns
+            + self.transform_columns
+            + time_columns
+            + ["last_y"] + shifted_columns + ["target"]
+        )
         output = output[column_order]
 
         # Remove last row of data (due to shifting last_y one row)
-        _drop_rows = 1
-        output.drop(output.tail(_drop_rows).index, inplace=True)
+        output.dropna(axis=0)
         return output
     
 
-    def fit_transform(self, data: pd.DataFrame) -> pd.DataFrame:
+    def fit_transform(self, data: pd.DataFrame, train: bool = True) -> pd.DataFrame:
         """Fit the Preprocesser to a DataFrame, then transform the DataFrame
 
         Args:
@@ -109,7 +187,7 @@ class Preprocesser:
             pd.DataFrame: Transformed DataFrame
         """
         self.fit(data)
-        return self.transform(data)
+        return self.transform(data, train)
     
     
     def reverse_y(self, y_column: pd.Series) -> pd.Series:
