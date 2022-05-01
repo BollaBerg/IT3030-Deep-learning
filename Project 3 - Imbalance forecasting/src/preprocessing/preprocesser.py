@@ -81,7 +81,7 @@ class Preprocesser:
         self.is_fitted = True
     
 
-    def transform(self, data: pd.DataFrame, train: bool = True) -> pd.DataFrame:
+    def transform(self, data: pd.DataFrame) -> pd.DataFrame:
         """Transform a DataFrame using the fitted Preprocesser.
 
         Note: Requires that the Preprocesser has previously been fitted.
@@ -152,14 +152,16 @@ class Preprocesser:
 
         # Create lag features
         shifted_columns = []
-        # Yesterday's output = target shifted by 24 hrs/day * 60 min/hr / 5 min data
+        # One day = 24 hrs/day * 60 min/hr / 5 min data
+        one_day = int(24 * 60 / 5)
+        # Yesterday's output
         if self.last_day_y:
-            output["yesterday_y"] = output["target"].shift(-24 * 60 / 5)
+            output["yesterday_y"] = output["target"].shift(-one_day)
             shifted_columns.append("yesterday_y")
 
         # Two days ago's output = target shifted 2 * 24 * 60 / 5
         if self.two_last_day_y:
-            output["2_yesterday_y"] = output["target"].shift(-2 * 24 * 60 / 5)
+            output["2_yesterday_y"] = output["target"].shift(-2 * one_day)
             shifted_columns.append("2_yesterday_y")
         
         # Change order of columns to get similar Tensors
@@ -171,12 +173,18 @@ class Preprocesser:
         )
         output = output[column_order]
 
-        # Remove last row of data (due to shifting last_y one row)
-        output.dropna(axis=0)
+        # Remove last rows of data, due to shifting
+        # Important note: We can safely do this without messing up the loading
+        # of our data, as we know two things:
+        #   - We had no missing data from the beginning
+        #   - We only "removed" data from the end, when shifting the y-columns
+        # When we dropna, then we simply remove the last N rows, where N is
+        # changed depending on which preprocessing columns we keep
+        output.dropna(axis=0, inplace=True)
         return output
     
 
-    def fit_transform(self, data: pd.DataFrame, train: bool = True) -> pd.DataFrame:
+    def fit_transform(self, data: pd.DataFrame) -> pd.DataFrame:
         """Fit the Preprocesser to a DataFrame, then transform the DataFrame
 
         Args:
@@ -187,7 +195,7 @@ class Preprocesser:
             pd.DataFrame: Transformed DataFrame
         """
         self.fit(data)
-        return self.transform(data, train)
+        return self.transform(data)
     
     
     def reverse_y(self, y_column: pd.Series) -> pd.Series:
