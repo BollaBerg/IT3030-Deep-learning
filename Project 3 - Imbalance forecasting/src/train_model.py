@@ -50,7 +50,7 @@ def _get_validation_loss(model, dataloader, loss_fn):
 
 
 def _save_losses(losses, path):
-    str_losses = ",".join([str(loss.item()) for loss in losses])
+    str_losses = "\n".join([str(loss.item()) for loss in losses])
     with open(path, "w") as file:
         file.write(str_losses)
 
