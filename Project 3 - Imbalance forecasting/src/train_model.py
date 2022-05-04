@@ -1,3 +1,5 @@
+import pathlib
+
 import matplotlib.pyplot as plt
 import pandas as pd
 import torch
@@ -6,7 +8,7 @@ from torch.optim import Adam, LBFGS
 from torch.utils.data import DataLoader, default_collate
 from tqdm import tqdm
 
-from src.helpers.config import read_config
+from src.helpers.config import read_config, Config
 from src.helpers.dataset import TimeSeriesDataset
 from src.helpers.path import DATA_PATH, ROOT_PATH
 from src.helpers.plotting import plot_loss_data, plot_validation_prediction
@@ -48,14 +50,16 @@ def _get_validation_loss(model, dataloader, loss_fn):
 
 
 def _save_losses(losses, path):
-    str_losses = ",".join([str(loss) for loss in losses])
+    str_losses = ",".join([str(loss.item()) for loss in losses])
     with open(path, "w") as file:
         file.write(str_losses)
 
 
-def train_model():
+def train_model(config: Config,
+                base_save_path: pathlib.Path = ROOT_PATH / "models/training"):
     # Load configs
     config = read_config(ROOT_PATH / "config.yml")
+    base_save_path = pathlib.Path(base_save_path)
 
     # Setup model
     input_size = (
@@ -137,7 +141,8 @@ def train_model():
 
             plot_validation_prediction(
                 model, validation_dataloader, epoch,
-                postprocess_target=preprocesser.reverse_y
+                postprocess_target=preprocesser.reverse_y,
+                base_save_path=base_save_path
             )
 
             # Add plot to combined plot
@@ -147,7 +152,7 @@ def train_model():
                 ax=ax[epoch]
             )
 
-            model_savepath = ROOT_PATH / f"models/training/LSTM_{epoch}.pt"
+            model_savepath = base_save_path  / f"LSTM_{epoch}.pt"
             model.save_model(model_savepath)
 
     # Plot loss data to gigaplot
@@ -156,9 +161,9 @@ def train_model():
     # Plot loss data as own plot, as well
     loss_fig, loss_ax = plt.subplots(1, 1, figsize=(20, 10))
     plot_loss_data(losses, loss_ax)
-    _save_losses(losses, ROOT_PATH / "models/training/losses")
+    _save_losses(losses, base_save_path / "losses")
 
     plt.tight_layout()
-    fig.savefig(ROOT_PATH / "plots/training/LSTM.png")
-    loss_fig.savefig(ROOT_PATH / "plots/training/loss.png")
+    fig.savefig(base_save_path / "LSTM.png")
+    loss_fig.savefig(base_save_path / "loss.png")
     plt.close(fig)
