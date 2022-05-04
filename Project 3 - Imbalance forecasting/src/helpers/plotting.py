@@ -1,3 +1,5 @@
+import pathlib
+
 import matplotlib.pyplot as plt
 import torch
 
@@ -15,12 +17,17 @@ def plot_validation_prediction(model,
                                 dataloader,
                                 epoch: int,
                                 postprocess_target = lambda x: x,
-                                ax: plt.Axes = None
+                                ax: plt.Axes = None,
+                                base_save_path: pathlib.Path = None
     ):
     if ax is None:
         create_new = True
-        savepath = ROOT_PATH / f"plots/training/LSTM_{epoch}.png"
         fig, ax = plt.subplots(1, 1, figsize=(20, 10))
+
+        if base_save_path is None:
+            savepath = ROOT_PATH / f"plots/training/LSTM_{epoch}.png"
+        else:
+            savepath = pathlib.Path(base_save_path) / f"LSTM_{epoch}.png"
     else:
         create_new = False
 
