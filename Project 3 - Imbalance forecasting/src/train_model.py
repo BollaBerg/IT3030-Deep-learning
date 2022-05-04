@@ -57,8 +57,6 @@ def _save_losses(losses, path):
 
 def train_model(config: Config,
                 base_save_path: pathlib.Path = ROOT_PATH / "training"):
-    # Load configs
-    config = read_config(ROOT_PATH / "config.yml")
     base_save_path = pathlib.Path(base_save_path)
 
     # Setup model
@@ -70,6 +68,7 @@ def train_model(config: Config,
         + (1 if config.data.last_day_y else 0)     # last_day_y has one col
         + (1 if config.data.two_last_day_y else 0) # two_last_day_y has one col
     )
+    print(input_size)
     model = LSTM(
         input_size = input_size,
         lstm_depth=config.model.lstm_depth,
