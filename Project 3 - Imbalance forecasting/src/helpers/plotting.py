@@ -6,11 +6,16 @@ import torch
 from src.helpers.path import ROOT_PATH
 
 
-def plot_loss_data(losses: list, ax: plt.Axes):
-    ax.set_title("Losses per epoch")
+def plot_loss_data(losses: list,
+                    ax: plt.Axes,
+                    title: str = "Losses per epoch",
+                    log_y: bool = False):
+    ax.set_title(title)
     ax.set_xlabel("Epoch")
     ax.set_ylabel("Loss (MSE)")
     ax.plot(losses)
+    if log_y:
+        ax.set_yscale("log")
 
 
 def plot_validation_prediction(model,
