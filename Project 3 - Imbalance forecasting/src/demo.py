@@ -4,11 +4,24 @@ import pandas as pd
 from torch.utils.data import DataLoader
 
 from src.helpers.config import read_config
-from src.helpers.path import DATA_PATH
-from src.future_prediction import predict_into_future
 from src.helpers.dataset import FutureDataset
+from src.helpers.path import DATA_PATH, ROOT_PATH
+from src.helpers.plotting import plot_future_predictions
+from src.future_prediction import predict_into_future
 from src.lstm import LSTM
 from src.preprocessing import Preprocesser, split_data, pd_to_tensor
+
+
+def _format_steps(step: int) -> str:
+    minutes = step * 5
+    hours = minutes // 60
+    minutes -= 60 * hours
+    
+    if hours > 0:
+        return f"{hours} hours, {minutes} minutes"
+    else:
+        return f"{minutes} minutes"
+
 
 def demo(config_path: Path, model_path: Path, data_path: Path):
     future_steps = 120 / 5      # 2 hours = 120 min / 5 min timesteps
@@ -57,3 +70,10 @@ def demo(config_path: Path, model_path: Path, data_path: Path):
         timesteps_into_future=future_steps,
         reverse_target=preprocesser.reverse_y
     )
+
+    for i, future_step in enumerate(predictions):
+        plot_future_predictions(
+            future_step[0], future_step[1],
+            title=f"Predictions, {_format_steps(i)} into the future",
+            savepath = ROOT_PATH / f"plots/LSTM_future_{i}.png"
+        )
