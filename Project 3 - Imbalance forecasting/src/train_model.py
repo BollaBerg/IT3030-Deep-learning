@@ -156,11 +156,11 @@ def train_model(config: Config,
             model.save_model(model_savepath)
 
     # Plot loss data to gigaplot
-    plot_loss_data(losses, ax[0], log=True)
+    plot_loss_data(losses, ax[0], log_y=True)
 
     # Plot loss data as own plot, as well
     loss_fig, loss_ax = plt.subplots(1, 1, figsize=(20, 10))
-    plot_loss_data(losses, loss_ax, log=True)
+    plot_loss_data(losses, loss_ax, log_y=True)
     _save_losses(losses, base_save_path / "losses")
 
     plt.tight_layout()
