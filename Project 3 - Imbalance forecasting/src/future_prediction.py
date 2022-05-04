@@ -6,7 +6,8 @@ from src.lstm import LSTM
 
 def predict_into_future(model: LSTM,
                         dataloader: DataLoader,
-                        timesteps_into_future: int
+                        timesteps_into_future: int,
+                        reverse_target = lambda x: x
                     ) -> list[tuple[torch.Tensor, torch.Tensor]]:
     """Predict N timesteps into the future
 
@@ -48,7 +49,10 @@ def predict_into_future(model: LSTM,
 
                 # Add prediction and target to output list
                 output.append(
-                    (timestep_prediction, timestep_target)
+                    (
+                        reverse_target(timestep_prediction),
+                        reverse_target(timestep_target)
+                    )
                 )
 
                 # Replace the next input's "last_y" with the recently predicted
