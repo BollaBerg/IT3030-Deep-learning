@@ -9,11 +9,12 @@ from src.helpers.path import ROOT_PATH
 def plot_loss_data(losses: list,
                     ax: plt.Axes,
                     title: str = "Losses per epoch",
+                    label: str = "",
                     log_y: bool = False):
     ax.set_title(title)
     ax.set_xlabel("Epoch")
     ax.set_ylabel("Loss (MSE)")
-    ax.plot(losses)
+    ax.plot(losses, label=label)
     if log_y:
         ax.set_yscale("log")
 
@@ -87,10 +88,11 @@ def plot_future_predictions(
     post_predictions = predictions.detach().numpy().flatten()
     post_targets = targets.detach().numpy().flatten()
 
+
     ax.set_title(title, fontsize=18)
     ax.text(x=0.5, y=0.90, s=loss_str, fontsize=12, ha="center", transform=ax.transAxes)
-    ax.plot(post_predictions, label="Model outputs")
-    ax.plot(post_targets, label="Targets")
+    ax.plot(post_predictions, label="Model outputs", color=plt.get_cmap("Set1").colors[1])
+    ax.plot(post_targets, label="Targets", color=plt.get_cmap("Set2").colors[0])
     ax.fill_between(
         range(len(post_targets)), post_predictions, post_targets,
         color="black", alpha=0.1
