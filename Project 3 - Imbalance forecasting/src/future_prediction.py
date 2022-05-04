@@ -1,7 +1,7 @@
 import torch
 from torch.utils.data import DataLoader
-from helpers.dataset import FutureDataset
 
+from src.helpers.dataset import FutureDataset
 from src.lstm import LSTM
 
 def predict_into_future(model: LSTM,
