@@ -40,7 +40,7 @@ class FutureDataset(Dataset):
         inputs = self.inputs[index: index + self.past_window + self.future_window]
         targets = self.targets[
             index + self.past_window - 1:
-            index + self.past_window + self.future_window - 1
+            index + self.past_window + self.future_window
         ]
         return inputs, targets
     
