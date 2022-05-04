@@ -25,8 +25,8 @@ if __name__ == "__main__":
         exit(0)
 
     if sys.argv[1] in ["--train", "-t"]:
-        if len(sys.argv) > 3:
-            base_path = pathlib.Path(sys.argv[3])
+        if len(sys.argv) > 2:
+            base_path = pathlib.Path(sys.argv[2])
             config_path = base_path / "config.yml"
         else:
             base_path = pathlib.Path("models/training")
