@@ -31,7 +31,7 @@ class Config:
     model: ModelConfig
 
 
-def read_config(path: str) -> tuple[TrainingConfig, DataConfig, ModelConfig]:
+def read_config(path: str) -> Config:
     file = pathlib.Path(path)
     if not file.exists():
         raise FileNotFoundError(f"Couldn't find config at {path}")
