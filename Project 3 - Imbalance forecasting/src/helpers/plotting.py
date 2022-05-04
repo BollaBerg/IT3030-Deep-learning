@@ -75,18 +75,20 @@ def plot_future_predictions(
             targets: torch.Tensor,
             title: str = "",
             ax: plt.Axes = None,
-            savepath: str = None
+            savepath: str = None,
+            loss_str: str = ""
             ):
     
     if ax is None:
-        fig, ax = plt.subplots(1, 1, figsize=(20, 10))
+        fig, ax = plt.subplots(1, 1, figsize=(20, 10), layout="tight")
     else:
         fig = None
 
     post_predictions = predictions.detach().numpy().flatten()
     post_targets = targets.detach().numpy().flatten()
 
-    ax.set_title(title)
+    ax.set_title(title, fontsize=18)
+    ax.text(x=0.5, y=0.90, s=loss_str, fontsize=12, ha="center", transform=ax.transAxes)
     ax.plot(post_predictions, label="Model outputs")
     ax.plot(post_targets, label="Targets")
     ax.fill_between(
@@ -102,3 +104,5 @@ def plot_future_predictions(
             raise ValueError("Cannot save existing ax")
         else:
             fig.savefig(savepath)
+            print(f"Predictions saved to {savepath}")
+            plt.close(fig)

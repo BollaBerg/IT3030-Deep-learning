@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pandas as pd
+from torch.nn import MSELoss
 from torch.utils.data import DataLoader
 
 from src.helpers.config import read_config
@@ -17,14 +18,16 @@ def _format_steps(step: int) -> str:
     hours = minutes // 60
     minutes -= 60 * hours
     
-    if hours > 0:
+    if hours == 1:
+        return f"{hours} hour, {minutes} minutes"
+    elif hours > 1:
         return f"{hours} hours, {minutes} minutes"
     else:
         return f"{minutes} minutes"
 
 
 def demo(config_path: Path, model_path: Path, data_path: Path):
-    future_steps = 120 / 5      # 2 hours = 120 min / 5 min timesteps
+    future_steps = int(120 / 5)      # 2 hours = 120 min / 5 min timesteps
     config = read_config(config_path)
     input_size = (
         8   # Standard, from the actual input data
@@ -65,6 +68,8 @@ def demo(config_path: Path, model_path: Path, data_path: Path):
     )
     dataloader = DataLoader(dataset, batch_size=len(dataset), shuffle=False)
 
+    loss_fn = MSELoss(reduction="mean")
+
     predictions = predict_into_future(
         model, dataloader,
         timesteps_into_future=future_steps,
@@ -72,8 +77,10 @@ def demo(config_path: Path, model_path: Path, data_path: Path):
     )
 
     for i, future_step in enumerate(predictions):
+        loss = loss_fn(future_step[0], future_step[1]).item()
         plot_future_predictions(
             future_step[0], future_step[1],
             title=f"Predictions, {_format_steps(i)} into the future",
-            savepath = ROOT_PATH / f"plots/LSTM_future_{i}.png"
+            savepath = ROOT_PATH / f"plots/LSTM_future_{i}.png",
+            loss_str=f"Loss: {loss}"
         )
