@@ -50,6 +50,7 @@ if __name__ == "__main__":
             config_path = ROOT_PATH / "config.yml"
         
         config = read_config(config_path)
+        print(f"Loaded config from {config_path}")
         train_model(config, base_path)
     
     elif sys.argv[1] in ["--demo", "-d"]:
