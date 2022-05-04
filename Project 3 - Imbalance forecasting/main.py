@@ -1,5 +1,8 @@
+import pathlib
 import sys
 
+from src.helpers.config import read_config
+from src.helpers.path import ROOT_PATH
 from src.train_model import train_model
 
 def print_help():
@@ -17,8 +20,17 @@ def print_help():
 
 
 if __name__ == "__main__":
-    if len(sys.argv) <= 1 or "--help" in sys.argv or "-h" in sys.argv:
+    if len(sys.argv) <= 1 or sys.argv[1] in ["--help", "-h"]:
         print_help()
         exit(0)
-    if "--train" in sys.argv or "-t" in sys.argv:
-        train_model()
+
+    if sys.argv[1] in ["--train", "-t"]:
+        if len(sys.argv) > 3:
+            base_path = pathlib.Path(sys.argv[3])
+            config_path = base_path / "config.yml"
+        else:
+            base_path = pathlib.Path("models/training")
+            config_path = ROOT_PATH / "config.yml"
+        
+        config = read_config(config_path)
+        train_model(config, base_path)
