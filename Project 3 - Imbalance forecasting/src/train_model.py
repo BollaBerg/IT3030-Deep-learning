@@ -47,6 +47,12 @@ def _get_validation_loss(model, dataloader, loss_fn):
     return sum(losses) / len(losses)
 
 
+def _save_losses(losses, path):
+    str_losses = ",".join([str(loss) for loss in losses])
+    with open(path, "w") as file:
+        file.write(str_losses)
+
+
 def train_model():
     # Load configs
     config = read_config(ROOT_PATH / "config.yml")
@@ -150,6 +156,7 @@ def train_model():
     # Plot loss data as own plot, as well
     loss_fig, loss_ax = plt.subplots(1, 1, figsize=(20, 10))
     plot_loss_data(losses, loss_ax)
+    _save_losses(losses, ROOT_PATH / "models/training/losses")
 
     plt.tight_layout()
     fig.savefig(ROOT_PATH / "plots/training/LSTM.png")
