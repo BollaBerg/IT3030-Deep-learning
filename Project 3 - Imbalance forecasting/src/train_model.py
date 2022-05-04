@@ -56,7 +56,7 @@ def _save_losses(losses, path):
 
 
 def train_model(config: Config,
-                base_save_path: pathlib.Path = ROOT_PATH / "models/training"):
+                base_save_path: pathlib.Path = ROOT_PATH / "training"):
     # Load configs
     config = read_config(ROOT_PATH / "config.yml")
     base_save_path = pathlib.Path(base_save_path)
@@ -152,15 +152,15 @@ def train_model(config: Config,
                 ax=ax[epoch]
             )
 
-            model_savepath = base_save_path  / f"LSTM_{epoch}.pt"
+            model_savepath = base_save_path  / f"models/LSTM_{epoch}.pt"
             model.save_model(model_savepath)
 
     # Plot loss data to gigaplot
-    plot_loss_data(losses, ax[0])
+    plot_loss_data(losses, ax[0], log=True)
 
     # Plot loss data as own plot, as well
     loss_fig, loss_ax = plt.subplots(1, 1, figsize=(20, 10))
-    plot_loss_data(losses, loss_ax)
+    plot_loss_data(losses, loss_ax, log=True)
     _save_losses(losses, base_save_path / "losses")
 
     plt.tight_layout()

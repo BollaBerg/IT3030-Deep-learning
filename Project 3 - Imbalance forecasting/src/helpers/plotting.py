@@ -30,9 +30,9 @@ def plot_validation_prediction(model,
         fig, ax = plt.subplots(1, 1, figsize=(20, 10))
 
         if base_save_path is None:
-            savepath = ROOT_PATH / f"plots/training/LSTM_{epoch}.png"
+            savepath = ROOT_PATH / f"training/plots/LSTM_{epoch}.png"
         else:
-            savepath = pathlib.Path(base_save_path) / f"LSTM_{epoch}.png"
+            savepath = pathlib.Path(base_save_path) / f"plots/LSTM_{epoch}.png"
     else:
         create_new = False
 
