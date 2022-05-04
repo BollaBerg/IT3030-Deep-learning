@@ -68,7 +68,6 @@ def train_model(config: Config,
         + (1 if config.data.last_day_y else 0)     # last_day_y has one col
         + (1 if config.data.two_last_day_y else 0) # two_last_day_y has one col
     )
-    print(input_size)
     model = LSTM(
         input_size = input_size,
         lstm_depth=config.model.lstm_depth,
@@ -126,7 +125,8 @@ def train_model(config: Config,
         ncols=1,
         figsize=(20, (config.training.epochs + 1) * 10)
     )
-    losses = [_get_validation_loss(model, validation_dataloader, loss_fn)]
+    train_losses = [_get_validation_loss(model, dataloader, loss_fn)]
+    validation_losses = [_get_validation_loss(model, validation_dataloader, loss_fn)]
     ax = axes.flat
 
     # Train model and plot with frequency save_frequency
@@ -136,7 +136,8 @@ def train_model(config: Config,
         if epoch % config.training.save_frequency == 0:
             loss = _get_validation_loss(model, validation_dataloader, loss_fn)
             tqdm.write(f"Loss epoch {epoch}: \t {loss}")
-            losses.append(loss)
+            train_losses.append(_get_validation_loss(model, dataloader, loss_fn))
+            validation_losses.append(loss)
 
             plot_validation_prediction(
                 model, validation_dataloader, epoch,
@@ -155,12 +156,15 @@ def train_model(config: Config,
             model.save_model(model_savepath)
 
     # Plot loss data to gigaplot
-    plot_loss_data(losses, ax[0], log_y=True)
+    plot_loss_data(validation_losses, ax[0], log_y=True, label="Validation loss")
+    plot_loss_data(train_losses, ax[0], log_y=True, label="Training loss")
 
     # Plot loss data as own plot, as well
     loss_fig, loss_ax = plt.subplots(1, 1, figsize=(20, 10))
-    plot_loss_data(losses, loss_ax, log_y=True)
-    _save_losses(losses, base_save_path / "losses")
+    plot_loss_data(validation_losses, loss_ax, log_y=True, label="Validation loss")
+    plot_loss_data(train_losses, loss_ax, log_y=True, label="Training loss")
+    _save_losses(validation_losses, base_save_path / "validation_losses")
+    _save_losses(train_losses, base_save_path / "train_losses")
 
     plt.tight_layout()
     fig.savefig(base_save_path / "LSTM.png")
