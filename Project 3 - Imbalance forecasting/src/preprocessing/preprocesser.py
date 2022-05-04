@@ -25,7 +25,7 @@ class Preprocesser:
     """
     keep_columns = []
     transform_columns = ["hydro", "micro", "thermal", "wind", "total", "sys_reg", "flow"]
-    if_fitted = False
+    is_fitted = False
 
     def __init__(self,
                  min_y_value: float = -1000,
@@ -109,7 +109,7 @@ class Preprocesser:
         )
 
         output["target"] = self.y_transformer.transform(clamped_y)
-        output["last_y"] = output["target"].shift(-1)
+        output["last_y"] = output["target"].shift(1)
 
         # Create new features
         time_columns = []
@@ -156,12 +156,12 @@ class Preprocesser:
         one_day = int(24 * 60 / 5)
         # Yesterday's output
         if self.last_day_y:
-            output["yesterday_y"] = output["target"].shift(-one_day)
+            output["yesterday_y"] = output["target"].shift(one_day)
             shifted_columns.append("yesterday_y")
 
         # Two days ago's output = target shifted 2 * 24 * 60 / 5
         if self.two_last_day_y:
-            output["2_yesterday_y"] = output["target"].shift(-2 * one_day)
+            output["2_yesterday_y"] = output["target"].shift(2 * one_day)
             shifted_columns.append("2_yesterday_y")
         
         # Change order of columns to get similar Tensors
@@ -169,7 +169,7 @@ class Preprocesser:
             self.keep_columns
             + self.transform_columns
             + time_columns
-            + ["last_y"] + shifted_columns + ["target"]
+            + shifted_columns + ["last_y", "target"]
         )
         output = output[column_order]
 
