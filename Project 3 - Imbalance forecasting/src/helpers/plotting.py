@@ -74,7 +74,6 @@ def plot_future_predictions(
             predictions: torch.Tensor,
             targets: torch.Tensor,
             title: str = "",
-            postprocess_target = lambda x: x,
             ax: plt.Axes = None,
             savepath: str = None
             ):
@@ -84,8 +83,8 @@ def plot_future_predictions(
     else:
         fig = None
 
-    post_predictions = postprocess_target(predictions).detach().numpy().flatten()
-    post_targets = postprocess_target(targets).detach().numpy().flatten()
+    post_predictions = predictions.detach().numpy().flatten()
+    post_targets = targets.detach().numpy().flatten()
 
     ax.set_title(title)
     ax.plot(post_predictions, label="Model outputs")
