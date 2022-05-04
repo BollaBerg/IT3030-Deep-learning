@@ -61,7 +61,7 @@ def plot_validation_prediction(model,
 def plot_future_predictions(
             predictions: torch.Tensor,
             targets: torch.Tensor,
-            timesteps_forward: int,
+            title: str = "",
             postprocess_target = lambda x: x,
             ax: plt.Axes = None,
             savepath: str = None
@@ -75,7 +75,7 @@ def plot_future_predictions(
     post_predictions = postprocess_target(predictions).detach().numpy().flatten()
     post_targets = postprocess_target(targets).detach().numpy().flatten()
 
-    ax.set_title(f"Predictions {timesteps_forward} timesteps in the future")
+    ax.set_title(title)
     ax.plot(post_predictions, label="Model outputs")
     ax.plot(post_targets, label="Targets")
     ax.fill_between(
