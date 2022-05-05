@@ -91,7 +91,8 @@ def train_model(config: Config,
         time_of_year=config.data.time_of_year,
         last_day_y=config.data.last_day_y,
         two_last_day_y=config.data.two_last_day_y,
-        randomize_last_y=config.data.randomize_last_y
+        randomize_last_y=config.data.randomize_last_y,
+        task_2_window=config.data.task_2_window
     )
     processed = preprocesser.fit_transform(data)
     validation_processed = preprocesser.transform(validation_data)
