@@ -1,4 +1,5 @@
 import pathlib
+import random
 
 import matplotlib.pyplot as plt
 import torch
@@ -77,7 +78,7 @@ def plot_future_predictions(
             title: str = "",
             ax: plt.Axes = None,
             savepath: str = None,
-            loss_str: str = ""
+            loss_str: str = "",
             ):
     
     if ax is None:
@@ -91,8 +92,16 @@ def plot_future_predictions(
 
     ax.set_title(title, fontsize=18)
     ax.text(x=0.5, y=0.90, s=loss_str, fontsize=12, ha="center", transform=ax.transAxes)
-    ax.plot(post_predictions, label="Model outputs", color=plt.get_cmap("Set1").colors[1])
-    ax.plot(post_targets, label="Targets", color=plt.get_cmap("Set2").colors[0])
+    ax.plot(
+        post_predictions,
+        label="Model outputs",
+        color=plt.get_cmap("Set1").colors[1]
+    )
+    ax.plot(
+        post_targets,
+        label="Targets",
+        color=plt.get_cmap("Set2").colors[0]
+    )
     ax.fill_between(
         range(len(post_targets)), post_predictions, post_targets,
         color="black", alpha=0.1
@@ -107,4 +116,36 @@ def plot_future_predictions(
         else:
             fig.savefig(savepath)
             print(f"Predictions saved to {savepath}")
+            plt.close(fig)
+
+def plot_zoomed_future_predictions(
+            predictions: torch.Tensor,
+            targets: torch.Tensor,
+            title: str = "",
+            ax: plt.Axes = None,
+            savepath: str = None,
+            start_index: int = None,
+            width_of_zoom: int = 60 * 24 * 4
+            ):
+    if ax is None:
+        fig, ax = plt.subplots(1, 1, figsize=(20, 10), layout="tight")
+    else:
+        fig = None
+    
+    if start_index is None:
+        start_index = random.randrange(0, len(predictions) - width_of_zoom)
+
+    plot_future_predictions(
+        predictions[start_index: start_index + width_of_zoom],
+        targets[start_index: start_index + width_of_zoom],
+        title=title,
+        ax=ax,
+    )
+    
+    if savepath is not None:
+        if fig is None:
+            raise ValueError("Cannot save existing ax")
+        else:
+            fig.savefig(savepath)
+            print(f"Zoomed predictions saved to {savepath}")
             plt.close(fig)
