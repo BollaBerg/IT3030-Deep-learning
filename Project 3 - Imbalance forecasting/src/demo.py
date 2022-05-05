@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 from src.helpers.config import read_config
 from src.helpers.dataset import FutureDataset
 from src.helpers.path import DATA_PATH, ROOT_PATH
-from src.helpers.plotting import plot_future_predictions
+from src.helpers.plotting import plot_future_predictions, plot_zoomed_future_predictions
 from src.future_prediction import predict_into_future
 from src.lstm import LSTM
 from src.preprocessing import Preprocesser, split_data, pd_to_tensor
@@ -84,3 +84,9 @@ def demo(config_path: Path, model_path: Path, data_path: Path):
             savepath = ROOT_PATH / f"plots/LSTM_future_{i}.png",
             loss_str=f"Loss: {loss}"
         )
+    
+    plot_zoomed_future_predictions(
+        predictions[-1][0], predictions[-1][1],
+        title="Zoomed predictions, 2 hours into the future",
+        savepath=ROOT_PATH / "plots/LSTM_zoomed.png"
+    )
