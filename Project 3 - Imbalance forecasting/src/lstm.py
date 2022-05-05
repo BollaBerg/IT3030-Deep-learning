@@ -82,15 +82,18 @@ class LSTM(nn.Module):
             hidden_states[0], cell_states[0] = self.cells[0](time_step, (input_hidden_state, cell_states[0]))
             cell_input = hidden_states[0]
 
-            for i, cell in enumerate(self.cells[1:], start=1):
-                # Use previous layer's hidden and previous time_step's cell
-                # state to compute value from each subsequent layers
-                hidden_state, cell_state = cell(cell_input, (hidden_states[i - 1], cell_states[i]))
+            if len(self.cells) <= 1:
+                hidden_state = hidden_states[0]
+            else:
+                for i, cell in enumerate(self.cells[1:], start=1):
+                    # Use previous layer's hidden and previous time_step's cell
+                    # state to compute value from each subsequent layers
+                    hidden_state, cell_state = cell(cell_input, (hidden_states[i - 1], cell_states[i]))
 
-                # Update states and cell_input
-                hidden_states[i] = hidden_state
-                cell_states[i] = cell_state
-                cell_input = hidden_state
+                    # Update states and cell_input
+                    hidden_states[i] = hidden_state
+                    cell_states[i] = cell_state
+                    cell_input = hidden_state
         
         # The last hidden_state is now our output from the LSTMCells
         if self.dropout is not None:
