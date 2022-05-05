@@ -29,11 +29,13 @@ def print_help():
     print("         Demo a model")
     print("         Args:")
     print("             DATA_PATH (optional): Path to data file. Defaults to")
-    print("                 data/validation.csv")
+    print("                 data/test.csv")
     print("             CONFIG_PATH (optional): Path to config file. Defaults")
     print("                 to best trained model.")
     print("             MODEL_PATH (optional): Path of saved model. Defaults")
     print("                 to best trained model")
+    print("     --demo2 | -d2 CONFIG_PATH MODEL_PATH DATA_PATH")
+    print("         Same as --demo, but for task 5.2.2")
 
 
 if __name__ == "__main__":
