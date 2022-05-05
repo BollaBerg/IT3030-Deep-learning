@@ -93,9 +93,11 @@ def predict_future_from_paths(
     model = LSTM(
         input_size = input_size,
         lstm_depth=config.model.lstm_depth,
-        hidden_layers=config.model.hidden_layers
+        hidden_layers=config.model.hidden_layers,
+        dropout=config.model.dropout
     )
     model.load_model(model_path)
+    model.eval()
 
     data = pd.read_csv(data_path, parse_dates=["start_time"])
 

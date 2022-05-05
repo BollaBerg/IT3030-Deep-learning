@@ -25,6 +25,7 @@ class DataConfig:
 class ModelConfig:
     lstm_depth: int
     hidden_layers: int
+    dropout: float
 
 @dataclass
 class Config:
@@ -59,5 +60,6 @@ def read_config(path: str) -> Config:
     model_config = ModelConfig(
         lstm_depth = data.get("model").get("lstm_depth"),
         hidden_layers = data.get("model").get("hidden_layers"),
+        dropout = data.get("model").get("dropout", None)
     )
     return Config(training_config, data_config, model_config)

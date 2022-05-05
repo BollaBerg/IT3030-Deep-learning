@@ -71,7 +71,8 @@ def train_model(config: Config,
     model = LSTM(
         input_size = input_size,
         lstm_depth=config.model.lstm_depth,
-        hidden_layers=config.model.hidden_layers
+        hidden_layers=config.model.hidden_layers,
+        dropout=config.model.dropout
     )
     model.to(device)
     
@@ -127,15 +128,22 @@ def train_model(config: Config,
         ncols=1,
         figsize=(20, (config.training.epochs + 1) * 10)
     )
+    ax = axes.flat
+
+    # Evaluate the first, untrained, model
+    model.eval()
     train_losses = [_get_validation_loss(model, dataloader, loss_fn)]
     validation_losses = [_get_validation_loss(model, validation_dataloader, loss_fn)]
-    ax = axes.flat
 
     # Train model and plot with frequency save_frequency
     for epoch in tqdm(range(1, config.training.epochs + 1), unit="epoch"):
+        # Train model
+        model.train()
         _train_epoch(model, dataloader, optimizer, loss_fn)
 
+        # Save and plot data + save model for every save_frequency epoch
         if epoch % config.training.save_frequency == 0:
+            model.eval()
             loss = _get_validation_loss(model, validation_dataloader, loss_fn)
             tqdm.write(f"Loss epoch {epoch}: \t {loss}")
             train_losses.append(_get_validation_loss(model, dataloader, loss_fn))

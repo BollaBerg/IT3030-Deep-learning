@@ -14,7 +14,11 @@ class LSTM(nn.Module):
         L = the number of timesteps in each sequence
     
     """
-    def __init__(self, input_size: int, lstm_depth: int, hidden_layers: int) -> None:
+    def __init__(self,
+                input_size: int,
+                lstm_depth: int,
+                hidden_layers: int,
+                dropout: float = None) -> None:
         """Create an instance of an LSTM class
 
         Args:
@@ -22,6 +26,9 @@ class LSTM(nn.Module):
                 each step in the sequence
             lstm_depth (int): The number of LSTMCells should be used
             hidden_layers (int): The number of hidden layers in each LSTMCell
+            dropout (float, optional): The probability that should be used for
+                a dropout layer between LSTM cells and output layer. If None,
+                no dropout will be done. Defaults to None.
         """
         super().__init__()
 
@@ -33,6 +40,12 @@ class LSTM(nn.Module):
             cells.append(cell)
 
         self.cells = nn.ModuleList(cells)
+        
+        if dropout is not None:
+            self.dropout = nn.Dropout(p=dropout)
+        else:
+            self.dropout = None
+
         self.output_layer = nn.Linear(hidden_layers, 1, dtype=float)
 
     
@@ -80,6 +93,8 @@ class LSTM(nn.Module):
                 cell_input = hidden_state
         
         # The last hidden_state is now our output from the LSTMCells
+        if self.dropout is not None:
+            hidden_state = self.dropout(hidden_state)
         return self.output_layer(hidden_state)
     
     def save_model(self, path: str):
