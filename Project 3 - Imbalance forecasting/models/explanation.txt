@@ -35,3 +35,18 @@ This is due to things such as optimizing for outliers may lower the loss while a
     - Representation like 6, but with 30-steps long inputs
     - Keep model after 19 epochs
     - Loss = 0.0003054171305916621
+
+8_randomness_last_y
+    - Added randomness to column last_y
+    - Keep model after 17 epochs
+    - Loss = 0.00790548203853022
+
+9_task_2_from_6
+    - Solution for task 5.2.2 (forecasting structural difference)
+    - Keep model after 13 epochs
+    - Loss = 0.00048563732064687816
+
+9_task_2_from_6_epoch_21
+    - Solution for task 5.2.2
+    - Keep model after 21 epochs
+    - Loss = 0.00033941206782641965
