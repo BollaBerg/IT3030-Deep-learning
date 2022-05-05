@@ -28,7 +28,7 @@ def demo(config_path: Path, model_path: Path, data_path: Path):
     loss_fn = MSELoss(reduction="mean")
 
     predictions = predict_future_from_paths(
-        config_path, model_path, data_path, future_steps, loss_fn
+        config_path, model_path, data_path, future_steps
     )
 
     for i, future_step in enumerate(predictions):

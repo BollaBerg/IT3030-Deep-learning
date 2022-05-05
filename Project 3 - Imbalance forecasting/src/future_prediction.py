@@ -80,7 +80,6 @@ def predict_future_from_paths(
         model_path: Path,
         data_path: Path,
         future_steps: int = int(120 / 5),
-        loss_fn = MSELoss(reduction="mean"),
     ):
     config = read_config(config_path)
     input_size = (
@@ -122,9 +121,7 @@ def predict_future_from_paths(
     )
     dataloader = DataLoader(dataset, batch_size=len(dataset), shuffle=False)
 
-    loss_fn = MSELoss(reduction="mean")
-
-    predictions = predict_into_future(
+    return predict_into_future(
         model, dataloader,
         timesteps_into_future=future_steps,
         reverse_target=preprocesser.reverse_y
