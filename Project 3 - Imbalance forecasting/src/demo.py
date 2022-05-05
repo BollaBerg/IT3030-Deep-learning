@@ -41,11 +41,12 @@ def demo(config_path: Path, model_path: Path, data_path: Path):
         )
     
     # Plot a zoomed window of 2-hour predictions
-    plot_zoomed_future_predictions(
-        predictions[-1][0], predictions[-1][1],
-        title="Zoomed predictions, 2 hours into the future",
-        savepath=ROOT_PATH / "plots/LSTM_zoomed.png"
-    )
+    for zoom_i in range(5):
+        plot_zoomed_future_predictions(
+            predictions[-1][0], predictions[-1][1],
+            title="Zoomed predictions, 2 hours into the future",
+            savepath=ROOT_PATH / f"plots/LSTM_zoomed_{zoom_i}.png"
+        )
 
     # Plot four plots of the previous target, then predictions over two hours
     plot_predictions_from_single_starts(

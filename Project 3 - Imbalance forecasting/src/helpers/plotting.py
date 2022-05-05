@@ -139,7 +139,7 @@ def plot_zoomed_future_predictions(
     plot_future_predictions(
         predictions[start_index: start_index + width_of_zoom],
         targets[start_index: start_index + width_of_zoom],
-        title=title,
+        title=title + f", starting at timestep {start_index}",
         ax=ax,
     )
     
