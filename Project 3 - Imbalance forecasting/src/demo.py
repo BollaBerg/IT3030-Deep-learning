@@ -16,9 +16,9 @@ def demo(config_path: Path, model_path: Path, data_path: Path, task_2: bool = Fa
     loss_fn = MSELoss(reduction="mean")
 
     if task_2:
-        model_name = "LSTM"
-    else:
         model_name = "TASK_2"
+    else:
+        model_name = "LSTM"
 
     predictions = predict_future_from_paths(
         config_path, model_path, data_path, future_steps
