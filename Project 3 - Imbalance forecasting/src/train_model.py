@@ -168,5 +168,6 @@ def train_model(config: Config,
 
     plt.tight_layout()
     fig.savefig(base_save_path / "LSTM.png")
+    loss_ax.legend()
     loss_fig.savefig(base_save_path / "loss.png")
     plt.close(fig)
