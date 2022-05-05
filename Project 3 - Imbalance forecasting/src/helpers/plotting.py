@@ -170,12 +170,12 @@ def plot_predictions_from_single_starts(
         # into the future
         start_indices = [
             random.randrange(previous_steps + 1, len(predictions[-1][0]) - prediction_steps)
-            for _ in range(4)
+            for _ in range(8)
         ]
     fig, axes = plt.subplots(
         nrows=int(len(start_indices) / 2),
         ncols=2,
-        figsize=(10, 10),
+        figsize=(10, 20),
         layout="tight"
     )
     ax = axes.flat
