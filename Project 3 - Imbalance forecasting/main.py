@@ -57,7 +57,7 @@ if __name__ == "__main__":
         if len(sys.argv) >= 3:
             data_path = pathlib.Path(sys.argv[2])
         else:
-            data_path = DATA_PATH / "validation.csv"
+            data_path = DATA_PATH / "test.csv"
         
         if len(sys.argv) >= 4:
             config_path = pathlib.Path(sys.argv[3])
@@ -68,6 +68,24 @@ if __name__ == "__main__":
             model_path = pathlib.Path(sys.argv[4])
         else:
             model_path = ROOT_PATH / "models/7_day_year_targets_more_memory.pt"
+        
+        demo(config_path, model_path, data_path)
+
+    elif sys.argv[1] in ["--demo2", "-d2"]:
+        if len(sys.argv) >= 3:
+            data_path = pathlib.Path(sys.argv[2])
+        else:
+            data_path = DATA_PATH / "test.csv"
+        
+        if len(sys.argv) >= 4:
+            config_path = pathlib.Path(sys.argv[3])
+        else:
+            config_path = ROOT_PATH / "models/configs/9_task_2_from_6.yml"
+
+        if len(sys.argv) >= 5:
+            model_path = pathlib.Path(sys.argv[4])
+        else:
+            model_path = ROOT_PATH / "models/9_task_2_from_6.pt"
         
         demo(config_path, model_path, data_path)
 
