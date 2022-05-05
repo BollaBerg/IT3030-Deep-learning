@@ -106,7 +106,9 @@ def predict_future_from_paths(
         time_of_week=config.data.time_of_week,
         time_of_year=config.data.time_of_year,
         last_day_y=config.data.last_day_y,
-        two_last_day_y=config.data.two_last_day_y
+        two_last_day_y=config.data.two_last_day_y,
+        randomize_last_y=config.data.randomize_last_y,
+        task_2_window=config.data.task_2_window
     )
     preprocesser.fit(_training_data)
 
