@@ -55,6 +55,14 @@ class Preprocesser:
                 from yesterday as an input. Defaults to False.
             two_last_day_y (bool, optional): Whether the data should include
                 target from two days ago as an input. Defaults to False.
+            randomize_last_y (bool, optional): Whether the last_y column should
+                include randomness, to limit its importance in the predictions
+                (possibly leading to better long-term predictions). Defaults
+                to False.
+            task_2_window (int, optional): Window to use for task 2. If None,
+                no window will be applied, and it is assumed that the model is
+                to solve task 1 (i.e. raw targets, not structural difference,
+                will be used as targets). Defaults to None.
         """
         self.min_y_value = min_y_value
         self.max_y_value = max_y_value
