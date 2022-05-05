@@ -36,7 +36,8 @@ class Preprocesser:
                  time_of_year: bool = False,
                  last_day_y: bool = False,
                  two_last_day_y: bool = False,
-                 randomize_last_y: bool = False,):
+                 randomize_last_y: bool = False,
+                 task_2_window: int = None):
         """Create an instance of Preprocesser
 
         Args:
@@ -64,6 +65,8 @@ class Preprocesser:
         self.last_day_y = last_day_y
         self.two_last_day_y = two_last_day_y
         self.randomize_last_y = randomize_last_y
+
+        self.task_2_window = task_2_window
 
         self.transformers = dict()
     
@@ -185,6 +188,36 @@ class Preprocesser:
             + shifted_columns + ["last_y", "target"]
         )
         output = output[column_order]
+
+
+        ############### TRANSFORM TARGET FOR TASK 2 ###############
+        # Task 2 (or 5.2.2) wants the model to target the structural difference
+        # between the continuously, slowly changing consumption in the system
+        # vs the abruptly changing power production of regulated power plants
+        # For more info about the method (and a plot of the result), see
+        #   exploration / data_exploration.ipynb
+        if self.task_2_window is not None:
+            # Use interpolation of average of 6 hours
+            _window = self.task_2_window
+            # Calculate the mean over this window, centered around each element
+            averages = output["target"].rolling(_window, center=True).mean()
+            # Use numpy to create an interpolation for each value
+            interpolation = np.interp(output["target"].index, averages.index, averages)
+
+            # .rolling() leaves us with _window - 1 NaNs, rounded up at head,
+            # down at tail. We fill these with the mean of the "remaining" 
+            # values
+            interpolation[:int(_window/2)] = np.mean(
+                output["target"][:int(_window/2)]
+            )
+            interpolation[-(int(_window/2) - 1):] = np.mean(
+                output["target"][-(int(_window/2) - 1):]
+            )
+
+            # Finally, replace target column with target - interpolation
+            output["target"] = output["target"] - interpolation
+        ###############   END OF TASK 2 SPECIFICS   ###############
+
 
         # Remove last rows of data, due to shifting
         # Important note: We can safely do this without messing up the loading
