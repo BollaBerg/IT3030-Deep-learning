@@ -26,5 +26,9 @@ if __name__ == "__main__":
     loss_list = [
         ("All options off", "models/losses/1_all_off.losses"),
         ("Time columns on", "models/losses/2_time_on.losses"),
+        ("Past targets on", "models/losses/3_hanging_y.losses"),
+        ("All extras on", "models/losses/4_all_on.losses"),
+        ("Time of day and week", "models/losses/5_day_week.losses"),
+        ("Time of day, year + past targets", "models/losses/6_day_year_hanging.losses")
     ]
     plot_losses(loss_list)
