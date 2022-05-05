@@ -87,7 +87,7 @@ if __name__ == "__main__":
         else:
             model_path = ROOT_PATH / "models/9_task_2_from_6.pt"
         
-        demo(config_path, model_path, data_path)
+        demo(config_path, model_path, data_path, task_2=True)
 
     else:
         print_help()
