@@ -31,5 +31,6 @@ if __name__ == "__main__":
         ("Time of day and week", "models/losses/5_day_week.losses"),
         ("Time of day, year + past targets", "models/losses/6_day_year_hanging.losses"),
         ("Time of day, year + past targets (30 steps)", "models/losses/7_day_year_targets_more_memory.losses"),
+        ("Randomness in last_y", "models/losses/8_randomness_last_y.losses")
     ]
     plot_losses(loss_list)

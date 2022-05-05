@@ -48,6 +48,7 @@ if __name__ == "__main__":
         ("All extras on", "models/configs/4_all_on.yml", "models/4_all_on.pt"),
         ("Time of day and week", "models/configs/5_day_week.yml", "models/5_day_week.pt"),
         ("Time of day, year + past targets", "models/configs/6_day_year_hanging.yml", "models/6_day_year_hanging.pt"),
-        ("Time of day, year + past targets (30 steps)", "models/configs/7_day_year_targets_more_memory.yml", "models/7_day_year_targets_more_memory.pt")
+        ("Time of day, year + past targets (30 steps)", "models/configs/7_day_year_targets_more_memory.yml", "models/7_day_year_targets_more_memory.pt"),
+        ("Randomness in last_y", "models/configs/8_randomness_last_y.yml", "models/8_randomness_last_y.pt"),
     ]
     plot_prediction_losses(paths)
