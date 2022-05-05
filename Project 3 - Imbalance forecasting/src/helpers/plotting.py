@@ -156,7 +156,7 @@ def plot_predictions_from_single_starts(
             predictions: list[tuple[torch.Tensor, torch.Tensor]],
             savepath: str,
             start_indices: list = None,
-            previous_steps: int = 60 * 4,
+            previous_steps: int = 60 * 3,
         ):
     past_color = plt.get_cmap("Paired").colors[1]
     target_color = plt.get_cmap("Paired").colors[0]
