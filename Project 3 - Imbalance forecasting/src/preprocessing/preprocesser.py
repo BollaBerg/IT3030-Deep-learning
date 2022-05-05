@@ -90,7 +90,36 @@ class Preprocesser:
             self.transformers[column].fit(data[column])
         
         self.y_transformer = Normalizer()
-        self.y_transformer.fit(clamp_series(data["y"], self.min_y_value, self.max_y_value))
+
+        clamped_y = clamp_series(data["y"], self.min_y_value, self.max_y_value)
+
+
+        ############### TRANSFORM TARGET FOR TASK 2 ###############
+        # For more info, see comment in self.transform
+        if self.task_2_window is not None:
+            # Use interpolation of average of 6 hours
+            _window = self.task_2_window
+            # Calculate the mean over this window, centered around each element
+            averages = clamped_y.rolling(_window, center=True).mean()
+            # Use numpy to create an interpolation for each value
+            interpolation = np.interp(clamped_y.index, averages.index, averages)
+
+            # .rolling() leaves us with _window - 1 NaNs, rounded up at head,
+            # down at tail. We fill these with the mean of the "remaining" 
+            # values
+            interpolation[:int(_window/2)] = np.mean(
+                clamped_y[:int(_window/2)]
+            )
+            interpolation[-(int(_window/2) - 1):] = np.mean(
+                clamped_y[-(int(_window/2) - 1):]
+            )
+
+            # Finally, replace target column with target - interpolation
+            clamped_y = clamped_y - interpolation
+        ###############   END OF TASK 2 SPECIFICS   ###############
+
+
+        self.y_transformer.fit(clamped_y)
         
         self.is_fitted = True
     
@@ -121,6 +150,36 @@ class Preprocesser:
         clamped_y = clamp_series(
             data["y"], lower=self.min_y_value, upper=self.max_y_value
         )
+
+
+        ############### TRANSFORM TARGET FOR TASK 2 ###############
+        # Task 2 (or 5.2.2) wants the model to target the structural difference
+        # between the continuously, slowly changing consumption in the system
+        # vs the abruptly changing power production of regulated power plants
+        # For more info about the method (and a plot of the result), see
+        #   exploration / data_exploration.ipynb
+        if self.task_2_window is not None:
+            # Use interpolation of average of 6 hours
+            _window = self.task_2_window
+            # Calculate the mean over this window, centered around each element
+            averages = clamped_y.rolling(_window, center=True).mean()
+            # Use numpy to create an interpolation for each value
+            interpolation = np.interp(clamped_y.index, averages.index, averages)
+
+            # .rolling() leaves us with _window - 1 NaNs, rounded up at head,
+            # down at tail. We fill these with the mean of the "remaining" 
+            # values
+            interpolation[:int(_window/2)] = np.mean(
+                clamped_y[:int(_window/2)]
+            )
+            interpolation[-(int(_window/2) - 1):] = np.mean(
+                clamped_y[-(int(_window/2) - 1):]
+            )
+
+            # Finally, replace target column with target - interpolation
+            clamped_y = clamped_y - interpolation
+        ###############   END OF TASK 2 SPECIFICS   ###############
+
 
         output["target"] = self.y_transformer.transform(clamped_y)
         output["last_y"] = output["target"].shift(1)
@@ -196,35 +255,6 @@ class Preprocesser:
             + shifted_columns + ["last_y", "target"]
         )
         output = output[column_order]
-
-
-        ############### TRANSFORM TARGET FOR TASK 2 ###############
-        # Task 2 (or 5.2.2) wants the model to target the structural difference
-        # between the continuously, slowly changing consumption in the system
-        # vs the abruptly changing power production of regulated power plants
-        # For more info about the method (and a plot of the result), see
-        #   exploration / data_exploration.ipynb
-        if self.task_2_window is not None:
-            # Use interpolation of average of 6 hours
-            _window = self.task_2_window
-            # Calculate the mean over this window, centered around each element
-            averages = output["target"].rolling(_window, center=True).mean()
-            # Use numpy to create an interpolation for each value
-            interpolation = np.interp(output["target"].index, averages.index, averages)
-
-            # .rolling() leaves us with _window - 1 NaNs, rounded up at head,
-            # down at tail. We fill these with the mean of the "remaining" 
-            # values
-            interpolation[:int(_window/2)] = np.mean(
-                output["target"][:int(_window/2)]
-            )
-            interpolation[-(int(_window/2) - 1):] = np.mean(
-                output["target"][-(int(_window/2) - 1):]
-            )
-
-            # Finally, replace target column with target - interpolation
-            output["target"] = output["target"] - interpolation
-        ###############   END OF TASK 2 SPECIFICS   ###############
 
 
         # Remove last rows of data, due to shifting
