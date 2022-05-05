@@ -1,0 +1,37 @@
+I haven't always selected the option with the lowest loss, but rather the one with the best plot.
+This is due to things such as optimizing for outliers may lower the loss while actually making the predictions worse.
+
+1_all_off
+    - All optional features are off
+    - Keep model after 19 epochs
+    - Loss = 0.00043777800272229965
+
+2_time_on
+    - Representation of time of day, day of week and day of year on 
+    - Keep model after 21 epochs
+    - Loss = 0.00035308304715704527
+
+3_hanging_y
+    - Representation of target 24 and 48 hours ago is on
+    - Keep model after 13 epochs
+    - Loss = 0.0003720217605660804
+
+4_all_on
+    - All optional features are on
+    - Keep model after 18 epochs
+    - Loss = 0.00031870206545889565
+
+5_day_week
+    - Representation of time-of-day and day-of-week is on
+    - Keep model after 10 epochs
+    - Loss = 0.00048646803641057306
+
+6_day_year_hanging
+    - Representation of day-of-year, day-of-year and target 24 and 48 hours ago is on
+    - Keep model after 18 epochs
+    - Loss = 0.00029655893611071194
+
+7_day_year_targets_more_memory
+    - Representation like 6, but with 30-steps long inputs
+    - Keep model after 19 epochs
+    - Loss = 0.0003054171305916621
