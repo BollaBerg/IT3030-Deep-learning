@@ -126,7 +126,7 @@ def plot_zoomed_future_predictions(
             ax: plt.Axes = None,
             savepath: str = None,
             start_index: int = None,
-            width_of_zoom: int = 60 * 24 * 4
+            width_of_zoom: int = 60 * 24 * 2
             ):
     if ax is None:
         fig, ax = plt.subplots(1, 1, figsize=(20, 10), layout="tight")
@@ -156,7 +156,7 @@ def plot_predictions_from_single_starts(
             predictions: list[tuple[torch.Tensor, torch.Tensor]],
             savepath: str,
             start_indices: list = None,
-            previous_steps: int = 60 * 24 * 4,
+            previous_steps: int = 60 * 4,
         ):
     past_color = plt.get_cmap("Paired").colors[1]
     target_color = plt.get_cmap("Paired").colors[0]
@@ -181,7 +181,7 @@ def plot_predictions_from_single_starts(
     ax = axes.flat
     for i, start_index in enumerate(start_indices):
         past_data = predictions[0][1][start_index - previous_steps: start_index + 1]
-        preds = [predictions[i][0][start_index].item() for i in range(prediction_steps)]
+        preds = [predictions[i][0][start_index + i].item() for i in range(prediction_steps)]
         targets = predictions[0][1][start_index: start_index + prediction_steps]
 
         ax[i].plot(past_data, color=past_color, label="Actual data before predictions")
