@@ -17,6 +17,7 @@ class DataConfig:
     time_of_year: bool
     last_day_y: bool
     two_last_day_y: bool
+    randomize_last_y: bool
 
 
 @dataclass
@@ -51,6 +52,7 @@ def read_config(path: str) -> Config:
         time_of_year = data.get("data").get("time_of_year", False),
         last_day_y = data.get("data").get("last_day_y", False),
         two_last_day_y = data.get("data").get("two_last_day_y", False),
+        randomize_last_y = data.get("data").get("randomize_last_y", False)
     )
     model_config = ModelConfig(
         lstm_depth = data.get("model").get("lstm_depth"),

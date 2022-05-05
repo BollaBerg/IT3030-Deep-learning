@@ -1,3 +1,4 @@
+import numpy as np
 from numpy import sin, cos, pi
 import pandas as pd
 
@@ -34,7 +35,8 @@ class Preprocesser:
                  time_of_week: bool = False,
                  time_of_year: bool = False,
                  last_day_y: bool = False,
-                 two_last_day_y: bool = False):
+                 two_last_day_y: bool = False,
+                 randomize_last_y: bool = False,):
         """Create an instance of Preprocesser
 
         Args:
@@ -61,6 +63,7 @@ class Preprocesser:
         self.time_of_year = time_of_year
         self.last_day_y = last_day_y
         self.two_last_day_y = two_last_day_y
+        self.randomize_last_y = randomize_last_y
 
         self.transformers = dict()
     
@@ -163,6 +166,16 @@ class Preprocesser:
         if self.two_last_day_y:
             output["2_yesterday_y"] = output["target"].shift(2 * one_day)
             shifted_columns.append("2_yesterday_y")
+        
+        # Add minor random value to last y, to decrease its importance for 
+        # predictions. Use the post-clamped std and mean (see 
+        # exploration/data_preprocessing.ipynb ) to disturb data nicely
+        if self.randomize_last_y:
+            rng = np.random.default_rng()
+            std = 320       # from exploration/data_preprocessing.ipynb 
+            mean = 8.9      # from exploration/data_preprocessing.ipynb
+            random_values = 0.5 * std * rng.random(len(output["last_y"])) + mean
+            output["last_y"] = output["last_y"] + random_values
         
         # Change order of columns to get similar Tensors
         column_order = (
