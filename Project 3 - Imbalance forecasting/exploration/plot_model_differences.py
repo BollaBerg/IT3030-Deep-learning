@@ -9,7 +9,7 @@ def plot_losses(loss_list: list):
     ax.set_ylabel("log(loss), MSE")
     ax.set_xlabel("Epoch")
 
-    colormap = plt.get_cmap("Paired").colors
+    colormap = plt.get_cmap("Set1").colors
 
     for i, (model_name, loss_location) in enumerate(loss_list):
         with open(loss_location, "r") as file:
@@ -29,6 +29,7 @@ if __name__ == "__main__":
         ("Past targets on", "models/losses/3_hanging_y.losses"),
         ("All extras on", "models/losses/4_all_on.losses"),
         ("Time of day and week", "models/losses/5_day_week.losses"),
-        ("Time of day, year + past targets", "models/losses/6_day_year_hanging.losses")
+        ("Time of day, year + past targets", "models/losses/6_day_year_hanging.losses"),
+        ("Time of day, year + past targets (30 steps)", "models/losses/7_day_year_targets_more_memory.losses"),
     ]
     plot_losses(loss_list)
