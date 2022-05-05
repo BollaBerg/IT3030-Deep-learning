@@ -2,25 +2,13 @@ from pathlib import Path
 
 from torch.nn import MSELoss
 
+from src.helpers.core import format_steps
 from src.helpers.path import ROOT_PATH
 from src.helpers.plotting import (
     plot_future_predictions, plot_zoomed_future_predictions,
     plot_predictions_from_single_starts
 )
 from src.future_prediction import predict_future_from_paths
-
-
-def _format_steps(step: int) -> str:
-    minutes = step * 5
-    hours = minutes // 60
-    minutes -= 60 * hours
-    
-    if hours == 1:
-        return f"{hours} hour, {minutes} minutes"
-    elif hours > 1:
-        return f"{hours} hours, {minutes} minutes"
-    else:
-        return f"{minutes} minutes"
 
 
 def demo(config_path: Path, model_path: Path, data_path: Path):
@@ -35,7 +23,7 @@ def demo(config_path: Path, model_path: Path, data_path: Path):
         loss = loss_fn(future_step[0], future_step[1]).item()
         plot_future_predictions(
             future_step[0], future_step[1],
-            title=f"Predictions, {_format_steps(i)} into the future",
+            title=f"Predictions, {format_steps(i)} into the future",
             savepath = ROOT_PATH / f"plots/LSTM_future_{i}.png",
             loss_str=f"Loss: {loss}"
         )
