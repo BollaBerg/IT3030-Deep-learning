@@ -104,7 +104,7 @@ def _plot_time_of_year(ax: plt.Axes):
 
 if __name__ == "__main__":
     fig, ax = plt.subplots(nrows=3, ncols=1, figsize=(20, 30))
-    savepath = ROOT_PATH / "plots/data.png"
+    savepath = ROOT_PATH / "plots/circular_data.png"
 
     _plot_time_in_day(ax[0])
     _plot_time_of_week(ax[1])
