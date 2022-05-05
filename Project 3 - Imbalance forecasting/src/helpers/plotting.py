@@ -118,6 +118,7 @@ def plot_future_predictions(
             print(f"Predictions saved to {savepath}")
             plt.close(fig)
 
+
 def plot_zoomed_future_predictions(
             predictions: torch.Tensor,
             targets: torch.Tensor,
@@ -149,3 +150,61 @@ def plot_zoomed_future_predictions(
             fig.savefig(savepath)
             print(f"Zoomed predictions saved to {savepath}")
             plt.close(fig)
+
+
+def plot_predictions_from_single_starts(
+            predictions: list[tuple[torch.Tensor, torch.Tensor]],
+            savepath: str,
+            start_indices: list = None,
+            previous_steps: int = 60 * 24 * 4,
+        ):
+    past_color = plt.get_cmap("Paired").colors[1]
+    target_color = plt.get_cmap("Paired").colors[0]
+    pred_color = plt.get_cmap("Paired").colors[3]
+
+    prediction_steps: int = len(predictions)
+
+    if start_indices is None:
+        # Default to 4 random start-positions, between 0 and the length of the
+        # 2-hour predictions, with padding enough to make predictions 24 steps
+        # into the future
+        start_indices = [
+            random.randrange(previous_steps + 1, len(predictions[-1][0]) - prediction_steps)
+            for _ in range(4)
+        ]
+    fig, axes = plt.subplots(
+        nrows=int(len(start_indices) / 2),
+        ncols=2,
+        figsize=(10, 10),
+        layout="tight"
+    )
+    ax = axes.flat
+    for i, start_index in enumerate(start_indices):
+        past_data = predictions[0][1][start_index - previous_steps: start_index + 1]
+        preds = [predictions[i][0][start_index].item() for i in range(prediction_steps)]
+        targets = predictions[0][1][start_index: start_index + prediction_steps]
+
+        ax[i].plot(past_data, color=past_color, label="Actual data before predictions")
+        ax[i].plot(
+            range(previous_steps, previous_steps + prediction_steps),
+            preds,
+            color=pred_color,
+            label="Predictions"
+        )
+        ax[i].plot(
+            range(previous_steps, previous_steps + prediction_steps),
+            targets,
+            color=target_color,
+            label="Target",
+            linestyle="--"
+        )
+
+        ax[i].set_title(f"Predictions starting at timestep {start_index}")
+        ax[i].legend()
+        ax[i].set_ylabel("Predicted output")
+        ax[i].set_xticks([])
+
+    fig.savefig(savepath)
+    print(f"Single-start predictions saved to {savepath}")
+    plt.close(fig)
+
