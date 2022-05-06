@@ -37,6 +37,7 @@ if __name__ == "__main__":
         ("Time of day, year + past targets (dropout)", "models/losses/10_6_with_dropout.losses"),
         ("Time of day, year + past targets (only 1 LSTMcell)", "models/losses/11_6_with_smaller_depth.losses"),
         ("Time of day, year + past targets (only 1 LSTMcell + dropout)", "models/losses/12_6_with_smaller_depth_with_dropout.losses"),
+        ("6-hour memory", "models/losses/15_very_long_memory.losses"),
     ]
     plot_losses(task_1_loss_list, ROOT_PATH / "plots/model_differences_task_1.png")
 

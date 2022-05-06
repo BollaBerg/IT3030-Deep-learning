@@ -10,6 +10,7 @@ from src.helpers.path import DATA_PATH, ROOT_PATH
 def plot_prediction_losses(
             model_list: list,
             savepath: str,
+            data_path: str,
         ):
     fig, ax = plt.subplots(1, 1, figsize=(10, 10))
     loss_fn = MSELoss(reduction="mean")
@@ -20,7 +21,7 @@ def plot_prediction_losses(
 
         predictions = predict_future_from_paths(
             config_path, model_path,
-            data_path=DATA_PATH / "validation.csv",
+            data_path=data_path,
             future_steps=int(120 / 5),
         )
 
@@ -57,8 +58,10 @@ if __name__ == "__main__":
             "models/configs/12_6_with_smaller_depth_with_dropout.yml",
             "models/12_6_with_smaller_depth_with_dropout.pt"
         ),
+        ("6-hour memory", "models/configs/15_very_long_memory.yml", "models/15_very_long_memory.pt"),
     ]
-    plot_prediction_losses(task_1_list, ROOT_PATH / "plots/model_future_differences_task_1.png")
+    plot_prediction_losses(task_1_list, ROOT_PATH / "plots/model_future_differences_task_1_validation.png", DATA_PATH / "validation.csv")
+    plot_prediction_losses(task_1_list, ROOT_PATH / "plots/model_future_differences_task_1_test.png", DATA_PATH / "test.csv")
     
     task_2_list = [
         ("All options off", "models/configs/13_task_2_all_off.yml", "models/13_task_2_all_off.pt"),
@@ -66,4 +69,5 @@ if __name__ == "__main__":
         ("Time of day, year + past targets (epoch 21)", "models/configs/9_task_2_from_6.yml", "models/9_task_2_from_6_epoch_21.pt"),
         ("Time of day, year + past targets (with dropout)", "models/configs/14_task_2_from_6_with_dropout.yml", "models/14_task_2_from_6_with_dropout.pt"),
     ]
-    plot_prediction_losses(task_2_list, ROOT_PATH / "plots/model_future_differences_task_2.png")
+    plot_prediction_losses(task_2_list, ROOT_PATH / "plots/model_future_differences_task_2_validation.png", DATA_PATH / "validation.csv")
+    plot_prediction_losses(task_2_list, ROOT_PATH / "plots/model_future_differences_task_2_test.png", DATA_PATH / "test.csv")

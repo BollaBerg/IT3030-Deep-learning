@@ -76,3 +76,8 @@ This is due to things such as optimizing for outliers may lower the loss while a
     - Keep model after 7 epochs
     - Loss = 0.001016360446260862
     - Note: This model learnt to create a line at 0, which is pretty interesting (but absolutely useless)
+
+15_very_long_memory
+    - Modeled after 6, but with 6-hour long sequences
+    - Keep model after 30 epochs
+    - Loss = 0.0003939359350130502
