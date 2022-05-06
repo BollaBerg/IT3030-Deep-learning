@@ -109,15 +109,21 @@ def train_model(config: Config,
     validation_targets = pd_to_tensor(validation_target_df)
 
     # Create train dataset and dataloader
+    if config.data.batch_size is not None:
+        dataloader_batch_size = validation_dataloader_batch_size = config.data.batch_size
+    else:
+        dataloader_batch_size = len(dataset)
+        validation_dataloader_batch_size = len(validation_dataset)
+
     dataset = TimeSeriesDataset(inputs, targets, window=config.data.sequence_length)
-    dataloader = DataLoader(dataset, batch_size=len(dataset), shuffle=True,
+    dataloader = DataLoader(dataset, batch_size=dataloader_batch_size, shuffle=True,
         # Move both training and test data to device, for CUDA training
         collate_fn=lambda x: tuple(x_.to(device) for x_ in default_collate(x))
     )
 
     # Create validation dataset and dataloader
     validation_dataset = TimeSeriesDataset(validation_inputs, validation_targets, window=config.data.sequence_length)
-    validation_dataloader = DataLoader(validation_dataset, batch_size=len(validation_dataset), shuffle=False,
+    validation_dataloader = DataLoader(validation_dataset, batch_size=validation_dataloader_batch_size, shuffle=False,
         # Move both training and test data to device, for CUDA training
         collate_fn=lambda x: tuple(x_.to(device) for x_ in default_collate(x))
     )

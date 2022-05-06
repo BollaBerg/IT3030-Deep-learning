@@ -19,6 +19,7 @@ class DataConfig:
     two_last_day_y: bool
     randomize_last_y: bool
     task_2_window: int
+    batch_size: int
 
 
 @dataclass
@@ -56,6 +57,7 @@ def read_config(path: str) -> Config:
         two_last_day_y = data.get("data").get("two_last_day_y", False),
         randomize_last_y = data.get("data").get("randomize_last_y", False),
         task_2_window = data.get("data").get("task_2_window", None),
+        batch_size = data.get("data").get("batch_size", None),
     )
     model_config = ModelConfig(
         lstm_depth = data.get("model").get("lstm_depth"),
