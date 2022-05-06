@@ -64,12 +64,12 @@ if __name__ == "__main__":
         if len(sys.argv) >= 4:
             config_path = pathlib.Path(sys.argv[3])
         else:
-            config_path = ROOT_PATH / "models/configs/7_day_year_targets_more_memory.yml"
+            config_path = ROOT_PATH / "models/configs/11_6_with_smaller_depth.yml"
 
         if len(sys.argv) >= 5:
             model_path = pathlib.Path(sys.argv[4])
         else:
-            model_path = ROOT_PATH / "models/7_day_year_targets_more_memory.pt"
+            model_path = ROOT_PATH / "models/11_6_with_smaller_depth.pt"
         
         demo(config_path, model_path, data_path)
 
@@ -87,7 +87,7 @@ if __name__ == "__main__":
         if len(sys.argv) >= 5:
             model_path = pathlib.Path(sys.argv[4])
         else:
-            model_path = ROOT_PATH / "models/9_task_2_from_6.pt"
+            model_path = ROOT_PATH / "models/9_task_2_from_6_epoch_21.pt"
         
         demo(config_path, model_path, data_path, task_2=True)
 
