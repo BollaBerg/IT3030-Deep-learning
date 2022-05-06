@@ -25,7 +25,7 @@ def print_help():
     print("                     models/")
     print("                     plots/")
     print("                 Defaults to models/training")
-    print("     --demo | -d CONFIG_PATH MODEL_PATH DATA_PATH")
+    print("     --demo | -d [DATA_PATH [CONFIG_PATH [MODEL_PATH]]]")
     print("         Demo a model")
     print("         Args:")
     print("             DATA_PATH (optional): Path to data file. Defaults to")
@@ -34,7 +34,7 @@ def print_help():
     print("                 to best trained model.")
     print("             MODEL_PATH (optional): Path of saved model. Defaults")
     print("                 to best trained model")
-    print("     --demo2 | -d2 CONFIG_PATH MODEL_PATH DATA_PATH")
+    print("     --demo2 | -d2 [DATA_PATH [CONFIG_PATH [MODEL_PATH]]]")
     print("         Same as --demo, but for task 5.2.2")
 
 
@@ -44,18 +44,19 @@ if __name__ == "__main__":
         exit(0)
 
     if sys.argv[1] in ["--train", "-t"]:
+        # Train a model with a possible given config
         if len(sys.argv) > 2:
             base_path = pathlib.Path(sys.argv[2])
             config_path = base_path / "config.yml"
         else:
-            base_path = pathlib.Path("models/training")
-            config_path = ROOT_PATH / "config.yml"
+            raise ValueError("Training a model requires a given base path")
         
         config = read_config(config_path)
         print(f"Loaded config from {config_path}")
         train_model(config, base_path)
     
     elif sys.argv[1] in ["--demo", "-d"]:
+        # Run demo of main assignment, with possible default model
         if len(sys.argv) >= 3:
             data_path = pathlib.Path(sys.argv[2])
         else:
@@ -74,6 +75,7 @@ if __name__ == "__main__":
         demo(config_path, model_path, data_path)
 
     elif sys.argv[1] in ["--demo2", "-d2"]:
+        # Run demo of secondary assignment, with possible default model
         if len(sys.argv) >= 3:
             data_path = pathlib.Path(sys.argv[2])
         else:
