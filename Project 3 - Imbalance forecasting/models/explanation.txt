@@ -70,3 +70,9 @@ This is due to things such as optimizing for outliers may lower the loss while a
     - Solution for task 5.2.2, with all optional parameters off
     - Keep model after 19 epochs
     - Loss = 0.0003458248955242506
+
+14_task_2_from_6_with_dropout
+    - Adaptation of 9, with Dropout layer (p = 0.5)
+    - Keep model after 7 epochs
+    - Loss = 0.001016360446260862
+    - Note: This model learnt to create a line at 0, which is pretty interesting (but absolutely useless)

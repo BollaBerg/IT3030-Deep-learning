@@ -43,6 +43,7 @@ if __name__ == "__main__":
     task_2_loss_list = [
         ("All options off", "models/losses/13_task_2_all_off.losses"),
         ("Time of day, year + past targets", "models/losses/9_task_2_from_6.losses"),
+        ("Time of day, year + past targets (with dropout)", "models/losses/14_task_2_from_6_with_dropout.losses"),
     ]
     plot_losses(task_2_loss_list, ROOT_PATH / "plots/model_differences_task_2.png")
 

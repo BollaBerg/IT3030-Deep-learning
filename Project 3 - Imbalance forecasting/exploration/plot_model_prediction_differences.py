@@ -64,5 +64,6 @@ if __name__ == "__main__":
         ("All options off", "models/configs/13_task_2_all_off.yml", "models/13_task_2_all_off.pt"),
         ("Time of day, year + past targets (epoch 13)", "models/configs/9_task_2_from_6.yml", "models/9_task_2_from_6.pt"),
         ("Time of day, year + past targets (epoch 21)", "models/configs/9_task_2_from_6.yml", "models/9_task_2_from_6_epoch_21.pt"),
+        ("Time of day, year + past targets (with dropout)", "models/configs/14_task_2_from_6_with_dropout.yml", "models/14_task_2_from_6_with_dropout.pt"),
     ]
     plot_prediction_losses(task_2_list, ROOT_PATH / "plots/model_future_differences_task_2.png")
