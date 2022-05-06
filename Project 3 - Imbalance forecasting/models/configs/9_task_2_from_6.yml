@@ -1,0 +1,18 @@
+training:
+  epochs: 30
+  save_frequency: 1
+  learning_rate: 0.08
+
+data:
+  sequence_length: 10
+  time_of_day: True
+  time_of_week: False
+  time_of_year: True
+  last_day_y: True
+  two_last_day_y: False
+  randomize_last_y: False
+  task_2_window: 72       # 6 hour window's average used for interpolation
+
+model:
+  lstm_depth: 2
+  hidden_layers: 10

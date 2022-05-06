@@ -50,3 +50,23 @@ This is due to things such as optimizing for outliers may lower the loss while a
     - Solution for task 5.2.2
     - Keep model after 21 epochs
     - Loss = 0.00033941206782641965
+
+10_6_with_dropout
+    - Same as 6, but with a Dropout layer between LSTM-cells and output layer, with p = 0.4
+    - Keep model after 16 epochs
+    - Loss = 0.0005845413266154334
+
+11_6_with_smaller_depth
+    - Same as 6, but with only 1 layer of LSTM-cells
+    - Keep model after 18 epochs
+    - Loss = 0.00030602913191776543
+
+12_6_with_smaller_depth_with_dropout
+    - Combination of 10 and 11
+    - Keep model after 11 epochs
+    - Loss = 0.0006421665918104739
+
+13_task_2_all_off
+    - Solution for task 5.2.2, with all optional parameters off
+    - Keep model after 19 epochs
+    - Loss = 0.0003458248955242506
